@@ -1,6 +1,6 @@
 # atom-flutter-dev
 
-An Atom Flutter development environment.
+A Flutter development environment for Atom.
 
 ## Features and bugs
 
