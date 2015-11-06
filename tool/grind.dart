@@ -13,11 +13,13 @@ analyze() {
 
 @DefaultTask()
 build() async {
+  // dart ../../dev_compiler/bin/dev_compiler.dart -oweb/ddc web/entry.dart
+
   await new DevCompiler().compileAsync(
     getFile('web/entry.dart'), getDir('web/ddc'));
 
-  // TODO: post-process the output
-  
+  // TODO: Post-process the output?
+
 }
 
 @Task()
