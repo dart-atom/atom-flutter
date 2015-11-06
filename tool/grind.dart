@@ -18,7 +18,7 @@ build() async {
   await new DevCompiler().compileAsync(
     getFile('web/entry.dart'), getDir('web/ddc'));
 
-  // TODO: Post-process the output?
+  // TODO: Generate web/entry_all.js by traversing the web/ddc output directory.
 
 }
 
