@@ -1,8 +1,6 @@
 global.dart_utils = require('./ddc/dev_compiler/runtime/dart_utils.js');
 global.dart_library = require('./ddc/dev_compiler/runtime/dart_library.js');
 
-//require('./ddc/dev_compiler/runtime/harmony_feature_check.js');
-
 require('./ddc/atom_flutter_dev/flutter_dev.js');
 require('./ddc/atom_flutter_dev/src/atom.js');
 require('./ddc/dev_compiler/runtime/dart/_classes.js');
