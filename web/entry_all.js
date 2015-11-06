@@ -1,3 +1,7 @@
+// Copyright (c) 2015, the Flutter project authors. Please see the AUTHORS file
+// for details. All rights reserved. Use of this source code is governed by a
+// BSD-style license that can be found in the LICENSE file.
+
 global.dart_utils = require('./ddc/dev_compiler/runtime/dart_utils.js');
 global.dart_library = require('./ddc/dev_compiler/runtime/dart_library.js');
 
