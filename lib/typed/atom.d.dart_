@@ -1,0 +1,2301 @@
+// Type definitions for Atom
+
+// Project: https://atom.io/
+
+// Definitions by: vvakame <https://github.com/vvakame/>
+
+// Definitions: https://github.com/borisyankov/DefinitelyTyped
+
+import "dart:html";
+
+/// <reference path="../q/Q.d.ts" />
+
+/// <reference path="../jquery/jquery.d.ts" />
+
+/// <reference path="../space-pen/space-pen.d.ts" />
+
+/// <reference path="../emissary/emissary.d.ts" />
+
+/// <reference path="../pathwatcher/pathwatcher.d.ts" />
+
+/// <reference path="../text-buffer/text-buffer.d.ts" />
+
+/// <reference path="../status-bar/status-bar.d.ts" />
+
+// Policy: this definition file only declare element related to `atom`.
+
+// if js file include to another npm package (e.g. "space-pen", "mixto" and "emissary").
+
+// you should create a separate file.
+
+// API documentation : https://atom.io/docs/api/v0.106.0/api/docs/README.md.html
+import "package:func/func.dart";
+import "package:js/js.dart";
+
+import "space-pen.d.dart" as spacePen;
+/// <reference path="../jquery/jquery.d.ts" />
+/// <reference path="../space-pen/space-pen.d.ts" />
+/// <reference path="../emissary/emissary.d.ts" />
+/// <reference path="../pathwatcher/pathwatcher.d.ts" />
+/// <reference path="../text-buffer/text-buffer.d.ts" />
+/// <reference path="../status-bar/status-bar.d.ts" />
+// Policy: this definition file only declare element related to `atom`.
+// if js file include to another npm package (e.g. "space-pen", "mixto" and "emissary").
+// you should create a separate file.
+// API documentation : https://atom.io/docs/api/v0.106.0/api/docs/README.md.html
+
+
+/* Skipping interface Window*/
+
+// Module AtomCore
+
+// https://atom.io/docs/v0.84.0/advanced/view-system
+@JS('AtomCore.IWorkspaceViewStatic')
+abstract class IWorkspaceViewStatic {
+  // @Ignore
+  IWorkspaceViewStatic.fakeConstructor$();
+  external num get version;
+  external set version(num v);
+  external dynamic get configDefaults;
+  external set configDefaults(dynamic v);
+  external dynamic content();
+}
+
+@JS('AtomCore.Decoration')
+abstract class Decoration {
+  // @Ignore
+  Decoration.fakeConstructor$();
+  external void destroy();
+}
+
+/**
+	 * Represents a buffer annotation that remains logically stationary even as the buffer changes. This is used
+	 * to represent cursors, folds, snippet targets, misspelled words, any anything else that needs to track a
+	 * logical location in the buffer over time.
+	 */
+@JS('AtomCore.Marker')
+abstract class Marker {
+  // @Ignore
+  Marker.fakeConstructor$();
+  /**
+		 * Destroys the marker, causing it to emit the 'destroyed' event. Once destroyed, a marker cannot be
+		 * restored by undo/redo operations.
+		 */
+  external void destroy();
+
+  /**
+		 * Gets the screen range of the display marker.
+		 */
+  external Range getScreenRange();
+}
+
+@JS('AtomCore.IWorkspaceView')
+abstract class IWorkspaceView implements View {
+  // @Ignore
+  IWorkspaceView.fakeConstructor$();
+  // Delegator.includeInto(WorkspaceView);
+
+  // delegate to model property's property
+  external bool get fullScreen;
+  external set fullScreen(bool v);
+
+  // delegate to model property's method
+  external Q.Promise<View> open(String uri, dynamic options);
+  external dynamic openSync(String uri, [dynamic options]);
+  external dynamic saveActivePaneItem();
+  external dynamic saveActivePaneItemAs();
+  external void saveAll();
+  external dynamic destroyActivePaneItem();
+  external dynamic destroyActivePane();
+  external void increaseFontSize();
+  external void decreaseFontSize();
+
+  // own property & methods
+  external dynamic initialize(IWorkspace model);
+  external void initialize(View view, dynamic args);
+  external IWorkspace get model;
+  external set model(IWorkspace v);
+  external IPaneContainerView get panes;
+  external set panes(IPaneContainerView v);
+  external IWorkspace getModel();
+  external dynamic installShellCommands();
+  external dynamic handleFocus();
+  external dynamic afterAttach([dynamic onDom]);
+  external bool confirmClose();
+  external dynamic updateTitle();
+  external dynamic setTitle(String title);
+  external List<dynamic> getEditorViews();
+  external dynamic prependToTop(dynamic element);
+  external dynamic appendToTop(dynamic element);
+  external dynamic prependToBottom(dynamic element);
+  external dynamic appendToBottom(dynamic element);
+  external dynamic prependToLeft(dynamic element);
+  external dynamic appendToLeft(dynamic element);
+  external dynamic prependToRight(dynamic element);
+  external dynamic appendToRight(dynamic element);
+  external IPaneView getActivePaneView();
+  external View getActiveView();
+  external dynamic focusPreviousPaneView();
+  external dynamic focusNextPaneView();
+  external dynamic focusPaneViewAbove();
+  external dynamic focusPaneViewBelow();
+  external dynamic focusPaneViewOnLeft();
+  external dynamic focusPaneViewOnRight();
+  external dynamic eachPaneView(Func1<IPaneView, dynamic> callback);
+  external List<IPaneView> getPaneViews();
+  external dynamic eachEditorView(Func1<dynamic, dynamic> callback);
+  external dynamic beforeRemove();
+  external dynamic command(String eventName, Function handler);
+  external dynamic command(
+      String eventName, Function selector, Function handler);
+  external dynamic command(String eventName, dynamic options, Function handler);
+  external dynamic command(
+      String eventName, Function selector, dynamic options, Function handler);
+  external StatusBar.IStatusBarView get statusBar;
+  external set statusBar(StatusBar.IStatusBarView v);
+}
+
+@JS('AtomCore.IPanes')
+abstract class IPanes {
+  // @Ignore
+  IPanes.fakeConstructor$();
+}
+
+@JS('AtomCore.IPaneView')
+abstract class IPaneView {
+  // @Ignore
+  IPaneView.fakeConstructor$();
+}
+
+@JS('AtomCore.IPaneContainerView')
+abstract class IPaneContainerView {
+  // @Ignore
+  IPaneContainerView.fakeConstructor$();
+}
+
+@JS('AtomCore.ITreeView')
+abstract class ITreeView {
+  // @Ignore
+  ITreeView.fakeConstructor$();
+}
+
+@JS('AtomCore.IGutterViewStatic')
+abstract class IGutterViewStatic {
+  // @Ignore
+  IGutterViewStatic.fakeConstructor$();
+  external dynamic content();
+}
+
+@JS('AtomCore.IGutterView')
+abstract class IGutterView implements View {
+  // @Ignore
+  IGutterView.fakeConstructor$();
+  external dynamic get firstScreenRow;
+  external set firstScreenRow(dynamic v);
+  external dynamic get lastScreenRow;
+  external set lastScreenRow(dynamic v);
+  external void initialize();
+  external void initialize(View view, dynamic args);
+  external dynamic afterAttach([dynamic onDom]);
+  external dynamic beforeRemove();
+  external dynamic handleMouseEvents(JQueryMouseEventObject e);
+  external dynamic getEditorView();
+  external IEditor getEditor();
+  external HtmlCollection getLineNumberElements();
+  external NodeList getLineNumberElementsForClass(String klass);
+  external NodeList getLineNumberElement(num bufferRow);
+  external bool addClassToAllLines(String klass);
+  external bool removeClassFromAllLines(String klass);
+  external bool addClassToLine(num bufferRow, String klass);
+  external bool removeClassFromLine(num bufferRow, String klass);
+  external dynamic updateLineNumbers(List<dynamic> changes,
+      [num startScreenRow, num endScreenRow]);
+  external void prependLineElements(dynamic lineElements);
+  external void appendLineElements(dynamic lineElements);
+  external void removeLineElements(num numberOfElements);
+  external dynamic buildLineElements(
+      dynamic startScreenRow, dynamic endScreenRow);
+  external dynamic buildLineElementsHtml(
+      dynamic startScreenRow, dynamic endScreenRow);
+  external dynamic updateFoldableClasses(List<dynamic> changes);
+  external void removeLineHighlights();
+  external dynamic addLineHighlight(num row, [bool emptySelection]);
+  external bool highlightLines();
+}
+
+@JS('AtomCore.ICommandRegistry')
+abstract class ICommandRegistry {
+  // @Ignore
+  ICommandRegistry.fakeConstructor$();
+  external void add(String selector, String name, VoidFunc1<dynamic> callback);
+  external List<Object> findCommands(Object params);
+  external void dispatch(dynamic selector, String name);
+}
+
+@JS('AtomCore.ICommandPanel')
+abstract class ICommandPanel {
+  // @Ignore
+  ICommandPanel.fakeConstructor$();
+}
+
+@JS('AtomCore.IDisplayBufferStatic')
+abstract class IDisplayBufferStatic {
+  // @Ignore
+  IDisplayBufferStatic.fakeConstructor$();
+}
+
+@JS('AtomCore.IDisplayBuffer')
+abstract class IDisplayBuffer {
+  // @Ignore
+  IDisplayBuffer.fakeConstructor$();
+  // Serializable.includeInto(Editor);
+  external IDisplayBufferStatic get constructor;
+  external set constructor(IDisplayBufferStatic v);
+  external num get verticalScrollMargin;
+  external set verticalScrollMargin(num v);
+  external num get horizontalScrollMargin;
+  external set horizontalScrollMargin(num v);
+  external dynamic get declaredPropertyValues;
+  external set declaredPropertyValues(dynamic v);
+  external ITokenizedBuffer get tokenizedBuffer;
+  external set tokenizedBuffer(ITokenizedBuffer v);
+  external TextBuffer.ITextBuffer get buffer;
+  external set buffer(TextBuffer.ITextBuffer v);
+  external dynamic get charWidthsByScope;
+  external set charWidthsByScope(dynamic v);
+  external Map<num, IDisplayBufferMarker> get markers;
+  external set markers(Map<num, IDisplayBufferMarker> v);
+  external dynamic get foldsByMarkerId;
+  external set foldsByMarkerId(dynamic v);
+  external num get maxLineLength;
+  external set maxLineLength(num v);
+  external List<ITokenizedLine> get screenLines;
+  external set screenLines(List<ITokenizedLine> v);
+  external dynamic get rowMap;
+  external set rowMap(dynamic v);
+  external num get longestScreenRow;
+  external set longestScreenRow(num v);
+  external List<Emissary.ISubscription> get subscriptions;
+  external set subscriptions(List<Emissary.ISubscription> v);
+  external dynamic get subscriptionsByObject;
+  external set subscriptionsByObject(dynamic v);
+  external dynamic get behaviors;
+  external set behaviors(dynamic v);
+  external dynamic get subscriptionCounts;
+  external set subscriptionCounts(dynamic v);
+  external dynamic get eventHandlersByEventName;
+  external set eventHandlersByEventName(dynamic v);
+  external dynamic get pendingChangeEvent;
+  external set pendingChangeEvent(dynamic v);
+  external bool get softWrap;
+  external set softWrap(bool v);
+  external dynamic serializeParams();
+  external dynamic deserializeParams(dynamic params);
+  external IDisplayBuffer copy();
+  external dynamic updateAllScreenLines();
+  external dynamic emitChanged(dynamic eventProperties, [bool refreshMarkers]);
+  external dynamic updateWrappedScreenLines();
+  external dynamic setVisible(dynamic visible);
+  external num getVerticalScrollMargin();
+  external num setVerticalScrollMargin(num verticalScrollMargin);
+  external num getHorizontalScrollMargin();
+  external num setHorizontalScrollMargin(num horizontalScrollMargin);
+  external dynamic getHeight();
+  external dynamic setHeight(dynamic height);
+  external dynamic getWidth();
+  external dynamic setWidth(dynamic newWidth);
+  external num getScrollTop();
+  external num setScrollTop(num scrollTop);
+  external num getScrollBottom();
+  external num setScrollBottom(num scrollBottom);
+  external num getScrollLeft();
+  external num setScrollLeft(num scrollLeft);
+  external num getScrollRight();
+  external num setScrollRight(num scrollRight);
+  external dynamic getLineHeight();
+  external dynamic setLineHeight(dynamic lineHeight);
+  external dynamic getDefaultCharWidth();
+  external dynamic setDefaultCharWidth(dynamic defaultCharWidth);
+  external dynamic getScopedCharWidth(dynamic scopeNames, dynamic char);
+  external dynamic getScopedCharWidths(dynamic scopeNames);
+  external dynamic setScopedCharWidth(
+      dynamic scopeNames, dynamic char, dynamic width);
+  external dynamic setScopedCharWidths(dynamic scopeNames, dynamic charWidths);
+  external dynamic clearScopedCharWidths();
+  external num getScrollHeight();
+  external num getScrollWidth();
+  external List<num> getVisibleRowRange();
+  external dynamic intersectsVisibleRowRange(dynamic startRow, dynamic endRow);
+  external dynamic selectionIntersectsVisibleRowRange(dynamic selection);
+  external dynamic scrollToScreenRange(dynamic screenRange);
+  external dynamic scrollToScreenPosition(dynamic screenPosition);
+  external dynamic scrollToBufferPosition(dynamic bufferPosition);
+  external dynamic pixelRectForScreenRange(TextBuffer.IRange screenRange);
+  external num getTabLength();
+  external dynamic setTabLength(num tabLength);
+  external bool setSoftWrap(bool softWrap);
+  external bool getSoftWrap();
+  external dynamic setEditorWidthInChars(num editorWidthInChars);
+  external num getEditorWidthInChars();
+  external num getSoftWrapColumn();
+  external dynamic lineForRow(num row);
+  external dynamic linesForRows(num startRow, num endRow);
+  external List<dynamic> getLines();
+  external dynamic indentLevelForLine(dynamic line);
+  external dynamic bufferRowsForScreenRows(
+      dynamic startScreenRow, dynamic endScreenRow);
+  external IFold createFold(num startRow, num endRow);
+  external bool isFoldedAtBufferRow(num bufferRow);
+  external bool isFoldedAtScreenRow(num screenRow);
+  external dynamic destroyFoldWithId(num id);
+  external List<dynamic> unfoldBufferRow(num bufferRow);
+  external dynamic largestFoldStartingAtBufferRow(num bufferRow);
+  external dynamic foldsStartingAtBufferRow(num bufferRow);
+  external dynamic largestFoldStartingAtScreenRow(dynamic screenRow);
+  external dynamic largestFoldContainingBufferRow(dynamic bufferRow);
+  external List<dynamic> outermostFoldsInBufferRowRange(
+      dynamic startRow, dynamic endRow);
+  external List<dynamic> foldsContainingBufferRow(dynamic bufferRow);
+  external num screenRowForBufferRow(num bufferRow);
+  external num lastScreenRowForBufferRow(num bufferRow);
+  external num bufferRowForScreenRow(num screenRow);
+  external TextBuffer.IRange screenRangeForBufferRange(
+      List<TextBuffer.IPoint> bufferRange);
+  external TextBuffer.IRange screenRangeForBufferRange(
+      TextBuffer.IRange bufferRange);
+  external TextBuffer.IRange screenRangeForBufferRange(dynamic bufferRange);
+  external TextBuffer.IRange screenRangeForBufferRange(dynamic bufferRange);
+  external TextBuffer.IRange screenRangeForBufferRange(dynamic bufferRange);
+  external TextBuffer.IRange screenRangeForBufferRange(dynamic bufferRange);
+  external TextBuffer.IRange screenRangeForBufferRange(dynamic bufferRange);
+  external TextBuffer.IRange screenRangeForBufferRange(dynamic bufferRange);
+  external TextBuffer.IRange screenRangeForBufferRange(dynamic bufferRange);
+  external TextBuffer.IRange screenRangeForBufferRange(dynamic bufferRange);
+  external TextBuffer.IRange screenRangeForBufferRange(dynamic bufferRange);
+  external TextBuffer.IRange bufferRangeForScreenRange(
+      List<TextBuffer.IPoint> screenRange);
+  external TextBuffer.IRange bufferRangeForScreenRange(
+      TextBuffer.IRange screenRange);
+  external TextBuffer.IRange bufferRangeForScreenRange(dynamic screenRange);
+  external TextBuffer.IRange bufferRangeForScreenRange(dynamic screenRange);
+  external TextBuffer.IRange bufferRangeForScreenRange(dynamic screenRange);
+  external TextBuffer.IRange bufferRangeForScreenRange(dynamic screenRange);
+  external TextBuffer.IRange bufferRangeForScreenRange(dynamic screenRange);
+  external TextBuffer.IRange bufferRangeForScreenRange(dynamic screenRange);
+  external TextBuffer.IRange bufferRangeForScreenRange(dynamic screenRange);
+  external TextBuffer.IRange bufferRangeForScreenRange(dynamic screenRange);
+  external TextBuffer.IRange bufferRangeForScreenRange(dynamic screenRange);
+  external TextBuffer.IRange pixelRangeForScreenRange(
+      List<TextBuffer.IPoint> screenRange,
+      [bool clip]);
+  external TextBuffer.IRange pixelRangeForScreenRange(
+      TextBuffer.IRange screenRange,
+      [bool clip]);
+  external TextBuffer.IRange pixelRangeForScreenRange(dynamic screenRange,
+      [bool clip]);
+  external TextBuffer.IRange pixelRangeForScreenRange(dynamic screenRange,
+      [bool clip]);
+  external TextBuffer.IRange pixelRangeForScreenRange(dynamic screenRange,
+      [bool clip]);
+  external TextBuffer.IRange pixelRangeForScreenRange(dynamic screenRange,
+      [bool clip]);
+  external TextBuffer.IRange pixelRangeForScreenRange(dynamic screenRange,
+      [bool clip]);
+  external TextBuffer.IRange pixelRangeForScreenRange(dynamic screenRange,
+      [bool clip]);
+  external TextBuffer.IRange pixelRangeForScreenRange(dynamic screenRange,
+      [bool clip]);
+  external TextBuffer.IRange pixelRangeForScreenRange(dynamic screenRange,
+      [bool clip]);
+  external TextBuffer.IRange pixelRangeForScreenRange(dynamic screenRange,
+      [bool clip]);
+  external TextBuffer.IPoint pixelPositionForScreenPosition(
+      TextBuffer.IPoint screenPosition,
+      [bool clip]);
+  external TextBuffer.IPoint pixelPositionForScreenPosition(
+      List<num> screenPosition,
+      [bool clip]);
+  external TextBuffer.IPoint pixelPositionForScreenPosition(
+      dynamic screenPosition,
+      [bool clip]);
+  external TextBuffer.IPoint screenPositionForPixelPosition(
+      dynamic pixelPosition);
+  external dynamic pixelPositionForBufferPosition(dynamic bufferPosition);
+  external num getLineCount();
+  external num getLastRow();
+  external num getMaxLineLength();
+  external dynamic screenPositionForBufferPosition(
+      dynamic bufferPosition, dynamic options);
+  external dynamic bufferPositionForScreenPosition(
+      dynamic bufferPosition, dynamic options);
+  external dynamic scopesForBufferPosition(dynamic bufferPosition);
+  external dynamic bufferRangeForScopeAtPosition(
+      dynamic selector, dynamic position);
+  external dynamic tokenForBufferPosition(dynamic bufferPosition);
+  external IGrammar getGrammar();
+  external dynamic setGrammar(IGrammar grammar);
+  external dynamic reloadGrammar();
+  external dynamic clipScreenPosition(dynamic screenPosition, dynamic options);
+  external dynamic findWrapColumn(dynamic line, dynamic softWrapColumn);
+  external TextBuffer.IRange rangeForAllLines();
+  external IDisplayBufferMarker getMarker(num id);
+  external List<IDisplayBufferMarker> getMarkers();
+  external num getMarkerCount();
+  external IDisplayBufferMarker markScreenRange(
+      TextBuffer.IRange range, List<dynamic> args);
+  external IDisplayBufferMarker markBufferRange(TextBuffer.IRange range,
+      [dynamic options]);
+  external IDisplayBufferMarker markScreenPosition(
+      TextBuffer.IPoint screenPosition,
+      [dynamic options]);
+  external IDisplayBufferMarker markBufferPosition(
+      TextBuffer.IPoint bufferPosition,
+      [dynamic options]);
+  external dynamic destroyMarker(num id);
+  external IDisplayBufferMarker findMarker([dynamic params]);
+  external List<IDisplayBufferMarker> findMarkers([dynamic params]);
+  external dynamic translateToBufferMarkerParams([dynamic params]);
+  external IMarker findFoldMarker(dynamic attributes);
+  external List<IMarker> findFoldMarkers(dynamic attributes);
+  external dynamic getFoldMarkerAttributes([dynamic attributes]);
+  external dynamic pauseMarkerObservers();
+  external dynamic resumeMarkerObservers();
+  external dynamic refreshMarkerScreenPositions();
+  external dynamic destroy();
+  external List<dynamic> logLines(num start, num end);
+  external dynamic handleTokenizedBufferChange(dynamic tokenizedBufferChange);
+  external dynamic updateScreenLines(
+      dynamic startBufferRow, dynamic endBufferRow,
+      [num bufferDelta, dynamic options]);
+  external dynamic buildScreenLines(
+      dynamic startBufferRow, dynamic endBufferRow);
+  external dynamic findMaxLineLength(
+      dynamic startScreenRow, dynamic endScreenRow, dynamic newScreenLines);
+  external dynamic handleBufferMarkersUpdated();
+  external dynamic handleBufferMarkerCreated(dynamic marker);
+  external IFold createFoldForMarker(dynamic maker);
+  external dynamic foldForMarker(dynamic marker);
+}
+
+@JS('AtomCore.IViewRegistry')
+abstract class IViewRegistry {
+  // @Ignore
+  IViewRegistry.fakeConstructor$();
+  external dynamic getView(dynamic selector);
+}
+
+@JS('AtomCore.ICursorStatic')
+abstract class ICursorStatic {
+  // @Ignore
+  ICursorStatic.fakeConstructor$();
+}
+
+@JS('AtomCore.ScopeDescriptor')
+abstract class ScopeDescriptor {
+  // @Ignore
+  ScopeDescriptor.fakeConstructor$();
+  external List<String> get scopes;
+  external set scopes(List<String> v);
+}
+
+@JS('AtomCore.ICursor')
+abstract class ICursor {
+  // @Ignore
+  ICursor.fakeConstructor$();
+  external ScopeDescriptor getScopeDescriptor();
+  external dynamic get screenPosition;
+  external set screenPosition(dynamic v);
+  external dynamic get bufferPosition;
+  external set bufferPosition(dynamic v);
+  external dynamic get goalColumn;
+  external set goalColumn(dynamic v);
+  external bool get visible;
+  external set visible(bool v);
+  external bool get needsAutoscroll;
+  external set needsAutoscroll(bool v);
+  external IEditor get editor;
+  external set editor(IEditor v);
+  external IDisplayBufferMarker get marker;
+  external set marker(IDisplayBufferMarker v);
+  external num get id;
+  external set id(num v);
+  external dynamic destroy();
+  external dynamic changePosition(dynamic options, Function fn);
+  external dynamic getPixelRect();
+  external dynamic setScreenPosition(dynamic screenPosition, [dynamic options]);
+  external TextBuffer.IPoint getScreenPosition();
+  external TextBuffer.IRange getScreenRange();
+  external dynamic setBufferPosition(dynamic bufferPosition, [dynamic options]);
+  external TextBuffer.IPoint getBufferPosition();
+  external dynamic autoscroll();
+  external dynamic updateVisibility();
+  external dynamic setVisible(bool visible);
+  external bool isVisible();
+  external dynamic wordRegExp([dynamic arg]);
+  external bool isLastCursor();
+  external bool isSurroundedByWhitespace();
+  external bool isBetweenWordAndNonWord();
+  external bool isInsideWord();
+  external void clearAutoscroll();
+  external void clearSelection();
+  external num getScreenRow();
+  external num getScreenColumn();
+  external num getBufferRow();
+  external num getBufferColumn();
+  external String getCurrentBufferLine();
+  external dynamic moveUp(num rowCount, [dynamic arg]);
+  external dynamic moveDown(num rowCount, [dynamic arg]);
+  external dynamic moveLeft([dynamic arg]);
+  external dynamic moveRight([dynamic arg]);
+  external dynamic moveToTop();
+  external void moveToBottom();
+  external void moveToBeginningOfScreenLine();
+  external void moveToBeginningOfLine();
+  external void moveToFirstCharacterOfLine();
+  external void moveToEndOfScreenLine();
+  external void moveToEndOfLine();
+  external void moveToBeginningOfWord();
+  external void moveToEndOfWord();
+  external void moveToBeginningOfNextWord();
+  external void moveToPreviousWordBoundary();
+  external void moveToNextWordBoundary();
+  external TextBuffer.IPoint getBeginningOfCurrentWordBufferPosition(
+      [dynamic options]);
+  external TextBuffer.IPoint getPreviousWordBoundaryBufferPosition(
+      [dynamic options]);
+  external TextBuffer.IPoint getMoveNextWordBoundaryBufferPosition(
+      [dynamic options]);
+  external TextBuffer.IPoint getEndOfCurrentWordBufferPosition(
+      [dynamic options]);
+  external TextBuffer.IPoint getBeginningOfNextWordBufferPosition(
+      [dynamic options]);
+  external TextBuffer.IPoint getCurrentWordBufferRange([dynamic options]);
+  external TextBuffer.IPoint getCurrentLineBufferRange([dynamic options]);
+  external dynamic getCurrentParagraphBufferRange();
+  external String getCurrentWordPrefix();
+  external bool isAtBeginningOfLine();
+  external num getIndentLevel();
+  external bool isAtEndOfLine();
+  external List<String> getScopes();
+  external bool hasPrecedingCharactersOnLine();
+  external Marker getMarker();
+}
+
+@JS('AtomCore.ILanguageMode')
+abstract class ILanguageMode {
+  // @Ignore
+  ILanguageMode.fakeConstructor$();
+}
+
+@JS('AtomCore.ISelection')
+abstract class ISelection {
+  // @Ignore
+  ISelection.fakeConstructor$();
+  external ICursor get cursor;
+  external set cursor(ICursor v);
+  external IDisplayBufferMarker get marker;
+  external set marker(IDisplayBufferMarker v);
+  external IEditor get editor;
+  external set editor(IEditor v);
+  external dynamic get initialScreenRange;
+  external set initialScreenRange(dynamic v);
+  external bool get wordwise;
+  external set wordwise(bool v);
+  external bool get needsAutoscroll;
+  external set needsAutoscroll(bool v);
+  external bool get retainSelection;
+  external set retainSelection(bool v);
+  external dynamic get subscriptionCounts;
+  external set subscriptionCounts(dynamic v);
+  external dynamic destroy();
+  external dynamic finalize();
+  external dynamic clearAutoscroll();
+  external bool isEmpty();
+  external bool isReversed();
+  external bool isSingleScreenLine();
+  external TextBuffer.IRange getScreenRange();
+  external dynamic setScreenRange(dynamic screenRange, dynamic options);
+  external TextBuffer.IRange getBufferRange();
+  external dynamic setBufferRange(dynamic bufferRange, dynamic options);
+  external List<num> getBufferRowRange();
+  external void autoscroll();
+  external String getText();
+  external bool clear();
+  external TextBuffer.IRange selectWord();
+  external dynamic expandOverWord();
+  external TextBuffer.IRange selectLine([dynamic row]);
+  external bool expandOverLine();
+  external dynamic selectToScreenPosition(dynamic position);
+  external dynamic selectToBufferPosition(dynamic position);
+  external bool selectRight();
+  external bool selectLeft();
+  external bool selectUp([dynamic rowCount]);
+  external bool selectDown([dynamic rowCount]);
+  external dynamic selectToTop();
+  external dynamic selectToBottom();
+  external dynamic selectAll();
+  external dynamic selectToBeginningOfLine();
+  external dynamic selectToFirstCharacterOfLine();
+  external dynamic selectToEndOfLine();
+  external dynamic selectToBeginningOfWord();
+  external dynamic selectToEndOfWord();
+  external dynamic selectToBeginningOfNextWord();
+  external dynamic selectToPreviousWordBoundary();
+  external dynamic selectToNextWordBoundary();
+  external dynamic addSelectionBelow();
+  external dynamic getGoalBufferRange();
+  external List<dynamic> addSelectionAbove();
+  external dynamic insertText(String text, [dynamic options]);
+  external dynamic normalizeIndents(String text, num indentBasis);
+  external dynamic indent([dynamic JS$_arg]);
+  external List<TextBuffer.IRange> indentSelectedRows();
+  external dynamic setIndentationForLine(String line, num indentLevel);
+  external dynamic backspace();
+  external dynamic backspaceToBeginningOfWord();
+  external dynamic backspaceToBeginningOfLine();
+  external dynamic delete();
+  external dynamic deleteToEndOfWord();
+  external dynamic deleteSelectedText();
+  external dynamic deleteLine();
+  external dynamic joinLines();
+  external List<dynamic> outdentSelectedRows();
+  external dynamic autoIndentSelectedRows();
+  external dynamic toggleLineComments();
+  external dynamic cutToEndOfLine(dynamic maintainClipboard);
+  external dynamic cut(dynamic maintainClipboard);
+  external dynamic copy(dynamic maintainClipboard);
+  external dynamic fold();
+  external dynamic modifySelection(Func0<dynamic> fn);
+  external dynamic plantTail();
+  external dynamic intersectsBufferRange(dynamic bufferRange);
+  external dynamic intersectsWith(dynamic otherSelection);
+  external dynamic merge(dynamic otherSelection, dynamic options);
+  external dynamic compare(dynamic otherSelection);
+  external List<dynamic> getRegionRects();
+  external dynamic screenRangeChanged();
+}
+
+@JS('AtomCore.IDecorationParams')
+abstract class IDecorationParams {
+  // @Ignore
+  IDecorationParams.fakeConstructor$();
+  external num get id;
+  external set id(num v);
+  external String get JS$class;
+  external set JS$class(String v);
+  external dynamic get type;
+  external set type(dynamic v);
+}
+
+@JS('AtomCore.IDecorationStatic')
+abstract class IDecorationStatic {
+  // @Ignore
+  IDecorationStatic.fakeConstructor$();
+  external bool isType(IDecorationParams decorationParams, dynamic type);
+}
+
+@JS('AtomCore.IDecoration')
+abstract class IDecoration implements Emissary.IEmitter {
+  // @Ignore
+  IDecoration.fakeConstructor$();
+  external IDisplayBufferMarker get marker;
+  external set marker(IDisplayBufferMarker v);
+  external IDisplayBuffer get displayBuffer;
+  external set displayBuffer(IDisplayBuffer v);
+  external IDecorationParams get params;
+  external set params(IDecorationParams v);
+  external num get id;
+  external set id(num v);
+  external List<dynamic> get flashQueue;
+  external set flashQueue(List<dynamic> v);
+  external bool get isDestroyed;
+  external set isDestroyed(bool v);
+  external void destroy();
+  external void update(IDecorationParams newParams);
+  external IDisplayBufferMarker getMarker();
+  external IDecorationParams getParams();
+  external bool isType(String type);
+  external bool matchesPattern(
+      Map<String, IDecorationParams> decorationPattern);
+  external void flash(String klass, [num duration]);
+  external dynamic consumeNextFlash();
+}
+
+@JS('AtomCore.IEditor')
+abstract class IEditor {
+  // @Ignore
+  IEditor.fakeConstructor$();
+  // Serializable.includeInto(Editor);
+
+  // Delegator.includeInto(Editor);
+  external bool get deserializing;
+  external set deserializing(bool v);
+  external bool get callDisplayBufferCreatedHook;
+  external set callDisplayBufferCreatedHook(bool v);
+  external bool get registerEditor;
+  external set registerEditor(bool v);
+  external TextBuffer.ITextBuffer get buffer;
+  external set buffer(TextBuffer.ITextBuffer v);
+  external ILanguageMode get languageMode;
+  external set languageMode(ILanguageMode v);
+  external List<ICursor> get cursors;
+  external set cursors(List<ICursor> v);
+  external List<ISelection> get selections;
+  external set selections(List<ISelection> v);
+  external bool get suppressSelectionMerging;
+  external set suppressSelectionMerging(bool v);
+  external num get updateBatchDepth;
+  external set updateBatchDepth(num v);
+  external num get selectionFlashDuration;
+  external set selectionFlashDuration(num v);
+  external bool get softTabs;
+  external set softTabs(bool v);
+  external IDisplayBuffer get displayBuffer;
+  external set displayBuffer(IDisplayBuffer v);
+  external num get id;
+  external set id(num v);
+  external dynamic get behaviors;
+  external set behaviors(dynamic v);
+  external dynamic get declaredPropertyValues;
+  external set declaredPropertyValues(dynamic v);
+  external dynamic get eventHandlersByEventName;
+  external set eventHandlersByEventName(dynamic v);
+  external dynamic get eventHandlersByNamespace;
+  external set eventHandlersByNamespace(dynamic v);
+  external num get lastOpened;
+  external set lastOpened(num v);
+  external dynamic get subscriptionCounts;
+  external set subscriptionCounts(dynamic v);
+  external dynamic get subscriptionsByObject;
+  external set subscriptionsByObject(dynamic v);
+  external List<Emissary.ISubscription> get subscriptions;
+  external set subscriptions(List<Emissary.ISubscription> v);
+  external dynamic get mini;
+  external set mini(dynamic v);
+  external dynamic serializeParams();
+  external dynamic deserializeParams(dynamic params);
+  external void subscribeToBuffer();
+  external void subscribeToDisplayBuffer();
+  external dynamic getViewClass();
+  external void destroyed();
+  external bool isDestroyed();
+  external IEditor copy();
+  external String getTitle();
+  external String getLongTitle();
+  external void setVisible(bool visible);
+  external void setMini(dynamic mini);
+  external void setScrollTop(dynamic scrollTop);
+  external num getScrollTop();
+  external void setScrollLeft(dynamic scrollLeft);
+  external num getScrollLeft();
+  external void setEditorWidthInChars(dynamic editorWidthInChars);
+  external num getSoftWrapColumn();
+  external bool getSoftTabs();
+  external void setSoftTabs(bool softTabs);
+  external bool getSoftWrap();
+  external void setSoftWrap(dynamic softWrap);
+  external String getTabText();
+  external num getTabLength();
+  external void setTabLength(dynamic tabLength);
+  external bool usesSoftTabs();
+  external void clipBufferPosition(dynamic bufferPosition);
+  external void clipBufferRange(dynamic range);
+  external void indentationForBufferRow(dynamic bufferRow);
+  external void setIndentationForBufferRow(
+      dynamic bufferRow, dynamic newLevel, dynamic JS$_arg);
+  external num indentLevelForLine(dynamic line);
+  external String buildIndentString(dynamic number);
+  external void save();
+  external void saveAs(dynamic filePath);
+  external void copyPathToClipboard();
+  external String getPath();
+  external String getText();
+  external void setText(dynamic text);
+  external dynamic getTextInRange(dynamic range);
+  external num getLineCount();
+  external TextBuffer.ITextBuffer getBuffer();
+  external String getURI();
+  external bool isBufferRowBlank(dynamic bufferRow);
+  external void isBufferRowCommented(dynamic bufferRow);
+  external void nextNonBlankBufferRow(dynamic bufferRow);
+  external TextBuffer.IPoint getEofBufferPosition();
+  external num getLastBufferRow();
+  external TextBuffer.IRange bufferRangeForBufferRow(
+      dynamic row, dynamic options);
+  external String lineForBufferRow(num row);
+  external num lineLengthForBufferRow(num row);
+  external dynamic scan();
+  external dynamic scanInBufferRange();
+  external dynamic backwardsScanInBufferRange();
+  external bool isModified();
+  external bool isEmpty();
+  external bool shouldPromptToSave();
+  external TextBuffer.IPoint screenPositionForBufferPosition(
+      dynamic bufferPosition,
+      [dynamic options]);
+  external TextBuffer.IPoint bufferPositionForScreenPosition(
+      dynamic screenPosition,
+      [dynamic options]);
+  external TextBuffer.IRange screenRangeForBufferRange(dynamic bufferRange);
+  external TextBuffer.IRange bufferRangeForScreenRange(dynamic screenRange);
+  external TextBuffer.IRange clipScreenPosition(
+      dynamic screenPosition, dynamic options);
+  external ITokenizedLine lineForScreenRow(dynamic row);
+  external List<ITokenizedLine> linesForScreenRows(
+      [dynamic start, dynamic end]);
+  external num getScreenLineCount();
+  external num getMaxScreenLineLength();
+  external num getLastScreenRow();
+  external List<dynamic> bufferRowsForScreenRows(
+      dynamic startRow, dynamic endRow);
+  external num bufferRowForScreenRow(dynamic row);
+  external List<String> scopesForBufferPosition(dynamic bufferPosition);
+  external dynamic bufferRangeForScopeAtCursor(String selector);
+  external IToken tokenForBufferPosition(dynamic bufferPosition);
+  external List<String> getCursorScopes();
+  external void logCursorScope();
+  external List<TextBuffer.IRange> insertText(String text, [dynamic options]);
+  external List<TextBuffer.IRange> insertNewline();
+  external List<TextBuffer.IRange> insertNewlineBelow();
+  external dynamic insertNewlineAbove();
+  external dynamic indent([dynamic options]);
+  external List<dynamic> backspace();
+
+  // deprecated backspaceToBeginningOfWord():any[];
+
+  // deprecated backspaceToBeginningOfLine():any[];
+  external List<dynamic> deleteToBeginningOfWord();
+  external List<dynamic> deleteToBeginningOfLine();
+  external List<dynamic> delete();
+  external List<dynamic> deleteToEndOfLine();
+  external List<dynamic> deleteToEndOfWord();
+  external List<TextBuffer.IRange> deleteLine();
+  external List<List<TextBuffer.IRange>> indentSelectedRows();
+  external List<List<TextBuffer.IRange>> outdentSelectedRows();
+  external List<TextBuffer.IRange> toggleLineCommentsInSelection();
+  external List<List<TextBuffer.IRange>> autoIndentSelectedRows();
+  external dynamic normalizeTabsInBufferRange(dynamic bufferRange);
+  external List<bool> cutToEndOfLine();
+  external List<bool> cutSelectedText();
+  external List<bool> copySelectedText();
+  external List<TextBuffer.IRange> pasteText([dynamic options]);
+  external List<dynamic> undo();
+  external List<dynamic> redo();
+  external dynamic foldCurrentRow();
+  external List<dynamic> unfoldCurrentRow();
+  external List<dynamic> foldSelectedLines();
+  external List<dynamic> foldAll();
+  external List<dynamic> unfoldAll();
+  external dynamic foldAllAtIndentLevel(dynamic level);
+  external dynamic foldBufferRow(dynamic bufferRow);
+  external dynamic unfoldBufferRow(dynamic bufferRow);
+  external bool isFoldableAtBufferRow(dynamic bufferRow);
+  external bool isFoldableAtScreenRow(dynamic screenRow);
+  external IFold createFold(dynamic startRow, dynamic endRow);
+  external dynamic destroyFoldWithId(dynamic id);
+  external dynamic destroyFoldsIntersectingBufferRange(dynamic bufferRange);
+  external dynamic toggleFoldAtBufferRow(dynamic bufferRow);
+  external bool isFoldedAtCursorRow();
+  external bool isFoldedAtBufferRow(dynamic bufferRow);
+  external bool isFoldedAtScreenRow(dynamic screenRow);
+  external bool largestFoldContainingBufferRow(dynamic bufferRow);
+  external dynamic largestFoldStartingAtScreenRow(dynamic screenRow);
+  external List<dynamic> outermostFoldsInBufferRowRange(
+      dynamic startRow, dynamic endRow);
+  external List<ISelection> moveLineUp();
+  external List<ISelection> moveLineDown();
+  external List<List<dynamic>> duplicateLines();
+
+  // duprecated duplicateLine():any[][];
+  external dynamic mutateSelectedText(Func1<ISelection, dynamic> fn);
+  external dynamic replaceSelectedText(
+      dynamic options, Func1<String, dynamic> fn);
+  external Map<num, List<IDecoration>> decorationsForScreenRowRange(
+      dynamic startScreenRow, dynamic endScreenRow);
+  external IDecoration decorateMarker(
+      IDisplayBufferMarker marker, dynamic decorationParams);
+  external IDecoration decorationForId(num id);
+  external IDisplayBufferMarker getMarker(num id);
+  external List<IDisplayBufferMarker> getMarkers();
+  external List<IDisplayBufferMarker> findMarkers(List<dynamic> args);
+  external IDisplayBufferMarker markScreenRange(List<dynamic> args);
+  external IDisplayBufferMarker markBufferRange(List<dynamic> args);
+  external IDisplayBufferMarker markScreenPosition(List<dynamic> args);
+  external IDisplayBufferMarker markBufferPosition(List<dynamic> args);
+  external bool destroyMarker(List<dynamic> args);
+  external num getMarkerCount();
+  external bool hasMultipleCursors();
+  external List<ICursor> getCursors();
+  external ICursor getCursor();
+  external ICursor addCursorAtScreenPosition(dynamic screenPosition);
+  external ICursor addCursorAtBufferPosition(dynamic bufferPosition);
+  external ICursor addCursor(dynamic marker);
+  external List<ICursor> removeCursor(dynamic cursor);
+  external ISelection addSelection(dynamic marker, dynamic options);
+  external ISelection addSelectionForBufferRange(
+      dynamic bufferRange, dynamic options);
+  external dynamic setSelectedBufferRange(dynamic bufferRange, dynamic options);
+  external dynamic setSelectedBufferRanges(
+      dynamic bufferRanges, dynamic options);
+  external dynamic removeSelection(ISelection selection);
+  external bool clearSelections();
+  external bool consolidateSelections();
+  external void selectionScreenRangeChanged(dynamic selection);
+  external List<ISelection> getSelections();
+  external ISelection getSelection([num index]);
+  external ISelection getLastSelection();
+  external List<ISelection> getSelectionsOrderedByBufferPosition();
+  external ISelection getLastSelectionInBuffer();
+  external dynamic selectionIntersectsBufferRange(dynamic bufferRange);
+  external dynamic setCursorScreenPosition(TextBuffer.IPoint position,
+      [dynamic options]);
+  external TextBuffer.IPoint getCursorScreenPosition();
+  external num getCursorScreenRow();
+  external dynamic setCursorBufferPosition(dynamic position, [dynamic options]);
+  external TextBuffer.IPoint getCursorBufferPosition();
+  external TextBuffer.IRange getSelectedScreenRange();
+  external TextBuffer.IRange getSelectedBufferRange();
+  external List<TextBuffer.IRange> getSelectedBufferRanges();
+  external String getSelectedText();
+  external String getTextInBufferRange(TextBuffer.IRange range);
+  external dynamic setTextInBufferRange(
+      dynamic /* TextBuffer . IRange | List < dynamic > */ range, String text);
+  external TextBuffer.IRange getCurrentParagraphBufferRange();
+  external String getWordUnderCursor([dynamic options]);
+  external void moveCursorUp([num lineCount]);
+  external void moveCursorDown([num lineCount]);
+  external void moveCursorLeft();
+  external void moveCursorRight();
+  external void moveCursorToTop();
+  external void moveCursorToBottom();
+  external void moveCursorToBeginningOfScreenLine();
+  external void moveCursorToBeginningOfLine();
+  external void moveCursorToFirstCharacterOfLine();
+  external void moveCursorToEndOfScreenLine();
+  external void moveCursorToEndOfLine();
+  external void moveCursorToBeginningOfWord();
+  external void moveCursorToEndOfWord();
+  external void moveCursorToBeginningOfNextWord();
+  external void moveCursorToPreviousWordBoundary();
+  external void moveCursorToNextWordBoundary();
+  external void moveCursorToBeginningOfNextParagraph();
+  external void moveCursorToBeginningOfPreviousParagraph();
+  external dynamic scrollToCursorPosition(dynamic options);
+  external void pageUp();
+  external void pageDown();
+  external void selectPageUp();
+  external void selectPageDown();
+  external num getRowsPerPage();
+  external dynamic moveCursors(Func1<ICursor, dynamic> fn);
+  external void cursorMoved(dynamic event);
+  external dynamic selectToScreenPosition(TextBuffer.IPoint position);
+  external List<ISelection> selectRight();
+  external List<ISelection> selectLeft();
+  external List<ISelection> selectUp([num rowCount]);
+  external List<ISelection> selectDown([num rowCount]);
+  external List<ISelection> selectToTop();
+  external List<ISelection> selectAll();
+  external List<ISelection> selectToBottom();
+  external List<ISelection> selectToBeginningOfLine();
+  external List<ISelection> selectToFirstCharacterOfLine();
+  external List<ISelection> selectToEndOfLine();
+  external List<ISelection> selectToPreviousWordBoundary();
+  external List<ISelection> selectToNextWordBoundary();
+  external List<ISelection> selectLine();
+  external List<ISelection> selectLinesContainingCursors();
+  external List<ISelection> addSelectionBelow();
+  external List<ISelection> addSelectionAbove();
+  external List<dynamic> splitSelectionsIntoLines();
+  external List<TextBuffer.IRange> transpose();
+  external List<bool> upperCase();
+  external List<bool> lowerCase();
+  external List<dynamic> joinLines();
+  external List<ISelection> selectToBeginningOfWord();
+  external List<ISelection> selectToEndOfWord();
+  external List<ISelection> selectToBeginningOfNextWord();
+  external List<ISelection> selectWord();
+  external List<ISelection> selectToBeginningOfNextParagraph();
+  external List<ISelection> selectToBeginningOfPreviousParagraph();
+  external dynamic selectMarker(dynamic marker);
+  external List<num> mergeCursors();
+  external dynamic expandSelectionsForward();
+  external List<ISelection> expandSelectionsBackward(
+      Func1<ISelection, dynamic> fn);
+  external List<bool> finalizeSelections();
+  external dynamic mergeIntersectingSelections();
+  external Emissary.ISubscription preserveCursorPositionOnBufferReload();
+  external IGrammar getGrammar();
+  external void setGrammar(IGrammar grammer);
+  external dynamic reloadGrammar();
+  external bool shouldAutoIndent();
+  external bool shouldShowInvisibles();
+  external void updateInvisibles();
+  external dynamic transact(Function fn);
+  external ITransaction beginTransaction();
+  external dynamic commitTransaction();
+  external List<dynamic> abortTransaction();
+  external String inspect();
+  external List<dynamic> logScreenLines(num start, num end);
+  external void handleTokenization();
+  external void handleGrammarChange();
+  external dynamic handleMarkerCreated(dynamic marker);
+  external dynamic getSelectionMarkerAttributes();
+  external num getVerticalScrollMargin();
+  external void setVerticalScrollMargin(num verticalScrollMargin);
+  external num getHorizontalScrollMargin();
+  external void setHorizontalScrollMargin(num horizontalScrollMargin);
+  external num getLineHeightInPixels();
+  external void setLineHeightInPixels(num lineHeightInPixels);
+  external void batchCharacterMeasurement(Function fn);
+  external dynamic getScopedCharWidth(dynamic scopeNames, dynamic char);
+  external dynamic setScopedCharWidth(
+      dynamic scopeNames, dynamic char, dynamic width);
+  external dynamic getScopedCharWidths(dynamic scopeNames);
+  external dynamic clearScopedCharWidths();
+  external num getDefaultCharWidth();
+  external void setDefaultCharWidth(num defaultCharWidth);
+  external void setHeight(num height);
+  external num getHeight();
+  external num getClientHeight();
+  external void setWidth(num width);
+  external num getWidth();
+  external num getScrollTop();
+  external void setScrollTop(num scrollTop);
+  external num getScrollBottom();
+  external void setScrollBottom(num scrollBottom);
+  external num getScrollLeft();
+  external void setScrollLeft(num scrollLeft);
+  external num getScrollRight();
+  external void setScrollRight(num scrollRight);
+  external num getScrollHeight();
+  external num getScrollWidth();
+  external num getVisibleRowRange();
+  external dynamic intersectsVisibleRowRange(dynamic startRow, dynamic endRow);
+  external dynamic selectionIntersectsVisibleRowRange(dynamic selection);
+  external dynamic pixelPositionForScreenPosition(dynamic screenPosition);
+  external dynamic pixelPositionForBufferPosition(dynamic bufferPosition);
+  external dynamic screenPositionForPixelPosition(dynamic pixelPosition);
+  external dynamic pixelRectForScreenRange(dynamic screenRange);
+  external dynamic scrollToScreenRange(dynamic screenRange, dynamic options);
+  external dynamic scrollToScreenPosition(
+      dynamic screenPosition, dynamic options);
+  external dynamic scrollToBufferPosition(
+      dynamic bufferPosition, dynamic options);
+  external dynamic horizontallyScrollable();
+  external dynamic verticallyScrollable();
+  external dynamic getHorizontalScrollbarHeight();
+  external dynamic setHorizontalScrollbarHeight(dynamic height);
+  external dynamic getVerticalScrollbarWidth();
+  external dynamic setVerticalScrollbarWidth(dynamic width);
+
+  // deprecated joinLine():any;
+  external Disposable onDidChange(Function callback);
+  external Disposable onDidDestroy(Function callback);
+  external Disposable onDidStopChanging(Function callback);
+  external Disposable onDidChangeCursorPosition(Function callback);
+  external Disposable onDidSave(VoidFunc1<dynamic> callback);
+  external Decoration decorateMarker(Marker marker, dynamic options);
+  external ICursor getLastCursor();
+}
+
+@JS('AtomCore.IGrammar')
+abstract class IGrammar {
+  // @Ignore
+  IGrammar.fakeConstructor$();
+  external bool get bundledPackage;
+  external set bundledPackage(bool v);
+  external dynamic get emitter;
+  external set emitter(dynamic v);
+  external List<String> /* Tuple  String */ get fileTypes;
+  external set fileTypes(List<String> /* Tuple  String */ v);
+  external dynamic get firstLineRegex;
+  external set firstLineRegex(dynamic v);
+  external dynamic get foldingStopMarker;
+  external set foldingStopMarker(dynamic v);
+  external List<dynamic> /* Tuple  dynamic */ get includedGrammarScopes;
+  external set includedGrammarScopes(List<dynamic> /* Tuple  dynamic */ v);
+  external dynamic get initialRule;
+  external set initialRule(dynamic v);
+  external dynamic get injectionSelector;
+  external set injectionSelector(dynamic v);
+  external dynamic get injections;
+  external set injections(dynamic v);
+  external Number get maxTokensPerLine;
+  external set maxTokensPerLine(Number v);
+  external String get name;
+  external set name(String v);
+  external String get packageName;
+  external set packageName(String v);
+  external String get path;
+  external set path(String v);
+  external List<dynamic> /* Tuple  dynamic */ get rawPatterns;
+  external set rawPatterns(List<dynamic> /* Tuple  dynamic */ v);
+  external dynamic get rawRepository;
+  external set rawRepository(dynamic v);
+  external Disposable get registration;
+  external set registration(Disposable v);
+  external dynamic get registry;
+  external set registry(dynamic v);
+  external Object get repository;
+  external set repository(Object v);
+  external String get scopeName;
+  external set scopeName(String v);
+}
+
+@JS('AtomCore.IPane')
+abstract class IPane {
+  // @Ignore
+  IPane.fakeConstructor$();
+  external Func1<String, IEditor> get itemForURI;
+  external set itemForURI(Func1<String, IEditor> v);
+  external List<dynamic> get items;
+  external set items(List<dynamic> v);
+  external dynamic get activeItem;
+  external set activeItem(dynamic v);
+  external dynamic serializeParams();
+  external dynamic deserializeParams(dynamic params);
+  external dynamic getViewClass();
+  external bool isActive();
+  external bool isDestroyed();
+  external void focus();
+  external void blur();
+  external void activate();
+  external List<IPane> getPanes();
+  external List<dynamic> getItems();
+  external dynamic getActiveItem();
+  external dynamic getActiveEditor();
+  external dynamic itemAtIndex(num index);
+  external dynamic activateNextItem();
+  external dynamic activatePreviousItem();
+  external num getActiveItemIndex();
+  external dynamic activateItemAtIndex(num index);
+  external dynamic activateItem(dynamic item);
+  external dynamic addItem(dynamic item, num index);
+  external List<dynamic> addItems(List<dynamic> items, num index);
+  external void removeItem(dynamic item, dynamic destroying);
+  external void moveItem(dynamic item, num newIndex);
+  external void moveItemToPane(dynamic item, IPane pane, num index);
+  external bool destroyActiveItem();
+  external bool destroyItem(dynamic item);
+  external List<dynamic> destroyItems();
+  external List<dynamic> destroyInactiveItems();
+  external void destroy();
+  external List<dynamic> destroyed();
+  external bool promptToSaveItem(dynamic item);
+  external void saveActiveItem();
+  external void saveActiveItemAs();
+  external void saveItem(dynamic item, Function nextAction);
+  external void saveItemAs(dynamic item, Function nextAction);
+  external List<dynamic> saveItems();
+  external dynamic activateItemForURI(dynamic uri);
+  external void copyActiveItem();
+  external IPane splitLeft(dynamic params);
+  external IPane splitRight(dynamic params);
+  external IPane splitUp(dynamic params);
+  external IPane splitDown(dynamic params);
+  external IPane split(String orientation, String side, dynamic params);
+  external IPane findLeftmostSibling();
+  external IPane findOrCreateRightmostSibling();
+}
+
+// https://atom.io/docs/v0.84.0/advanced/serialization
+@JS('AtomCore.ISerializationStatic')
+abstract class ISerializationStatic<T> {
+  // @Ignore
+  ISerializationStatic.fakeConstructor$();
+  external T deserialize(ISerializationInfo data);
+}
+
+@JS('AtomCore.ISerialization')
+abstract class ISerialization {
+  // @Ignore
+  ISerialization.fakeConstructor$();
+  external ISerializationInfo serialize();
+}
+
+@JS('AtomCore.ISerializationInfo')
+abstract class ISerializationInfo {
+  // @Ignore
+  ISerializationInfo.fakeConstructor$();
+  external String get deserializer;
+  external set deserializer(String v);
+}
+
+@JS('AtomCore.IBrowserWindow')
+abstract class IBrowserWindow {
+  // @Ignore
+  IBrowserWindow.fakeConstructor$();
+  external List<num> getPosition();
+  external List<num> getSize();
+}
+
+@JS('AtomCore.IAtomWindowDimentions')
+abstract class IAtomWindowDimentions {
+  // @Ignore
+  IAtomWindowDimentions.fakeConstructor$();
+  external num get x;
+  external set x(num v);
+  external num get y;
+  external set y(num v);
+  external num get width;
+  external set width(num v);
+  external num get height;
+  external set height(num v);
+}
+
+@JS('AtomCore.IProjectStatic')
+abstract class IProjectStatic {
+  // @Ignore
+  IProjectStatic.fakeConstructor$();
+  external String pathForRepositoryUrl(String repoUrl);
+}
+
+@JS('AtomCore.IProject')
+abstract class IProject {
+  // @Ignore
+  IProject.fakeConstructor$();
+  // Serializable.includeInto(Project);
+  external String get path;
+  external set path(String v);
+
+  /** deprecated */
+  external PathWatcher.IDirectory get rootDirectory;
+  external set rootDirectory(PathWatcher.IDirectory v);
+  external List<PathWatcher.IDirectory> get rootDirectories;
+  external set rootDirectories(List<PathWatcher.IDirectory> v);
+  external dynamic serializeParams();
+  external dynamic deserializeParams(dynamic params);
+  external dynamic destroyed();
+  external dynamic destroyRepo();
+  external dynamic destroyUnretainedBuffers();
+  external IGit getRepo();
+  external String getPath();
+  external dynamic setPath(String projectPath);
+  external PathWatcher.IDirectory getRootDirectory();
+  external String resolve(String uri);
+  external String relativize(String fullPath);
+  external bool contains(String pathToCheck);
+  external Q.Promise<IEditor> open(String filePath, [dynamic options]);
+  external IEditor openSync(String filePath, [dynamic options]);
+  external TextBuffer.ITextBuffer getBuffers();
+  external bool isPathModified(String filePath);
+  external TextBuffer.ITextBuffer findBufferForPath(String filePath);
+  external TextBuffer.ITextBuffer bufferForPathSync(String filePath);
+  external Q.Promise<TextBuffer.ITextBuffer> bufferForPath(String filePath);
+  external TextBuffer.ITextBuffer bufferForId(dynamic id);
+  external TextBuffer.ITextBuffer buildBufferSync(String absoluteFilePath);
+  external Q.Promise<TextBuffer.ITextBuffer> buildBuffer(
+      String absoluteFilePath);
+  external dynamic addBuffer(TextBuffer.ITextBuffer buffer, [dynamic options]);
+  external dynamic addBufferAtIndex(TextBuffer.ITextBuffer buffer, num index,
+      [dynamic options]);
+  external Q.Promise<dynamic> scan(
+      dynamic regex, dynamic options, dynamic iterator);
+  external Q.Promise<dynamic> replace(dynamic regex, dynamic replacementText,
+      dynamic filePaths, dynamic iterator);
+  external IEditor buildEditorForBuffer(dynamic buffer, dynamic editorOptions);
+  external dynamic eachBuffer(List<dynamic> args);
+  external Disposable onDidChangePaths(Function callback);
+}
+
+@JS('AtomCore.IWorkspaceStatic')
+abstract class IWorkspaceStatic {
+  // @Ignore
+  IWorkspaceStatic.fakeConstructor$();
+}
+
+@JS('AtomCore.IWorkspacePanelOptions')
+abstract class IWorkspacePanelOptions {
+  // @Ignore
+  IWorkspacePanelOptions.fakeConstructor$();
+  external dynamic get item;
+  external set item(dynamic v);
+  external bool get visible;
+  external set visible(bool v);
+  external num get priority;
+  external set priority(num v);
+}
+
+@JS('AtomCore.Panel')
+abstract class Panel {
+  // @Ignore
+  Panel.fakeConstructor$();
+  external dynamic getItem();
+  external dynamic getPriority();
+  external bool isVisible();
+  external void show();
+  external void hide();
+}
+
+@JS('AtomCore.IWorkspace')
+abstract class IWorkspace {
+  // @Ignore
+  IWorkspace.fakeConstructor$();
+  external Panel addBottomPanel(IWorkspacePanelOptions options);
+  external Panel addLeftPanel(IWorkspacePanelOptions options);
+  external Panel addRightPanel(IWorkspacePanelOptions options);
+  external Panel addTopPanel(IWorkspacePanelOptions options);
+  external Panel addModalPanel(IWorkspacePanelOptions options);
+  external dynamic addOpener(Function opener);
+  external dynamic deserializeParams(dynamic params);
+  external dynamic serializeParams();
+  external void eachEditor(Function callback);
+  external List<IEditor> getTextEditors();
+  external Q.Promise<View> open(String uri, dynamic options);
+  external void openLicense();
+  external dynamic openSync(String uri, dynamic options);
+  external Q.Promise<View> openUriInPane(
+      String uri, dynamic pane, dynamic options);
+  external Disposable observeTextEditors(Function callback);
+  external dynamic reopenItemSync();
+  external void registerOpener(Func1<String, dynamic> opener);
+  external void unregisterOpener(Function opener);
+  external dynamic getOpeners();
+  external IPane getActivePane();
+  external IPane getActivePaneItem();
+  external IEditor getActiveTextEditor();
+  external dynamic getPanes();
+  external void saveAll();
+  external dynamic activateNextPane();
+  external dynamic activatePreviousPane();
+  external Func1<String, IPane> get paneForURI;
+  external set paneForURI(Func1<String, IPane> v);
+  external dynamic saveActivePaneItem();
+  external dynamic saveActivePaneItemAs();
+  external dynamic destroyActivePaneItem();
+  external dynamic destroyActivePane();
+  external IEditor getActiveEditor();
+  external void increaseFontSize();
+  external void decreaseFontSize();
+  external void resetFontSize();
+  external void itemOpened(dynamic item);
+  external void onPaneItemDestroyed(dynamic item);
+  external void destroyed();
+  external Disposable onDidChangeActivePaneItem(dynamic item);
+}
+
+@JS('AtomCore.IAtomSettings')
+abstract class IAtomSettings {
+  // @Ignore
+  IAtomSettings.fakeConstructor$();
+  external String get appVersion;
+  external set appVersion(String v);
+  external String get bootstrapScript;
+  external set bootstrapScript(String v);
+  external bool get devMode;
+  external set devMode(bool v);
+  external String get initialPath;
+  external set initialPath(String v);
+  external String get pathToOpen;
+  external set pathToOpen(String v);
+  external String get resourcePath;
+  external set resourcePath(String v);
+  external num get shellLoadTime;
+  external set shellLoadTime(num v);
+  external String get windowState;
+  external set windowState(String v);
+}
+
+@JS('AtomCore.IAtomState')
+abstract class IAtomState {
+  // @Ignore
+  IAtomState.fakeConstructor$();
+  external String get mode;
+  external set mode(String v);
+  external dynamic get packageStates;
+  external set packageStates(dynamic v);
+  external dynamic get project;
+  external set project(dynamic v);
+  external dynamic get syntax;
+  external set syntax(dynamic v);
+  external num get version;
+  external set version(num v);
+  external dynamic get windowDimensions;
+  external set windowDimensions(dynamic v);
+  external dynamic get workspace;
+  external set workspace(dynamic v);
+}
+
+@JS('AtomCore.IDeserializerManager')
+abstract class IDeserializerManager {
+  // @Ignore
+  IDeserializerManager.fakeConstructor$();
+  external Function get deserializers;
+  external set deserializers(Function v);
+  external Function get add;
+  external set add(Function v);
+  external Function get remove;
+  external set remove(Function v);
+  external Function get deserialize;
+  external set deserialize(Function v);
+  external Function get JS$get;
+  external set JS$get(Function v);
+}
+
+@JS('AtomCore.IConfig')
+abstract class IConfig {
+  // @Ignore
+  IConfig.fakeConstructor$();
+  external dynamic JS$get(String keyPath);
+}
+
+@JS('AtomCore.IKeymapManager')
+abstract class IKeymapManager {
+  // @Ignore
+  IKeymapManager.fakeConstructor$();
+  external HtmlElement get defaultTarget;
+  external set defaultTarget(HtmlElement v);
+}
+
+@JS('AtomCore.IPackage')
+abstract class IPackage {
+  // @Ignore
+  IPackage.fakeConstructor$();
+  external String get mainModulePath;
+  external set mainModulePath(String v);
+  external dynamic get mainModule;
+  external set mainModule(dynamic v);
+  external void enable();
+  external void disable();
+  external bool isTheme();
+  external String getType();
+  external String getStylesheetType();
+  external IPackage load();
+  external void reset();
+  external Q.Promise<List<dynamic>> activate();
+  external void activateNow();
+}
+
+@JS('AtomCore.IPackageManager')
+abstract class IPackageManager implements Emissary.IEmitter {
+  // @Ignore
+  IPackageManager.fakeConstructor$();
+  external List<String> get packageDirPaths;
+  external set packageDirPaths(List<String> v);
+  external dynamic get loadedPackages;
+  external set loadedPackages(dynamic v);
+  external dynamic get activePackages;
+  external set activePackages(dynamic v);
+  external dynamic get packageStates;
+  external set packageStates(dynamic v);
+  external List<dynamic> get packageActivators;
+  external set packageActivators(List<dynamic> v);
+  external String getApmPath();
+  external String getPackageDirPaths();
+  external dynamic getPackageState(String name);
+  external void setPackageState(String name, dynamic state);
+  external dynamic enablePackage(String name);
+  external dynamic disablePackage(String name);
+  external void activate();
+  external void registerPackageActivator(dynamic activator, dynamic types);
+  external void activatePackages(dynamic packages);
+  external Q.Promise<IPackage> activatePackage(String name);
+  external void deactivatePackages();
+  external void deactivatePackage(String name);
+  external dynamic getActivePackages();
+  external dynamic getActivePackage(String name);
+  external bool isPackageActive(String name);
+  external void unobserveDisabledPackages();
+  external void observeDisabledPackages();
+  external void loadPackages();
+  external void loadPackage(String nameOrPath);
+  external void unloadPackages();
+  external void unloadPackage(String name);
+  external dynamic getLoadedPackage(String name);
+  external bool isPackageLoaded(String name);
+  external dynamic getLoadedPackages();
+  external List<dynamic> getLoadedPackagesForTypes(dynamic types);
+  external String resolvePackagePath(String name);
+  external bool isPackageDisabled(String name);
+  external bool hasAtomEngine(String packagePath);
+  external bool isBundledPackage(String name);
+  external dynamic getPackageDependencies();
+  external List<dynamic> getAvailablePackagePaths();
+  external List<dynamic> getAvailablePackageNames();
+  external List<dynamic> getAvailablePackageMetadata();
+}
+
+@JS('AtomCore.INotifications')
+abstract class INotifications {
+  // @Ignore
+  INotifications.fakeConstructor$();
+  external Function get addInfo;
+  external set addInfo(Function v);
+  external Function get addError;
+  external set addError(Function v);
+  external Function get addSuccess;
+  external set addSuccess(Function v);
+  external Function get addWarning;
+  external set addWarning(Function v);
+}
+
+@JS('AtomCore.IThemeManager')
+abstract class IThemeManager {
+  // @Ignore
+  IThemeManager.fakeConstructor$();
+}
+
+@JS('AtomCore.IContextMenuManager')
+abstract class IContextMenuManager {
+  // @Ignore
+  IContextMenuManager.fakeConstructor$();
+}
+
+@JS('AtomCore.IMenuManager')
+abstract class IMenuManager {
+  // @Ignore
+  IMenuManager.fakeConstructor$();
+}
+
+@JS('AtomCore.IClipboard')
+abstract class IClipboard {
+  // @Ignore
+  IClipboard.fakeConstructor$();
+  external dynamic write(String text, [dynamic metadata]);
+  external String read();
+}
+
+@JS('AtomCore.ISyntax')
+abstract class ISyntax {
+  // @Ignore
+  ISyntax.fakeConstructor$();
+}
+
+@JS('AtomCore.IWindowEventHandler')
+abstract class IWindowEventHandler {
+  // @Ignore
+  IWindowEventHandler.fakeConstructor$();
+}
+
+@JS('AtomCore.IAtomStatic')
+abstract class IAtomStatic implements ISerializationStatic<IAtom> {
+  // @Ignore
+  IAtomStatic.fakeConstructor$();
+  external num get version;
+  external set version(num v);
+  external IAtomSettings get loadSettings;
+  external set loadSettings(IAtomSettings v);
+
+  /* Load or create the Atom environment in the given mode */
+  external IAtom loadOrCreate(String /* "editor" */ mode);
+
+  /* Load or create the Atom environment in the given mode */
+  external IAtom loadOrCreate(String /* "spec" */ mode);
+
+  /* Load or create the Atom environment in the given mode */
+  external IAtom loadOrCreate(String mode);
+  external void loadState(dynamic mode);
+  external String getStatePath(dynamic mode);
+  external String getConfigDirPath();
+  external String getStorageDirPath();
+  external IAtomSettings getLoadSettings();
+  external IBrowserWindow getCurrentWindow();
+  external String getVersion();
+  external bool isReleasedVersion();
+}
+
+@JS('AtomCore.Disposable')
+class Disposable {
+  // @Ignore
+  Disposable.fakeConstructor$();
+  external factory Disposable(dynamic disposalAction);
+  external void dispose();
+}
+// https://atom.io/docs/api/v0.106.0/api/classes/Atom.html
+
+/* Global Atom class : instance members */
+@JS('AtomCore.IAtom')
+abstract class IAtom {
+  // @Ignore
+  IAtom.fakeConstructor$();
+  external IAtomStatic get constructor;
+  external set constructor(IAtomStatic v);
+  external IAtomState get state;
+  external set state(IAtomState v);
+  external String get mode;
+  external set mode(String v);
+  external IDeserializerManager get deserializers;
+  external set deserializers(IDeserializerManager v);
+  external IConfig get config;
+  external set config(IConfig v);
+  external ICommandRegistry get commands;
+  external set commands(ICommandRegistry v);
+  external IKeymapManager get keymaps;
+  external set keymaps(IKeymapManager v);
+  external IKeymapManager get keymap;
+  external set keymap(IKeymapManager v);
+  external IPackageManager get packages;
+  external set packages(IPackageManager v);
+  external IThemeManager get themes;
+  external set themes(IThemeManager v);
+  external IContextMenuManager get contextManu;
+  external set contextManu(IContextMenuManager v);
+  external IMenuManager get menu;
+  external set menu(IMenuManager v);
+  external INotifications get notifications;
+  external set notifications(INotifications v);
+  external IClipboard get clipboard;
+  external set clipboard(IClipboard v);
+  external ISyntax get syntax;
+  external set syntax(ISyntax v);
+  external IViewRegistry get views;
+  external set views(IViewRegistry v);
+  external IWindowEventHandler get windowEventHandler;
+  external set windowEventHandler(IWindowEventHandler v);
+
+  // really exists? start
+  external Function get subscribe;
+  external set subscribe(Function v);
+  external Function get unsubscribe;
+  external set unsubscribe(Function v);
+  external num get loadTime;
+  external set loadTime(num v);
+  external String get workspaceViewParentSelector;
+  external set workspaceViewParentSelector(String v);
+  external IProject get project;
+  external set project(IProject v);
+  external IWorkspaceView get workspaceView;
+  external set workspaceView(IWorkspaceView v);
+  external IWorkspace get workspace;
+  external set workspace(IWorkspace v);
+
+  // really exists? end
+  external Function get initialize;
+  external set initialize(Function v);
+
+  // registerRepresentationClass:Function;
+
+  // registerRepresentationClasses:Function;
+  external Function get setBodyPlatformClass;
+  external set setBodyPlatformClass(Function v);
+  external IBrowserWindow getCurrentWindow();
+  external Function get getWindowDimensions;
+  external set getWindowDimensions(Function v);
+  external Function get setWindowDimensions;
+  external set setWindowDimensions(Function v);
+  external Function get restoreWindowDimensions;
+  external set restoreWindowDimensions(Function v);
+  external Function get storeWindowDimensions;
+  external set storeWindowDimensions(Function v);
+  external Function get getLoadSettings;
+  external set getLoadSettings(Function v);
+  external Function get deserializeProject;
+  external set deserializeProject(Function v);
+  external Function get deserializeWorkspaceView;
+  external set deserializeWorkspaceView(Function v);
+  external Function get deserializePackageStates;
+  external set deserializePackageStates(Function v);
+  external Function get deserializeEditorWindow;
+  external set deserializeEditorWindow(Function v);
+  external Function get startEditorWindow;
+  external set startEditorWindow(Function v);
+  external Function get unloadEditorWindow;
+  external set unloadEditorWindow(Function v);
+  external Function get loadThemes;
+  external set loadThemes(Function v);
+  external Function get watchThemes;
+  external set watchThemes(Function v);
+  external Function get open;
+  external set open(Function v);
+  external Function get confirm;
+  external set confirm(Function v);
+  external Function get showSaveDialog;
+  external set showSaveDialog(Function v);
+  external Function get showSaveDialogSync;
+  external set showSaveDialogSync(Function v);
+  external Function get openDevTools;
+  external set openDevTools(Function v);
+  external Function get toggleDevTools;
+  external set toggleDevTools(Function v);
+  external Function get executeJavaScriptInDevTools;
+  external set executeJavaScriptInDevTools(Function v);
+  external Function get reload;
+  external set reload(Function v);
+  external Function get focus;
+  external set focus(Function v);
+  external Function get show;
+  external set show(Function v);
+  external Function get hide;
+  external set hide(Function v);
+  external Function get setSize;
+  external set setSize(Function v);
+  external Function get setPosition;
+  external set setPosition(Function v);
+  external Function get center;
+  external set center(Function v);
+  external Function get displayWindow;
+  external set displayWindow(Function v);
+  external Function get close;
+  external set close(Function v);
+  external Function get exit;
+  external set exit(Function v);
+  external Function get inDevMode;
+  external set inDevMode(Function v);
+  external Function get inSpecMode;
+  external set inSpecMode(Function v);
+  external Function get toggleFullScreen;
+  external set toggleFullScreen(Function v);
+  external Function get setFullScreen;
+  external set setFullScreen(Function v);
+  external Function get isFullScreen;
+  external set isFullScreen(Function v);
+  external Function get getVersion;
+  external set getVersion(Function v);
+  external Function get isReleasedVersion;
+  external set isReleasedVersion(Function v);
+  external Function get getGitHubAuthTokenName;
+  external set getGitHubAuthTokenName(Function v);
+  external Function get setGitHubAuthToken;
+  external set setGitHubAuthToken(Function v);
+  external Function get getGitHubAuthToken;
+  external set getGitHubAuthToken(Function v);
+  external Function get getConfigDirPath;
+  external set getConfigDirPath(Function v);
+  external Function get saveSync;
+  external set saveSync(Function v);
+  external num getWindowLoadTime();
+  external Function get crashMainProcess;
+  external set crashMainProcess(Function v);
+  external Function get crashRenderProcess;
+  external set crashRenderProcess(Function v);
+  external Function get beep;
+  external set beep(Function v);
+  external Function get getUserInitScriptPath;
+  external set getUserInitScriptPath(Function v);
+  external Function get requireUserInitScript;
+  external set requireUserInitScript(Function v);
+  external Function get requireWithGlobals;
+  external set requireWithGlobals(Function v);
+  external dynamic get services;
+  external set services(dynamic v);
+}
+
+@JS('AtomCore.IBufferedNodeProcessStatic')
+abstract class IBufferedNodeProcessStatic {
+  // @Ignore
+  IBufferedNodeProcessStatic.fakeConstructor$();
+}
+
+@JS('AtomCore.IBufferedNodeProcess')
+abstract class IBufferedNodeProcess implements IBufferedProcess {
+  // @Ignore
+  IBufferedNodeProcess.fakeConstructor$();
+}
+
+@JS('AtomCore.IBufferedProcessStatic')
+abstract class IBufferedProcessStatic {
+  // @Ignore
+  IBufferedProcessStatic.fakeConstructor$();
+}
+
+@JS('AtomCore.IBufferedProcess')
+abstract class IBufferedProcess {
+  // @Ignore
+  IBufferedProcess.fakeConstructor$();
+  external Function get process;
+  external set process(Function v);
+  external bool get killed;
+  external set killed(bool v);
+  external Function get bufferStream;
+  external set bufferStream(Function v);
+  external Function get kill;
+  external set kill(Function v);
+}
+
+@JS('AtomCore.IGitStatic')
+abstract class IGitStatic {
+  // @Ignore
+  IGitStatic.fakeConstructor$();
+}
+
+@JS('AtomCore.IGit')
+abstract class IGit {
+  // @Ignore
+  IGit.fakeConstructor$();
+}
+
+@JS('AtomCore.ITokenizedBuffer')
+abstract class ITokenizedBuffer {
+  // @Ignore
+  ITokenizedBuffer.fakeConstructor$();
+}
+
+@JS('AtomCore.ITokenizedLine')
+abstract class ITokenizedLine {
+  // @Ignore
+  ITokenizedLine.fakeConstructor$();
+}
+
+@JS('AtomCore.IToken')
+abstract class IToken {
+  // @Ignore
+  IToken.fakeConstructor$();
+}
+
+@JS('AtomCore.IFoldStatic')
+abstract class IFoldStatic {
+  // @Ignore
+  IFoldStatic.fakeConstructor$();
+}
+
+@JS('AtomCore.IFold')
+abstract class IFold {
+  // @Ignore
+  IFold.fakeConstructor$();
+  external num get id;
+  external set id(num v);
+  external IDisplayBuffer get displayBuffer;
+  external set displayBuffer(IDisplayBuffer v);
+  external IMarker get marker;
+  external set marker(IMarker v);
+}
+
+@JS('AtomCore.IDisplayBufferMarkerStatic')
+abstract class IDisplayBufferMarkerStatic {
+  // @Ignore
+  IDisplayBufferMarkerStatic.fakeConstructor$();
+}
+
+@JS('AtomCore.IDisplayBufferMarker')
+abstract class IDisplayBufferMarker
+    implements Emissary.IEmitter, Emissary.ISubscriber {
+  // @Ignore
+  IDisplayBufferMarker.fakeConstructor$();
+  external IDisplayBufferMarkerStatic get constructor;
+  external set constructor(IDisplayBufferMarkerStatic v);
+  external num get id;
+  external set id(num v);
+  external dynamic get bufferMarkerSubscription;
+  external set bufferMarkerSubscription(dynamic v);
+  external TextBuffer.IPoint get oldHeadBufferPosition;
+  external set oldHeadBufferPosition(TextBuffer.IPoint v);
+  external TextBuffer.IPoint get oldHeadScreenPosition;
+  external set oldHeadScreenPosition(TextBuffer.IPoint v);
+  external TextBuffer.IPoint get oldTailBufferPosition;
+  external set oldTailBufferPosition(TextBuffer.IPoint v);
+  external TextBuffer.IPoint get oldTailScreenPosition;
+  external set oldTailScreenPosition(TextBuffer.IPoint v);
+  external bool get wasValid;
+  external set wasValid(bool v);
+  external IMarker get bufferMarker;
+  external set bufferMarker(IMarker v);
+  external IDisplayBuffer get displayBuffer;
+  external set displayBuffer(IDisplayBuffer v);
+  external num get globalPauseCount;
+  external set globalPauseCount(num v);
+  external dynamic get globalQueuedEvents;
+  external set globalQueuedEvents(dynamic v);
+  external List<Emissary.ISubscription> get subscriptions;
+  external set subscriptions(List<Emissary.ISubscription> v);
+  external dynamic get subscriptionsByObject;
+  external set subscriptionsByObject(dynamic v);
+  external IDisplayBufferMarker copy([dynamic attributes]);
+  external TextBuffer.IRange getScreenRange();
+  external dynamic setScreenRange(dynamic screenRange, dynamic options);
+  external TextBuffer.IRange getBufferRange();
+  external dynamic setBufferRange(dynamic bufferRange, dynamic options);
+  external dynamic getPixelRange();
+  external TextBuffer.IPoint getHeadScreenPosition();
+  external dynamic setHeadScreenPosition(
+      dynamic screenPosition, dynamic options);
+  external TextBuffer.IPoint getHeadBufferPosition();
+  external dynamic setHeadBufferPosition(dynamic bufferPosition);
+  external TextBuffer.IPoint getTailScreenPosition();
+  external dynamic setTailScreenPosition(
+      dynamic screenPosition, dynamic options);
+  external TextBuffer.IPoint getTailBufferPosition();
+  external dynamic setTailBufferPosition(dynamic bufferPosition);
+  external bool plantTail();
+  external bool clearTail();
+  external bool hasTail();
+  external bool isReversed();
+  external bool isValid();
+  external bool isDestroyed();
+  external dynamic getAttributes();
+  external dynamic setAttributes(dynamic attributes);
+  external dynamic matchesAttributes(dynamic attributes);
+  external dynamic destroy();
+  external bool isEqual(IDisplayBufferMarker other);
+  external bool compare(IDisplayBufferMarker other);
+  external String inspect();
+  external dynamic destroyed();
+  external dynamic notifyObservers(dynamic JS$_arg);
+}
+
+@JS('AtomCore.ITransaction')
+abstract class ITransaction {
+  // @Ignore
+  ITransaction.fakeConstructor$();
+}
+
+@JS('AtomCore.IMarker')
+abstract class IMarker implements Emissary.IEmitter {
+  // @Ignore
+  IMarker.fakeConstructor$();
+}
+
+@JS('AtomCore.ITaskStatic')
+abstract class ITaskStatic {
+  // @Ignore
+  ITaskStatic.fakeConstructor$();
+}
+
+@JS('AtomCore.ITask')
+abstract class ITask {
+  // @Ignore
+  ITask.fakeConstructor$();
+}
+
+// End module AtomCore
+@JS('atom')
+external AtomCore.IAtom get atom;
+@JS('atom')
+external set atom(v);
+// Module atom
+@JS(r'$')
+external /* XXX TypeQuery */ spacePen.$ get $;
+@JS(r'$')
+external set $(v);
+@JS(r'$$')
+external /* XXX TypeQuery */ spacePen.$$ get $$;
+@JS(r'$$')
+external set $$(v);
+@JS(r'$$$')
+external /* XXX TypeQuery */ spacePen.$$$ get $$$;
+@JS(r'$$$')
+external set $$$(v);
+@JS('BufferedNodeProcess')
+external AtomCore.IBufferedNodeProcessStatic get BufferedNodeProcess;
+@JS('BufferedNodeProcess')
+external set BufferedNodeProcess(v);
+@JS('BufferedProcess')
+external AtomCore.IBufferedProcessStatic get BufferedProcess;
+@JS('BufferedProcess')
+external set BufferedProcess(v);
+@JS('Git')
+external AtomCore.IGitStatic get Git;
+@JS('Git')
+external set Git(v);
+@JS('Point')
+external TextBuffer.IPointStatic get Point;
+@JS('Point')
+external set Point(v);
+@JS('Range')
+external TextBuffer.IRangeStatic get Range;
+@JS('Range')
+external set Range(v);
+
+@JS('atom.View')
+class View extends spacePen.View implements Emissary.ISubscriber {
+  // @Ignore
+  View.fakeConstructor$() : super.fakeConstructor$();
+  // Subscriber.includeInto(spacePen.View);
+
+  // inherit from Subscriber
+  external dynamic subscribeWith(
+      dynamic eventEmitter, String methodName, dynamic args);
+  external dynamic addSubscription(dynamic subscription);
+  external dynamic subscribe(
+      dynamic eventEmitterOrSubscription, List<dynamic> args);
+  external dynamic subscribeToCommand(dynamic eventEmitter, List<dynamic> args);
+  external dynamic unsubscribe([dynamic object]);
+}
+
+@JS('atom.EditorView')
+class EditorView extends View {
+  // @Ignore
+  EditorView.fakeConstructor$() : super.fakeConstructor$();
+  external static dynamic get characterWidthCache;
+  external static set characterWidthCache(dynamic v);
+  external static dynamic get configDefaults;
+  external static set configDefaults(dynamic v);
+  external static num get nextEditorId;
+  external static set nextEditorId(num v);
+  external static void content(dynamic params);
+  external static String classes([dynamic JS$_arg]);
+  external num get vScrollMargin;
+  external set vScrollMargin(num v);
+  external num get hScrollMargin;
+  external set hScrollMargin(num v);
+  external dynamic get lineHeight;
+  external set lineHeight(dynamic v);
+  external dynamic get charWidth;
+  external set charWidth(dynamic v);
+  external dynamic get charHeight;
+  external set charHeight(dynamic v);
+  external List<dynamic> get cursorViews;
+  external set cursorViews(List<dynamic> v);
+  external List<dynamic> get selectionViews;
+  external set selectionViews(List<dynamic> v);
+  external List<dynamic> get lineCache;
+  external set lineCache(List<dynamic> v);
+  external dynamic get isFocused;
+  external set isFocused(dynamic v);
+  external AtomCore.IEditor get editor;
+  external set editor(AtomCore.IEditor v);
+  external dynamic get attached;
+  external set attached(dynamic v);
+  external num get lineOverdraw;
+  external set lineOverdraw(num v);
+  external List<dynamic> get pendingChanges;
+  external set pendingChanges(List<dynamic> v);
+  external List<dynamic> get newCursors;
+  external set newCursors(List<dynamic> v);
+  external List<dynamic> get newSelections;
+  external set newSelections(List<dynamic> v);
+  external dynamic get redrawOnReattach;
+  external set redrawOnReattach(dynamic v);
+  external num get bottomPaddingInLines;
+  external set bottomPaddingInLines(num v);
+  external bool get active;
+  external set active(bool v);
+  external num get id;
+  external set id(num v);
+  external AtomCore.IGutterView get gutter;
+  external set gutter(AtomCore.IGutterView v);
+  external JQuery get overlayer;
+  external set overlayer(JQuery v);
+  external JQuery get scrollView;
+  external set scrollView(JQuery v);
+  external JQuery get renderedLines;
+  external set renderedLines(JQuery v);
+  external JQuery get underlayer;
+  external set underlayer(JQuery v);
+  external JQuery get hiddenInput;
+  external set hiddenInput(JQuery v);
+  external JQuery get verticalScrollbar;
+  external set verticalScrollbar(JQuery v);
+  external JQuery get verticalScrollbarContent;
+  external set verticalScrollbarContent(JQuery v);
+  external factory EditorView(AtomCore.IEditor editor);
+  /* Override: initialize(editorOrOptions:AtomCore.IEditor):void;*/
+
+  /* Override: initialize(editorOrOptions?:{editor: AtomCore.IEditor; mini:any; placeholderText:any}):void;*/
+
+  /* Override: initialize(editorOrOptions:{}):void;*/
+  external void initialize(
+      [dynamic /* AtomCore . IEditor | dynamic | dynamic */ editorOrOptions]);
+  external void bindKeys();
+  external AtomCore.IEditor getEditor();
+  external String getText();
+  external void setText(String text);
+  external List<TextBuffer.IRange> insertText(String text, [dynamic options]);
+  external num setHeightInLines(num heightInLines);
+  external num setWidthInChars(num widthInChars);
+  external void pageDown();
+  external void pageUp();
+  external num getPageRows();
+  external void setShowInvisibles(bool showInvisibles);
+  external void setInvisibles(dynamic invisibles);
+  external void setShowIndentGuide(bool showIndentGuide);
+  external void setPlaceholderText(String placeholderText);
+  external String getPlaceholderText();
+  external bool checkoutHead();
+  external Emissary.ISubscription configure();
+  external void handleEvents();
+  external void handleInputEvents();
+  external JQuery bringHiddenInputIntoView();
+  external dynamic selectOnMousemoveUntilMouseup();
+  external dynamic afterAttach(dynamic onDom);
+  external dynamic edit(AtomCore.IEditor editor);
+  external AtomCore.IEditor getModel();
+  external dynamic setModel(AtomCore.IEditor editor);
+  external dynamic showBufferConflictAlert(AtomCore.IEditor editor);
+  external dynamic scrollTop(num scrollTop, [dynamic options]);
+  external dynamic scrollBottom([num scrollBottom]);
+  external num scrollLeft([num scrollLeft]);
+  external dynamic scrollRight([num scrollRight]);
+  external dynamic scrollToBottom();
+  external dynamic scrollToCursorPosition();
+  external dynamic scrollToBufferPosition(
+      dynamic bufferPosition, dynamic options);
+  external dynamic scrollToScreenPosition(
+      dynamic screenPosition, dynamic options);
+  external dynamic scrollToPixelPosition(
+      dynamic pixelPosition, dynamic options);
+  external dynamic highlightFoldsContainingBufferRange(dynamic bufferRange);
+  external dynamic saveScrollPositionForEditor();
+  external dynamic toggleSoftTabs();
+  external dynamic toggleSoftWrap();
+  external num calculateWidthInChars();
+  external num calculateHeightInLines();
+  external num getScrollbarWidth();
+  external dynamic setSoftWrap(bool softWrap);
+  external dynamic setFontSize(num fontSize);
+  external num getFontSize();
+  external dynamic setFontFamily([String fontFamily]);
+  external String getFontFamily();
+  external dynamic setLineHeight(num lineHeight);
+  external dynamic redraw();
+  external dynamic splitLeft();
+  external dynamic splitRight();
+  external dynamic splitUp();
+  external dynamic splitDown();
+  external dynamic getPane();
+  external dynamic remove(dynamic selector, dynamic keepData);
+  external dynamic beforeRemove();
+  external dynamic getCursorView([num index]);
+  external List<dynamic> getCursorViews();
+  external dynamic addCursorView(dynamic cursor, dynamic options);
+  external dynamic removeCursorView(dynamic cursorView);
+  external dynamic getSelectionView([num index]);
+  external List<dynamic> getSelectionViews();
+  external dynamic addSelectionView(dynamic selection);
+  external dynamic removeSelectionView(dynamic selectionView);
+  external List<dynamic> removeAllCursorAndSelectionViews();
+  external dynamic appendToLinesView(dynamic view);
+  external dynamic scrollVertically(dynamic pixelPosition, dynamic JS$_arg);
+  external dynamic scrollHorizontally(dynamic pixelPosition);
+  external num calculateDimensions();
+  external dynamic recalculateDimensions();
+  external dynamic updateLayerDimensions();
+  external bool isHidden();
+  external void clearRenderedLines();
+  external dynamic resetDisplay();
+  external dynamic requestDisplayUpdate();
+  external dynamic updateDisplay([dynamic options]);
+  external dynamic updateCursorViews();
+  external dynamic shouldUpdateCursor(dynamic cursorView);
+  external List<dynamic> updateSelectionViews();
+  external dynamic shouldUpdateSelection(dynamic selectionView);
+  external List<dynamic> syncCursorAnimations();
+  external List<dynamic> autoscroll([dynamic suppressAutoscroll]);
+  external dynamic updatePlaceholderText();
+  external dynamic updateRenderedLines(dynamic scrollViewWidth);
+  external dynamic computeSurroundingEmptyLineChanges(dynamic change);
+  external dynamic computeIntactRanges(dynamic renderFrom, dynamic renderTo);
+  external dynamic truncateIntactRanges(
+      dynamic intactRanges, dynamic renderFrom, dynamic renderTo);
+  external dynamic clearDirtyRanges(dynamic intactRanges);
+  external dynamic clearLine(dynamic lineElement);
+  external dynamic fillDirtyRanges(
+      dynamic intactRanges, dynamic renderFrom, dynamic renderTo);
+  external dynamic updatePaddingOfRenderedLines();
+  external num getFirstVisibleScreenRow();
+  external num getLastVisibleScreenRow();
+  external bool isScreenRowVisible();
+  external dynamic handleScreenLinesChange(dynamic change);
+  external dynamic buildLineElementForScreenRow(dynamic screenRow);
+  external dynamic buildLineElementsForScreenRows(
+      dynamic startRow, dynamic endRow);
+  external dynamic htmlForScreenRows(dynamic startRow, dynamic endRow);
+  external dynamic htmlForScreenLine(dynamic screenLine, dynamic screenRow);
+  external dynamic buildIndentation(dynamic screenRow, dynamic editor);
+  external dynamic buildHtmlEndOfLineInvisibles(dynamic screenLine);
+  external dynamic getEndOfLineInvisibles(dynamic screenLine);
+  external dynamic lineElementForScreenRow(dynamic screenRow);
+  external dynamic toggleLineCommentsInSelection();
+  external dynamic pixelPositionForBufferPosition(dynamic position);
+  external dynamic pixelPositionForScreenPosition(dynamic position);
+  external dynamic positionLeftForLineAndColumn(
+      dynamic lineElement, dynamic screenRow, dynamic screenColumn);
+  external dynamic measureToColumn(
+      dynamic lineElement, dynamic tokenizedLine, dynamic screenColumn);
+  external dynamic getCharacterWidthCache(dynamic scopes, dynamic char);
+  external dynamic setCharacterWidthCache(
+      dynamic scopes, dynamic char, dynamic val);
+  external dynamic clearCharacterWidthCache();
+  external dynamic pixelOffsetForScreenPosition(dynamic position);
+  external dynamic screenPositionFromMouseEvent(dynamic e);
+  external dynamic highlightCursorLine();
+  external dynamic copyPathToClipboard();
+  external dynamic buildLineHtml(dynamic JS$_arg);
+  external dynamic updateScopeStack(
+      dynamic line, dynamic scopeStack, dynamic desiredScopes);
+  external dynamic pushScope(dynamic line, dynamic scopeStack, dynamic scope);
+  external dynamic popScope(dynamic line, dynamic scopeStack);
+  external dynamic buildEmptyLineHtml(
+      dynamic showIndentGuide,
+      dynamic eolInvisibles,
+      dynamic htmlEolInvisibles,
+      dynamic indentation,
+      dynamic editor,
+      dynamic mini);
+  external dynamic replaceSelectedText(Func1<String, String> replaceFn);
+  external dynamic consolidateSelections(dynamic e);
+  external dynamic logCursorScope();
+  external dynamic logScreenLines(dynamic start, dynamic end);
+  external dynamic logRenderedLines();
+}
+
+@JS('atom.ScrollView')
+class ScrollView extends View {
+  // @Ignore
+  ScrollView.fakeConstructor$() : super.fakeConstructor$();
+}
+
+@JS('atom.ISelectListItem')
+abstract class ISelectListItem {
+  // @Ignore
+  ISelectListItem.fakeConstructor$();
+  /** e.g. application:about */
+  external String get eventName;
+  external set eventName(String v);
+
+  /** e.g. Application: About */
+  external String get eventDescription;
+  external set eventDescription(String v);
+}
+
+@JS('atom.SelectListView')
+class SelectListView extends View {
+  // @Ignore
+  SelectListView.fakeConstructor$() : super.fakeConstructor$();
+  external static dynamic content();
+  external num get maxItems;
+  external set maxItems(num v);
+  external dynamic get scheduleTimeout;
+  external set scheduleTimeout(dynamic v);
+  external num get inputThrottle;
+  external set inputThrottle(num v);
+  external bool get cancelling;
+  external set cancelling(bool v);
+  external List<dynamic> get items;
+  external set items(List<dynamic> v);
+  external JQuery get list;
+  external set list(JQuery v);
+  external JQuery get filterEditorView;
+  external set filterEditorView(JQuery v);
+  external JQuery get previouslyFocusedElement;
+  external set previouslyFocusedElement(JQuery v);
+  external dynamic initialize();
+  external num schedulePopulateList();
+  external dynamic setItems(List<dynamic> items);
+  external dynamic setError([String message]);
+  external dynamic setLoading([String message]);
+  external String getFilterQuery();
+  external dynamic populateList();
+  external String getEmptyMessage(
+      [dynamic itemCount, dynamic filteredItemCount]);
+  external void setMaxItems(num maxItems);
+  external dynamic selectPreviousItemView();
+  external dynamic selectNextItemView();
+  external dynamic selectItemView(dynamic view);
+  external dynamic scrollToItemView(dynamic view);
+  external dynamic getSelectedItemView();
+  external dynamic getSelectedItem();
+  external dynamic confirmSelection();
+  external dynamic /* JQuery | String | HtmlElement | View */ viewForItem(
+      dynamic item);
+  external dynamic confirmed(dynamic item);
+  external dynamic getFilterKey();
+  external dynamic focusFilterEditor();
+  external dynamic storeFocusedElement();
+  external dynamic restoreFocus();
+  external dynamic cancelled();
+  external dynamic cancel();
+}
+
+@JS('WorkspaceView')
+external AtomCore.IWorkspaceViewStatic get WorkspaceView;
+@JS('WorkspaceView')
+external set WorkspaceView(v);
+@JS('Task')
+external AtomCore.ITaskStatic get Task;
+@JS('Task')
+external set Task(v);
+@JS('Workspace')
+external AtomCore.IWorkspaceStatic get Workspace;
+@JS('Workspace')
+external set Workspace(v);
+// End module atom

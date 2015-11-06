@@ -1,0 +1,416 @@
+// Type definitions for SpacePen
+
+// Project: https://github.com/atom/space-pen
+
+// Definitions by: vvakame <https://github.com/vvakame>
+
+// Definitions: https://github.com/borisyankov/DefinitelyTyped
+
+// http://atom.github.io/space-pen/
+import "package:func/func.dart";
+import "package:js/js.dart";
+
+@JS('JQuery')
+abstract class JQuery {
+  // @Ignore
+  JQuery.fakeConstructor$();
+  external dynamic view();
+  external List<dynamic> views();
+  external num scrollBottom();
+  external JQuery scrollBottom(num newValue);
+  external JQuery scrollDown();
+  external JQuery scrollUp();
+  external JQuery scrollToTop();
+  external JQuery scrollToBottom();
+  external num scrollRight();
+  external JQuery scrollRight(num newValue);
+  external JQuery pageUp();
+  external JQuery pageDown();
+  external bool isOnDom();
+  external bool isVisible();
+  external bool isHidden();
+  external bool isDisabled();
+  external JQuery enable();
+  external JQuery disable();
+  external JQuery insertAt(num index, dynamic element);
+  external JQuery removeAt(num index);
+  external dynamic indexOf(dynamic child);
+  external bool containsElement(dynamic element);
+  external dynamic preempt(dynamic eventName, Function handler);
+  external dynamic handlers(dynamic eventName);
+  external bool hasParent();
+  external bool hasFocus();
+  external num flashError();
+  external dynamic trueHeight();
+  external dynamic trueWidth();
+  external dynamic document(dynamic eventName, String docString);
+  external dynamic events();
+  external dynamic command(dynamic eventName, dynamic handler);
+  external dynamic command(
+      dynamic eventName, dynamic selector, dynamic handler);
+  external dynamic command(
+      dynamic eventName, dynamic selector, dynamic options, dynamic handler);
+  external void iconSize(num size);
+  external num intValue();
+}
+
+@JS('View')
+class View {
+  // @Ignore
+  View.fakeConstructor$();
+  external static List<Builder> get builderStack;
+  external static set builderStack(List<Builder> v);
+  external static void subview(dynamic name, dynamic view);
+  external static void text(String str);
+  external static void tag(dynamic tagName, List<dynamic> args);
+  external static void raw(String str);
+  external static void pushBuilder();
+  external static Builder popBuilder();
+
+  /* Override: static buildHtml(fn:()=>void):string[];*/
+
+  /* Override: buildHtml(params:any):any;*/
+  external dynamic /* List < String > | dynamic */ buildHtml(
+      dynamic /* VoidFunc0 | dynamic */ fn_params);
+  external static JQuery render(VoidFunc0 fn);
+
+  // please override this method!
+  external static void content(List<dynamic> args);
+
+  // tag start
+  external static void a(List<dynamic> args);
+  external static void abbr(List<dynamic> args);
+  external static void address(List<dynamic> args);
+  external static void article(List<dynamic> args);
+  external static void aside(List<dynamic> args);
+  external static void audio(List<dynamic> args);
+  external static void b(List<dynamic> args);
+  external static void bdi(List<dynamic> args);
+  external static void bdo(List<dynamic> args);
+  external static void blockquote(List<dynamic> args);
+  external static void body(List<dynamic> args);
+  external static void button(List<dynamic> args);
+  external static void canvas(List<dynamic> args);
+  external static void caption(List<dynamic> args);
+  external static void cite(List<dynamic> args);
+  external static void code(List<dynamic> args);
+  external static void colgroup(List<dynamic> args);
+  external static void datalist(List<dynamic> args);
+  external static void dd(List<dynamic> args);
+  external static void del(List<dynamic> args);
+  external static void details(List<dynamic> args);
+  external static void dfn(List<dynamic> args);
+  external static void div(List<dynamic> args);
+  external static void dl(List<dynamic> args);
+  external static void dt(List<dynamic> args);
+  external static void em(List<dynamic> args);
+  external static void fieldset(List<dynamic> args);
+  external static void figcaption(List<dynamic> args);
+  external static void figure(List<dynamic> args);
+  external static void footer(List<dynamic> args);
+  external static void form(List<dynamic> args);
+  external static void h1(List<dynamic> args);
+  external static void h2(List<dynamic> args);
+  external static void h3(List<dynamic> args);
+  external static void h4(List<dynamic> args);
+  external static void h5(List<dynamic> args);
+  external static void h6(List<dynamic> args);
+  external static void head(List<dynamic> args);
+  external static void header(List<dynamic> args);
+  external static void hgroup(List<dynamic> args);
+  external static void html(List<dynamic> args);
+  external static void i(List<dynamic> args);
+  external static void iframe(List<dynamic> args);
+  external static void ins(List<dynamic> args);
+  external static void kbd(List<dynamic> args);
+  external static void label(List<dynamic> args);
+  external static void legend(List<dynamic> args);
+  external static void li(List<dynamic> args);
+  external static void map(List<dynamic> args);
+  external static void mark(List<dynamic> args);
+  external static void menu(List<dynamic> args);
+  external static void meter(List<dynamic> args);
+  external static void nav(List<dynamic> args);
+  external static void noscript(List<dynamic> args);
+  external static void object(List<dynamic> args);
+  external static void ol(List<dynamic> args);
+  external static void optgroup(List<dynamic> args);
+  external static void option(List<dynamic> args);
+  external static void output(List<dynamic> args);
+  external static void p(List<dynamic> args);
+  external static void pre(List<dynamic> args);
+  external static void progress(List<dynamic> args);
+  external static void q(List<dynamic> args);
+  external static void rp(List<dynamic> args);
+  external static void rt(List<dynamic> args);
+  external static void ruby(List<dynamic> args);
+  external static void s(List<dynamic> args);
+  external static void samp(List<dynamic> args);
+  external static void script(List<dynamic> args);
+  external static void section(List<dynamic> args);
+  external static void select(List<dynamic> args);
+  external static void small(List<dynamic> args);
+  external static void span(List<dynamic> args);
+  external static void strong(List<dynamic> args);
+  external static void style(List<dynamic> args);
+  external static void sub(List<dynamic> args);
+  external static void summary(List<dynamic> args);
+  external static void sup(List<dynamic> args);
+  external static void table(List<dynamic> args);
+  external static void tbody(List<dynamic> args);
+  external static void td(List<dynamic> args);
+  external static void textarea(List<dynamic> args);
+  external static void tfoot(List<dynamic> args);
+  external static void th(List<dynamic> args);
+  external static void thead(List<dynamic> args);
+  external static void time(List<dynamic> args);
+  external static void title(List<dynamic> args);
+  external static void tr(List<dynamic> args);
+  external static void u(List<dynamic> args);
+  external static void ul(List<dynamic> args);
+  external static void video(List<dynamic> args);
+  external static void area(List<dynamic> args);
+  external static void base(List<dynamic> args);
+  external static void br(List<dynamic> args);
+  external static void col(List<dynamic> args);
+
+  /* Override: static command(...args:any[]):void;*/
+
+  /* Override: command(commandName:any, selector:any, options:any, handler:any):any;*/
+  external dynamic /* void | dynamic */ command(
+      dynamic /* List < dynamic > | dynamic */ args_commandName,
+      [dynamic selector,
+      dynamic options,
+      dynamic handler]);
+  external static void embed(List<dynamic> args);
+  external static void hr(List<dynamic> args);
+  external static void img(List<dynamic> args);
+  external static void input(List<dynamic> args);
+  external static void keygen(List<dynamic> args);
+  external static void link(List<dynamic> args);
+  external static void meta(List<dynamic> args);
+  external static void param(List<dynamic> args);
+  external static void source(List<dynamic> args);
+  external static void track(List<dynamic> args);
+  external static void wbrk(List<dynamic> args);
+
+  // tag end
+  external void initialize(View view, dynamic args);
+  external factory View(List<dynamic> args);
+  external void wireOutlets(View view);
+  external void bindEventHandlers(View view);
+  external dynamic pushStack(dynamic elems);
+  external dynamic end();
+  external dynamic preempt(dynamic eventName, dynamic handler);
+}
+
+@JS('Builder')
+class Builder {
+  // @Ignore
+  Builder.fakeConstructor$();
+  external List<dynamic> get document;
+  external set document(List<dynamic> v);
+  external List<dynamic> get postProcessingSteps;
+  external set postProcessingSteps(List<dynamic> v);
+  external List<dynamic> buildHtml();
+  external void tag(String name, List<dynamic> args);
+  external void openTag(String name, dynamic attributes);
+  external void closeTag(String name);
+  external void text(String str);
+  external void raw(String str);
+  external void subview(dynamic outletName, View subview);
+  external dynamic extractOptions(dynamic args);
+}
+// Module space-pen
+
+// copy & paste start
+@JS('space-pen.View')
+class View {
+  // @Ignore
+  View.fakeConstructor$();
+  external static List<Builder> get builderStack;
+  external static set builderStack(List<Builder> v);
+  external static void subview(dynamic name, dynamic view);
+  external static void text(String str);
+  external static void tag(dynamic tagName, List<dynamic> args);
+  external static void raw(String str);
+  external static void pushBuilder();
+  external static Builder popBuilder();
+
+  /* Override: static buildHtml(fn:()=>void):string[];*/
+
+  /* Override: buildHtml(params:any):any;*/
+  external dynamic /* List < String > | dynamic */ buildHtml(
+      dynamic /* VoidFunc0 | dynamic */ fn_params);
+  external static JQuery render(VoidFunc0 fn);
+
+  // please override this method!
+  external static void content(List<dynamic> args);
+
+  // tag start
+  external static dynamic a(List<dynamic> args);
+  external static dynamic abbr(List<dynamic> args);
+  external static dynamic address(List<dynamic> args);
+  external static dynamic article(List<dynamic> args);
+  external static dynamic aside(List<dynamic> args);
+  external static dynamic audio(List<dynamic> args);
+  external static dynamic b(List<dynamic> args);
+  external static dynamic bdi(List<dynamic> args);
+  external static dynamic bdo(List<dynamic> args);
+  external static dynamic blockquote(List<dynamic> args);
+  external static dynamic body(List<dynamic> args);
+  external static dynamic button(List<dynamic> args);
+  external static dynamic canvas(List<dynamic> args);
+  external static dynamic caption(List<dynamic> args);
+  external static dynamic cite(List<dynamic> args);
+  external static dynamic code(List<dynamic> args);
+  external static dynamic colgroup(List<dynamic> args);
+  external static dynamic datalist(List<dynamic> args);
+  external static dynamic dd(List<dynamic> args);
+  external static dynamic del(List<dynamic> args);
+  external static dynamic details(List<dynamic> args);
+  external static dynamic dfn(List<dynamic> args);
+  external static dynamic div(List<dynamic> args);
+  external static dynamic dl(List<dynamic> args);
+  external static dynamic dt(List<dynamic> args);
+  external static dynamic em(List<dynamic> args);
+  external static dynamic fieldset(List<dynamic> args);
+  external static dynamic figcaption(List<dynamic> args);
+  external static dynamic figure(List<dynamic> args);
+  external static dynamic footer(List<dynamic> args);
+  external static dynamic form(List<dynamic> args);
+  external static dynamic h1(List<dynamic> args);
+  external static dynamic h2(List<dynamic> args);
+  external static dynamic h3(List<dynamic> args);
+  external static dynamic h4(List<dynamic> args);
+  external static dynamic h5(List<dynamic> args);
+  external static dynamic h6(List<dynamic> args);
+  external static dynamic head(List<dynamic> args);
+  external static dynamic header(List<dynamic> args);
+  external static dynamic hgroup(List<dynamic> args);
+  external static dynamic html(List<dynamic> args);
+  external static dynamic i(List<dynamic> args);
+  external static dynamic iframe(List<dynamic> args);
+  external static dynamic ins(List<dynamic> args);
+  external static dynamic kbd(List<dynamic> args);
+  external static dynamic label(List<dynamic> args);
+  external static dynamic legend(List<dynamic> args);
+  external static dynamic li(List<dynamic> args);
+  external static dynamic map(List<dynamic> args);
+  external static dynamic mark(List<dynamic> args);
+  external static dynamic menu(List<dynamic> args);
+  external static dynamic meter(List<dynamic> args);
+  external static dynamic nav(List<dynamic> args);
+  external static dynamic noscript(List<dynamic> args);
+  external static dynamic object(List<dynamic> args);
+  external static dynamic ol(List<dynamic> args);
+  external static dynamic optgroup(List<dynamic> args);
+  external static dynamic option(List<dynamic> args);
+  external static dynamic output(List<dynamic> args);
+  external static dynamic p(List<dynamic> args);
+  external static dynamic pre(List<dynamic> args);
+  external static dynamic progress(List<dynamic> args);
+  external static dynamic q(List<dynamic> args);
+  external static dynamic rp(List<dynamic> args);
+  external static dynamic rt(List<dynamic> args);
+  external static dynamic ruby(List<dynamic> args);
+  external static dynamic s(List<dynamic> args);
+  external static dynamic samp(List<dynamic> args);
+  external static dynamic script(List<dynamic> args);
+  external static dynamic section(List<dynamic> args);
+  external static dynamic select(List<dynamic> args);
+  external static dynamic small(List<dynamic> args);
+  external static dynamic span(List<dynamic> args);
+  external static dynamic strong(List<dynamic> args);
+  external static dynamic style(List<dynamic> args);
+  external static dynamic sub(List<dynamic> args);
+  external static dynamic summary(List<dynamic> args);
+  external static dynamic sup(List<dynamic> args);
+  external static dynamic table(List<dynamic> args);
+  external static dynamic tbody(List<dynamic> args);
+  external static dynamic td(List<dynamic> args);
+  external static dynamic textarea(List<dynamic> args);
+  external static dynamic tfoot(List<dynamic> args);
+  external static dynamic th(List<dynamic> args);
+  external static dynamic thead(List<dynamic> args);
+  external static dynamic time(List<dynamic> args);
+  external static dynamic title(List<dynamic> args);
+  external static dynamic tr(List<dynamic> args);
+  external static dynamic u(List<dynamic> args);
+  external static dynamic ul(List<dynamic> args);
+  external static dynamic video(List<dynamic> args);
+  external static dynamic area(List<dynamic> args);
+  external static dynamic base(List<dynamic> args);
+  external static dynamic br(List<dynamic> args);
+  external static dynamic col(List<dynamic> args);
+
+  /* Override: static command(...args:any[]):any;*/
+
+  /* Override: command(eventName:string, handler:any):any;*/
+
+  /* Override: command(eventName:string, selector:any, handler:any):any;*/
+
+  /* Override: command(eventName:string, selector:any, options:any, handler:any):any;*/
+  external dynamic command(
+      dynamic /* List < dynamic > | String */ args_eventName,
+      [dynamic handler_selector,
+      dynamic handler_options,
+      dynamic handler]);
+  external static dynamic embed(List<dynamic> args);
+  external static dynamic hr(List<dynamic> args);
+  external static dynamic img(List<dynamic> args);
+  external static dynamic input(List<dynamic> args);
+  external static dynamic keygen(List<dynamic> args);
+  external static dynamic link(List<dynamic> args);
+  external static dynamic meta(List<dynamic> args);
+  external static dynamic param(List<dynamic> args);
+  external static dynamic source(List<dynamic> args);
+  external static dynamic track(List<dynamic> args);
+  external static dynamic wbrk(List<dynamic> args);
+
+  // tag end
+  external void initialize(View view, dynamic args);
+  external factory View(List<dynamic> args);
+  external void wireOutlets(View view);
+  external void bindEventHandlers(View view);
+  external dynamic pushStack(dynamic elems);
+  external dynamic end();
+  external dynamic preempt(dynamic eventName, dynamic handler);
+}
+
+@JS('space-pen.Builder')
+class Builder {
+  // @Ignore
+  Builder.fakeConstructor$();
+  external List<dynamic> get document;
+  external set document(List<dynamic> v);
+  external List<dynamic> get postProcessingSteps;
+  external set postProcessingSteps(List<dynamic> v);
+  external List<dynamic> buildHtml();
+  external void tag(String name, List<dynamic> args);
+  external void openTag(String name, dynamic attributes);
+  external void closeTag(String name);
+  external void text(String str);
+  external void raw(String str);
+  external void subview(dynamic outletName, View subview);
+  external dynamic extractOptions(dynamic args);
+}
+
+// copy & paste end
+@JS('jQuery')
+external JQueryStatic get jQuery;
+@JS('jQuery')
+external set jQuery(v);
+@JS(r'$')
+external JQueryStatic get $;
+@JS(r'$')
+external set $(v);
+@JS(r'$$')
+external Func1<Function, JQuery> get $$;
+@JS(r'$$')
+external set $$(v);
+@JS(r'$$$')
+external Func1<Function, dynamic> get $$$;
+@JS(r'$$$')
+external set $$$(v);
+// End module space-pen

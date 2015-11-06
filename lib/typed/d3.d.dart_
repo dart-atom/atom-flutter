@@ -1,0 +1,3743 @@
+// Type definitions for d3JS
+
+// Project: http://d3js.org/
+
+// Definitions by: Alex Ford <https://github.com/gustavderdrache>, Boris Yankov <https://github.com/borisyankov>
+
+// Definitions: https://github.com/borisyankov/DefinitelyTyped
+import "dart:html";
+
+import "package:func/func.dart";
+import "package:js/js.dart";
+// Module d3
+
+/**
+   * The current version of D3.js.
+   */
+@JS('version')
+external String get version;
+@JS('version')
+external set version(v);
+/**
+   * Find the first element that matches the given selector string.
+   */
+external Selection<dynamic> select(String selector);
+
+/**
+   * Create a selection from the given node reference.
+   */
+external Selection<dynamic> select(EventTarget node);
+
+/**
+   * Find all elements that match the given selector string.
+   */
+external Selection<dynamic> selectAll(String selector);
+
+/**
+   * Create a selection from the given list of nodes.
+   */
+external Selection<dynamic> selectAll(List<EventTarget> nodes);
+
+/**
+   * Returns the root selection (as if by d3.select(document.documentElement)). This function may be used for 'instanceof' tests, and extending its prototype will add properties to all selections.
+   */
+external Selection<dynamic> selection();
+
+// Module selection
+@JS('prototype')
+external Selection<dynamic> get prototype;
+@JS('prototype')
+external set prototype(v);
+
+/**
+       * Selections are grouped into arrays of nodes, with the parent tracked in the 'parentNode' property.
+       */
+@JS('d3.selection.Group')
+abstract class Group implements Array<EventTarget> {
+  // @Ignore
+  Group.fakeConstructor$();
+  external EventTarget get parentNode;
+  external set parentNode(EventTarget v);
+}
+
+@JS('d3.selection.Update')
+abstract class Update<Datum> {
+  // @Ignore
+  Update.fakeConstructor$();
+  /**
+           * Retrieve a grouped selection.
+           */
+
+  /**
+           * The number of groups in this selection.
+           */
+  external num get length;
+  external set length(num v);
+
+  /**
+           * Retrieve the value of the given attribute for the first node in the selection.
+           *
+           * @param name The attribute name to query. May be prefixed (see d3.ns.prefix).
+           */
+  external String attr(String name);
+
+  /**
+           * For all nodes, set the attribute to the specified constant value. Use null to remove.
+           *
+           * @param name The attribute name, optionally prefixed.
+           * @param value The attribute value to use. Note that this is coerced to a string automatically.
+           */
+  external Update<Datum> attr(
+      String name, /*XXX TypeAlaisDeclaration:Primitive*/ dynamic value);
+
+  /**
+           * Derive an attribute value for each node in the selection based on bound data.
+           *
+           * @param name The attribute name, optionally prefixed.
+           * @param value The function of the datum (the bound data item), index (the position in the subgrouping), and outer index (overall position in nested selections) which computes the attribute value. If the function returns null, the attribute is removed.
+           */
+  external Update<Datum> attr(
+      String name,
+      Func3<Datum, num,
+          num, /*XXX TypeAlaisDeclaration:Primitive*/ dynamic> value);
+
+  /**
+           * Set multiple properties at once using an Object. D3 iterates over all enumerable properties and either sets or computes the attribute's value based on the corresponding entry in the Object.
+           *
+           * @param obj A key-value mapping corresponding to attributes and values. If the value is a simple string or number, it is taken as a constant. Otherwise, it is a function that derives the attribute value.
+           */
+  external Update<Datum> attr(Map<String,
+      dynamic /* /*XXX TypeAlaisDeclaration:Primitive*/ dynamic | /* XXX LastTypeNode not supported yet*/ */ > obj);
+
+  /**
+           * Returns true if the first node in this selection has the given class list. If multiple classes are specified (i.e., "foo bar"), then returns true only if all classes match.
+           *
+           * @param name The class list to query.
+           */
+  external bool classed(String name);
+
+  /**
+           * Adds (or removes) the given class list.
+           *
+           * @param name The class list to toggle. Spaces separate class names: "foo bar" is a list of two classes.
+           * @param value If true, add the classes. If false, remove them.
+           */
+  external Update<Datum> classed(String name, bool value);
+
+  /**
+           * Determine if the given class list should be toggled for each node in the selection.
+           *
+           * @param name The class list. Spaces separate multiple class names.
+           * @param value The function to run for each node. Should return true to add the class to the node, or false to remove it.
+           */
+  external Update<Datum> classed(
+      String name, Func3<Datum, num, num, bool> value);
+
+  /**
+           * Set or derive classes for multiple class lists at once.
+           *
+           * @param obj An Object mapping class lists to values that are either plain booleans or functions that return booleans.
+           */
+  external Update<Datum> classed(Map<String,
+      dynamic /* bool | /* XXX LastTypeNode not supported yet*/ */ > obj);
+
+  /**
+           * Retrieve the computed style value for the first node in the selection.
+           * @param name The CSS property name to query
+           */
+  external String style(String name);
+
+  /**
+           * Set a style property for all nodes in the selection.
+           * @param name the CSS property name
+           * @param value the property value
+           * @param priority if specified, either null or the string "important" (no exclamation mark)
+           */
+  external Update<Datum> style(
+      String name, /*XXX TypeAlaisDeclaration:Primitive*/ dynamic value,
+      [String priority]);
+
+  /**
+           * Derive a property value for each node in the selection.
+           * @param name the CSS property name
+           * @param value the function to derive the value
+           * @param priority if specified, either null or the string "important" (no exclamation mark)
+           */
+  external Update<Datum> style(
+      String name,
+      Func3<Datum, num,
+          num, /*XXX TypeAlaisDeclaration:Primitive*/ dynamic> value,
+      [String priority]);
+
+  /**
+           * Set a large number of CSS properties from an object.
+           *
+           * @param obj an Object whose keys correspond to CSS property names and values are either constants or functions that derive property values
+           * @param priority if specified, either null or the string "important" (no exclamation mark)
+           */
+  external Update<Datum> style(Map<String,
+          dynamic /* /*XXX TypeAlaisDeclaration:Primitive*/ dynamic | /* XXX LastTypeNode not supported yet*/ */ > obj,
+      [String priority]);
+
+  /**
+           * Retrieve an arbitrary node property such as the 'checked' property of checkboxes, or the 'value' of text boxes.
+           *
+           * @param name the node's property to retrieve
+           */
+  external dynamic property(String name);
+
+  /**
+           * For each node, set the property value. Internally, this sets the node property directly (e.g., node[name] = value), so take care not to mutate special properties like __proto__.
+           *
+           * @param name the property name
+           * @param value the property value
+           */
+  external Update<Datum> property(String name, dynamic value);
+
+  /**
+           * For each node, derive the property value. Internally, this sets the node property directly (e.g., node[name] = value), so take care not to mutate special properties like __proto__.
+           *
+           * @param name the property name
+           * @param value the function used to derive the property's value
+           */
+  external Update<Datum> property(
+      String name, Func3<Datum, num, num, dynamic> value);
+
+  /**
+           * Set multiple node properties. Caveats apply: take care not to mutate special properties like __proto__.
+           *
+           * @param obj an Object whose keys correspond to node properties and values are either constants or functions that will compute a value.
+           */
+  external Update<Datum> property(Map<String,
+      dynamic /* dynamic | /* XXX LastTypeNode not supported yet*/ */ > obj);
+
+  /**
+           * Retrieve the textContent of the first node in the selection.
+           */
+  external String text();
+
+  /**
+           * Set the textContent of each node in the selection.
+           * @param value the text to use for all nodes
+           */
+  external Update<Datum> text(
+      /*XXX TypeAlaisDeclaration:Primitive*/ dynamic value);
+
+  /**
+           * Compute the textContent of each node in the selection.
+           * @param value the function which will compute the text
+           */
+  external Update<Datum> text(Func3<Datum, num,
+      num, /*XXX TypeAlaisDeclaration:Primitive*/ dynamic> value);
+
+  /**
+           * Retrieve the HTML content of the first node in the selection. Uses 'innerHTML' internally and will not work with SVG or other elements without a polyfill.
+           */
+  external String html();
+
+  /**
+           * Set the HTML content of every node in the selection. Uses 'innerHTML' internally and thus will not work with SVG or other elements without a polyfill.
+           * @param value the HTML content to use.
+           */
+  external Selection<Datum> html(String value);
+
+  /**
+           * Compute the HTML content for each node in the selection. Uses 'innerHTML' internally and thus will not work with SVG or other elements without a polyfill.
+           * @param value the function to compute HTML content
+           */
+  external Selection<Datum> html(Func3<Datum, num, num, String> value);
+
+  /**
+           * Appends a new child to each node in the selection. This child will inherit the parent's data (if available). Returns a fresh selection consisting of the newly-appended children.
+           *
+           * @param name the element name to append. May be prefixed (see d3.ns.prefix).
+           */
+  external Selection<Datum> append(String name);
+
+  /**
+           * Appends a new child to each node in the selection by computing a new node. This child will inherit the parent's data (if available). Returns a fresh selection consisting of the newly-appended children.
+           *
+           * @param name the function to compute a new element
+           */
+  external Update<Datum> append(Func3<Datum, num, num, EventTarget> name);
+
+  /**
+           * Inserts a new child to each node in the selection. This child will inherit its parent's data (if available). Returns a fresh selection consisting of the newly-inserted children.
+           * @param name the element name to append. May be prefixed (see d3.ns.prefix).
+           * @param before the selector to determine position (e.g., ":first-child")
+           */
+  external Update<Datum> insert(String name, String before);
+
+  /**
+           * Inserts a new child to each node in the selection. This child will inherit its parent's data (if available). Returns a fresh selection consisting of the newly-inserted children.
+           * @param name the element name to append. May be prefixed (see d3.ns.prefix).
+           * @param before a function to determine the node to use as the next sibling
+           */
+  external Update<Datum> insert(
+      String name, Func3<Datum, num, num, EventTarget> before);
+
+  /**
+           * Inserts a new child to the end of each node in the selection by computing a new node. This child will inherit its parent's data (if available). Returns a fresh selection consisting of the newly-inserted children.
+           * @param name the function to compute a new child
+           * @param before the selector to determine position (e.g., ":first-child")
+           */
+  external Update<Datum> insert(
+      Func3<Datum, num, num, EventTarget> name, String before);
+
+  /**
+           * Inserts a new child to the end of each node in the selection by computing a new node. This child will inherit its parent's data (if available). Returns a fresh selection consisting of the newly-inserted children.
+           * @param name the function to compute a new child
+           * @param before a function to determine the node to use as the next sibling
+           */
+  external Update<Datum> insert(Func3<Datum, num, num, EventTarget> name,
+      Func3<Datum, num, num, EventTarget> before);
+
+  /**
+           * Removes the elements from the DOM. They are in a detached state and may be re-added (though there is currently no dedicated API for doing so).
+           */
+  external Update<Datum> remove();
+
+  /**
+           * Retrieves the data bound to the first group in this selection.
+           */
+  external List<Datum> data();
+
+  /**
+           * Binds data to this selection.
+           * @param data the array of data to bind to this selection
+           * @param key the optional function to determine the unique key for each piece of data. When unspecified, uses the index of the element.
+           */
+  external Update< /*NewDatum*/ dynamic> data(List< /*NewDatum*/ dynamic> data,
+      [Func3< /*NewDatum*/ dynamic, num, num, String> key]);
+
+  /**
+           * Derives data to bind to this selection.
+           * @param data the function to derive data. Must return an array.
+           * @param key the optional function to determine the unique key for each data item. When unspecified, uses the index of the element.
+           */
+  external Update< /*NewDatum*/ dynamic> data(
+      Func3<Datum, num, num, List< /*NewDatum*/ dynamic>> data,
+      [Func3< /*NewDatum*/ dynamic, num, num, String> key]);
+
+  /**
+           * Filters the selection, returning only those nodes that match the given CSS selector.
+           * @param selector the CSS selector
+           */
+  external Update<Datum> filter(String selector);
+
+  /**
+           * Filters the selection, returning only those nodes for which the given function returned true.
+           * @param selector the filter function
+           */
+  external Update<Datum> filter(Func3<Datum, num, num, bool> selector);
+
+  /**
+           * Return the data item bound to the first element in the selection.
+           */
+  external Datum datum();
+
+  /**
+           * Set the data item for each node in the selection.
+           * @param value the constant element to use for each node
+           */
+  external Update< /*NewDatum*/ dynamic> datum(/*NewDatum*/ dynamic value);
+
+  /**
+           * Derive the data item for each node in the selection. Useful for situations such as the HTML5 'dataset' attribute.
+           * @param value the function to compute data for each node
+           */
+  external Update< /*NewDatum*/ dynamic> datum(
+      Func3<Datum, num, num, /*NewDatum*/ dynamic> value);
+
+  /**
+           * Reorders nodes in the selection based on the given comparator. Nodes are re-inserted into the document once sorted.
+           * @param comparator the comparison function, which defaults to d3.ascending
+           */
+  external Update<Datum> sort([Func2<Datum, Datum, num> comparator]);
+
+  /**
+           * Reorders nodes in the document to match the selection order. More efficient than calling sort() if the selection is already ordered.
+           */
+  external Update<Datum> order();
+
+  /**
+           * Returns the listener (if any) for the given event.
+           * @param type the type of event to load the listener for. May have a namespace (e.g., ".foo") at the end.
+           */
+  external Func3<Datum, num, num, dynamic> on(String type);
+
+  /**
+           * Adds a listener for the specified event. If one was already registered, it is removed before the new listener is added. The return value of the listener function is ignored.
+           * @param type the of event to listen to. May have a namespace (e.g., ".foo") at the end.
+           * @param listener an event listener function, or null to unregister
+           * @param capture sets the DOM useCapture flag
+           */
+  external Update<Datum> on(
+      String type, Func3<Datum, num, num, dynamic> listener,
+      [bool capture]);
+
+  /**
+           * Begins a new transition. Interrupts any active transitions of the same name.
+           * @param name the transition name (defaults to "")
+           */
+  external Transition<Datum> transition([String name]);
+
+  /**
+           * Interrupts the active transition of the provided name. Does not cancel scheduled transitions.
+           * @param name the transition name (defaults to "")
+           */
+  external Update<Datum> interrupt([String name]);
+
+  /**
+           * Creates a subselection by finding the first descendent matching the selector string. Bound data is inherited.
+           * @param selector the CSS selector to match against
+           */
+  external Update<Datum> select(String selector);
+
+  /**
+           * Creates a subselection by using a function to find descendent elements. Bound data is inherited.
+           * @param selector the function to find matching descendants
+           */
+  external Update<Datum> select(Func3<Datum, num, num, EventTarget> selector);
+
+  /**
+           * Creates a subselection by finding all descendents that match the given selector. Bound data is not inherited.
+           * @param selector the CSS selector to match against
+           */
+  external Update<Datum> selectAll(String selector);
+
+  /**
+           * Creates a subselection by using a function to find descendent elements. Bound data is not inherited.
+           * @param selector the function to find matching descendents
+           */
+  external Update<dynamic> selectAll(Func3<Datum, num, num,
+      dynamic /* List < EventTarget > | NodeList */ > selector);
+
+  /**
+           * Invoke the given function for each element in the selection. The return value of the function is ignored.
+           * @param func the function to invoke
+           */
+  external Update<Datum> each(Func3<Datum, num, num, dynamic> func);
+
+  /**
+           * Call a function on the selection. sel.call(foo) is equivalent to foo(sel).
+           * @param func the function to call on the selection
+           * @param args any optional args
+           */
+  external Update<Datum> call(
+      Function /* (sel: Update<Datum>, ...args: any[]) => any */ func,
+      List<dynamic> args);
+
+  /**
+           * Returns true if the current selection is empty.
+           */
+  external bool empty();
+
+  /**
+           * Returns the first non-null element in the selection, or null otherwise.
+           */
+  external Node node();
+
+  /**
+           * Returns the total number of elements in the selection.
+           */
+  external num size();
+
+  /**
+           * Returns the placeholder nodes for each data element for which no corresponding DOM element was found.
+           */
+  external Enter<Datum> enter();
+
+  /**
+           * Returns a selection for those DOM nodes for which no new data element was found.
+           */
+  external Selection<Datum> exit();
+}
+
+@JS('d3.selection.Enter')
+abstract class Enter<Datum> {
+  // @Ignore
+  Enter.fakeConstructor$();
+  external Selection<Datum> append(String name);
+  external Selection<Datum> append(Func3<Datum, num, num, EventTarget> name);
+  external Selection<Datum> insert(String name, [String before]);
+  external Selection<Datum> insert(
+      String name, Func3<Datum, num, num, EventTarget> before);
+  external Selection<Datum> insert(Func3<Datum, num, num, EventTarget> name,
+      [String before]);
+  external Selection<Datum> insert(Func3<Datum, num, num, EventTarget> name,
+      Func3<Datum, num, num, EventTarget> before);
+  external Selection<Datum> select(Func3<Datum, num, num, EventTarget> name);
+  external Enter<Datum> call(
+      Function /* (selection: Enter<Datum>, ...args: any[]) => any */ func,
+      List<dynamic> args);
+}
+// End module selection
+
+/**
+   * Administrivia: JavaScript primitive types, or "things that toString() predictably".
+   */
+/* XXX TypeAliasDeclaration not supported. */
+/**
+   * Administrivia: anything with a valueOf(): number method is comparable, so we allow it in numeric operations
+   */
+@JS('d3.Numeric')
+abstract class Numeric {
+  // @Ignore
+  Numeric.fakeConstructor$();
+  external num valueOf();
+}
+
+/**
+   * A grouped array of nodes.
+   * @param Datum the data bound to this selection.
+   */
+@JS('d3.Selection')
+abstract class Selection<Datum> {
+  // @Ignore
+  Selection.fakeConstructor$();
+  /**
+       * Retrieve a grouped selection.
+       */
+
+  /**
+       * The number of groups in this selection.
+       */
+  external num get length;
+  external set length(num v);
+
+  /**
+       * Retrieve the value of the given attribute for the first node in the selection.
+       *
+       * @param name The attribute name to query. May be prefixed (see d3.ns.prefix).
+       */
+  external String attr(String name);
+
+  /**
+       * For all nodes, set the attribute to the specified constant value. Use null to remove.
+       *
+       * @param name The attribute name, optionally prefixed.
+       * @param value The attribute value to use. Note that this is coerced to a string automatically.
+       */
+  external Selection<Datum> attr(
+      String name, /*XXX TypeAlaisDeclaration:Primitive*/ dynamic value);
+
+  /**
+       * Derive an attribute value for each node in the selection based on bound data.
+       *
+       * @param name The attribute name, optionally prefixed.
+       * @param value The function of the datum (the bound data item), index (the position in the subgrouping), and outer index (overall position in nested selections) which computes the attribute value. If the function returns null, the attribute is removed.
+       */
+  external Selection<Datum> attr(
+      String name,
+      Func3<Datum, num,
+          num, /*XXX TypeAlaisDeclaration:Primitive*/ dynamic> value);
+
+  /**
+       * Set multiple properties at once using an Object. D3 iterates over all enumerable properties and either sets or computes the attribute's value based on the corresponding entry in the Object.
+       *
+       * @param obj A key-value mapping corresponding to attributes and values. If the value is a simple string or number, it is taken as a constant. Otherwise, it is a function that derives the attribute value.
+       */
+  external Selection<Datum> attr(Map<String,
+      dynamic /* /*XXX TypeAlaisDeclaration:Primitive*/ dynamic | /* XXX LastTypeNode not supported yet*/ */ > obj);
+
+  /**
+       * Returns true if the first node in this selection has the given class list. If multiple classes are specified (i.e., "foo bar"), then returns true only if all classes match.
+       *
+       * @param name The class list to query.
+       */
+  external bool classed(String name);
+
+  /**
+       * Adds (or removes) the given class list.
+       *
+       * @param name The class list to toggle. Spaces separate class names: "foo bar" is a list of two classes.
+       * @param value If true, add the classes. If false, remove them.
+       */
+  external Selection<Datum> classed(String name, bool value);
+
+  /**
+       * Determine if the given class list should be toggled for each node in the selection.
+       *
+       * @param name The class list. Spaces separate multiple class names.
+       * @param value The function to run for each node. Should return true to add the class to the node, or false to remove it.
+       */
+  external Selection<Datum> classed(
+      String name, Func3<Datum, num, num, bool> value);
+
+  /**
+       * Set or derive classes for multiple class lists at once.
+       *
+       * @param obj An Object mapping class lists to values that are either plain booleans or functions that return booleans.
+       */
+  external Selection<Datum> classed(Map<String,
+      dynamic /* bool | /* XXX LastTypeNode not supported yet*/ */ > obj);
+
+  /**
+       * Retrieve the computed style value for the first node in the selection.
+       * @param name The CSS property name to query
+       */
+  external String style(String name);
+
+  /**
+       * Set a style property for all nodes in the selection.
+       * @param name the CSS property name
+       * @param value the property value
+       * @param priority if specified, either null or the string "important" (no exclamation mark)
+       */
+  external Selection<Datum> style(
+      String name, /*XXX TypeAlaisDeclaration:Primitive*/ dynamic value,
+      [String priority]);
+
+  /**
+       * Derive a property value for each node in the selection.
+       * @param name the CSS property name
+       * @param value the function to derive the value
+       * @param priority if specified, either null or the string "important" (no exclamation mark)
+       */
+  external Selection<Datum> style(
+      String name,
+      Func3<Datum, num,
+          num, /*XXX TypeAlaisDeclaration:Primitive*/ dynamic> value,
+      [String priority]);
+
+  /**
+       * Set a large number of CSS properties from an object.
+       *
+       * @param obj an Object whose keys correspond to CSS property names and values are either constants or functions that derive property values
+       * @param priority if specified, either null or the string "important" (no exclamation mark)
+       */
+  external Selection<Datum> style(Map<String,
+          dynamic /* /*XXX TypeAlaisDeclaration:Primitive*/ dynamic | /* XXX LastTypeNode not supported yet*/ */ > obj,
+      [String priority]);
+
+  /**
+       * Retrieve an arbitrary node property such as the 'checked' property of checkboxes, or the 'value' of text boxes.
+       *
+       * @param name the node's property to retrieve
+       */
+  external dynamic property(String name);
+
+  /**
+       * For each node, set the property value. Internally, this sets the node property directly (e.g., node[name] = value), so take care not to mutate special properties like __proto__.
+       *
+       * @param name the property name
+       * @param value the property value
+       */
+  external Selection<Datum> property(String name, dynamic value);
+
+  /**
+       * For each node, derive the property value. Internally, this sets the node property directly (e.g., node[name] = value), so take care not to mutate special properties like __proto__.
+       *
+       * @param name the property name
+       * @param value the function used to derive the property's value
+       */
+  external Selection<Datum> property(
+      String name, Func3<Datum, num, num, dynamic> value);
+
+  /**
+       * Set multiple node properties. Caveats apply: take care not to mutate special properties like __proto__.
+       *
+       * @param obj an Object whose keys correspond to node properties and values are either constants or functions that will compute a value.
+       */
+  external Selection<Datum> property(Map<String,
+      dynamic /* dynamic | /* XXX LastTypeNode not supported yet*/ */ > obj);
+
+  /**
+       * Retrieve the textContent of the first node in the selection.
+       */
+  external String text();
+
+  /**
+       * Set the textContent of each node in the selection.
+       * @param value the text to use for all nodes
+       */
+  external Selection<Datum> text(
+      /*XXX TypeAlaisDeclaration:Primitive*/ dynamic value);
+
+  /**
+       * Compute the textContent of each node in the selection.
+       * @param value the function which will compute the text
+       */
+  external Selection<Datum> text(Func3<Datum, num,
+      num, /*XXX TypeAlaisDeclaration:Primitive*/ dynamic> value);
+
+  /**
+       * Retrieve the HTML content of the first node in the selection. Uses 'innerHTML' internally and will not work with SVG or other elements without a polyfill.
+       */
+  external String html();
+
+  /**
+       * Set the HTML content of every node in the selection. Uses 'innerHTML' internally and thus will not work with SVG or other elements without a polyfill.
+       * @param value the HTML content to use.
+       */
+  external Selection<Datum> html(String value);
+
+  /**
+       * Compute the HTML content for each node in the selection. Uses 'innerHTML' internally and thus will not work with SVG or other elements without a polyfill.
+       * @param value the function to compute HTML content
+       */
+  external Selection<Datum> html(Func3<Datum, num, num, String> value);
+
+  /**
+       * Appends a new child to each node in the selection. This child will inherit the parent's data (if available). Returns a fresh selection consisting of the newly-appended children.
+       *
+       * @param name the element name to append. May be prefixed (see d3.ns.prefix).
+       */
+  external Selection<Datum> append(String name);
+
+  /**
+       * Appends a new child to each node in the selection by computing a new node. This child will inherit the parent's data (if available). Returns a fresh selection consisting of the newly-appended children.
+       *
+       * @param name the function to compute a new element
+       */
+  external Selection<Datum> append(Func3<Datum, num, num, EventTarget> name);
+
+  /**
+       * Inserts a new child to each node in the selection. This child will inherit its parent's data (if available). Returns a fresh selection consisting of the newly-inserted children.
+       * @param name the element name to append. May be prefixed (see d3.ns.prefix).
+       * @param before the selector to determine position (e.g., ":first-child")
+       */
+  external Selection<Datum> insert(String name, String before);
+
+  /**
+       * Inserts a new child to each node in the selection. This child will inherit its parent's data (if available). Returns a fresh selection consisting of the newly-inserted children.
+       * @param name the element name to append. May be prefixed (see d3.ns.prefix).
+       * @param before a function to determine the node to use as the next sibling
+       */
+  external Selection<Datum> insert(
+      String name, Func3<Datum, num, num, EventTarget> before);
+
+  /**
+       * Inserts a new child to the end of each node in the selection by computing a new node. This child will inherit its parent's data (if available). Returns a fresh selection consisting of the newly-inserted children.
+       * @param name the function to compute a new child
+       * @param before the selector to determine position (e.g., ":first-child")
+       */
+  external Selection<Datum> insert(
+      Func3<Datum, num, num, EventTarget> name, String before);
+
+  /**
+       * Inserts a new child to the end of each node in the selection by computing a new node. This child will inherit its parent's data (if available). Returns a fresh selection consisting of the newly-inserted children.
+       * @param name the function to compute a new child
+       * @param before a function to determine the node to use as the next sibling
+       */
+  external Selection<Datum> insert(Func3<Datum, num, num, EventTarget> name,
+      Func3<Datum, num, num, EventTarget> before);
+
+  /**
+       * Removes the elements from the DOM. They are in a detached state and may be re-added (though there is currently no dedicated API for doing so).
+       */
+  external Selection<Datum> remove();
+
+  /**
+       * Retrieves the data bound to the first group in this selection.
+       */
+  external List<Datum> data();
+
+  /**
+       * Binds data to this selection.
+       * @param data the array of data to bind to this selection
+       * @param key the optional function to determine the unique key for each piece of data. When unspecified, uses the index of the element.
+       */
+  external selection.Update< /*NewDatum*/ dynamic> data(
+      List< /*NewDatum*/ dynamic> data,
+      [Func3< /*NewDatum*/ dynamic, num, num, String> key]);
+
+  /**
+       * Derives data to bind to this selection.
+       * @param data the function to derive data. Must return an array.
+       * @param key the optional function to determine the unique key for each data item. When unspecified, uses the index of the element.
+       */
+  external selection.Update< /*NewDatum*/ dynamic> data(
+      Func3<Datum, num, num, List< /*NewDatum*/ dynamic>> data,
+      [Func3< /*NewDatum*/ dynamic, num, num, String> key]);
+
+  /**
+       * Filters the selection, returning only those nodes that match the given CSS selector.
+       * @param selector the CSS selector
+       */
+  external Selection<Datum> filter(String selector);
+
+  /**
+       * Filters the selection, returning only those nodes for which the given function returned true.
+       * @param selector the filter function
+       */
+  external Selection<Datum> filter(Func3<Datum, num, num, bool> selector);
+
+  /**
+       * Return the data item bound to the first element in the selection.
+       */
+  external Datum datum();
+
+  /**
+       * Derive the data item for each node in the selection. Useful for situations such as the HTML5 'dataset' attribute.
+       * @param value the function to compute data for each node
+       */
+  external Selection< /*NewDatum*/ dynamic> datum(
+      Func3<Datum, num, num, /*NewDatum*/ dynamic> value);
+
+  /**
+       * Set the data item for each node in the selection.
+       * @param value the constant element to use for each node
+       */
+  external Selection< /*NewDatum*/ dynamic> datum(/*NewDatum*/ dynamic value);
+
+  /**
+       * Reorders nodes in the selection based on the given comparator. Nodes are re-inserted into the document once sorted.
+       * @param comparator the comparison function, which defaults to d3.ascending
+       */
+  external Selection<Datum> sort([Func2<Datum, Datum, num> comparator]);
+
+  /**
+       * Reorders nodes in the document to match the selection order. More efficient than calling sort() if the selection is already ordered.
+       */
+  external Selection<Datum> order();
+
+  /**
+       * Returns the listener (if any) for the given event.
+       * @param type the type of event to load the listener for. May have a namespace (e.g., ".foo") at the end.
+       */
+  external Func3<Datum, num, num, dynamic> on(String type);
+
+  /**
+       * Adds a listener for the specified event. If one was already registered, it is removed before the new listener is added. The return value of the listener function is ignored.
+       * @param type the of event to listen to. May have a namespace (e.g., ".foo") at the end.
+       * @param listener an event listener function, or null to unregister
+       * @param capture sets the DOM useCapture flag
+       */
+  external Selection<Datum> on(
+      String type, Func3<Datum, num, num, dynamic> listener,
+      [bool capture]);
+
+  /**
+       * Begins a new transition. Interrupts any active transitions of the same name.
+       * @param name the transition name (defaults to "")
+       */
+  external Transition<Datum> transition([String name]);
+
+  /**
+       * Interrupts the active transition of the provided name. Does not cancel scheduled transitions.
+       * @param name the transition name (defaults to "")
+       */
+  external Selection<Datum> interrupt([String name]);
+
+  /**
+       * Creates a subselection by finding the first descendent matching the selector string. Bound data is inherited.
+       * @param selector the CSS selector to match against
+       */
+  external Selection<Datum> select(String selector);
+
+  /**
+       * Creates a subselection by using a function to find descendent elements. Bound data is inherited.
+       * @param selector the function to find matching descendants
+       */
+  external Selection<Datum> select(
+      Func3<Datum, num, num, EventTarget> selector);
+
+  /**
+       * Creates a subselection by finding all descendents that match the given selector. Bound data is not inherited.
+       * @param selector the CSS selector to match against
+       */
+  external Selection<dynamic> selectAll(String selector);
+
+  /**
+       * Creates a subselection by finding all descendants that match the given selector. Bound data is not inherited.
+       *
+       * Use this overload when data-binding a subselection (that is, sel.selectAll('.foo').data(d => ...)). The type will carry over.
+       */
+  external Selection< /*T*/ dynamic> selectAll(String selector);
+
+  /**
+       * Creates a subselection by using a function to find descendent elements. Bound data is not inherited.
+       * @param selector the function to find matching descendents
+       */
+  external Selection<dynamic> selectAll(Func3<Datum, num, num,
+      dynamic /* List < EventTarget > | NodeList */ > selector);
+
+  /**
+       * Creates a subselection by using a function to find descendent elements. Bound data is not inherited.
+       *
+       * Use this overload when data-binding a subselection (that is, sel.selectAll('.foo').data(d => ...)). The type will carry over.
+       * @param selector the function to find matching descendents
+       */
+  external Selection< /*T*/ dynamic> selectAll(Func3<Datum, num, num,
+      dynamic /* List < EventTarget > | NodeList */ > selector);
+
+  /**
+       * Invoke the given function for each element in the selection. The return value of the function is ignored.
+       * @param func the function to invoke
+       */
+  external Selection<Datum> each(Func3<Datum, num, num, dynamic> func);
+
+  /**
+       * Call a function on the selection. sel.call(foo) is equivalent to foo(sel).
+       * @param func the function to call on the selection
+       * @param args any optional args
+       */
+  external Selection<Datum> call(
+      Function /* (sel: Selection<Datum>, ...args: any[]) => any */ func,
+      List<dynamic> args);
+
+  /**
+       * Returns true if the current selection is empty.
+       */
+  external bool empty();
+
+  /**
+       * Returns the first non-null element in the selection, or null otherwise.
+       */
+  external EventTarget node();
+
+  /**
+       * Returns the total number of elements in the selection.
+       */
+  external num size();
+}
+
+external Transition<dynamic> transition();
+
+// Module transition
+@JS('prototype')
+external Transition<dynamic> get prototype;
+@JS('prototype')
+external set prototype(v);
+
+// End module transition
+@JS('d3.Transition')
+abstract class Transition<Datum> {
+  // @Ignore
+  Transition.fakeConstructor$();
+  external Transition<Datum> transition();
+  external num delay();
+  external Transition<Datum> delay(num delay);
+  external Transition<Datum> delay(Func3<Datum, num, num, num> delay);
+  external num duration();
+  external Transition<Datum> duration(num duration);
+  external Transition<Datum> duration(Func3<Datum, num, num, num> duration);
+  external Func1<num, num> ease();
+  external Transition<Datum> ease(String value, List<dynamic> args);
+  external Transition<Datum> ease(Func1<num, num> value);
+  external Transition<Datum> attr(
+      String name, /*XXX TypeAlaisDeclaration:Primitive*/ dynamic value);
+  external Transition<Datum> attr(
+      String name,
+      Func3<Datum, num,
+          num, /*XXX TypeAlaisDeclaration:Primitive*/ dynamic> value);
+  external Transition<Datum> attr(Map<String,
+      dynamic /* /*XXX TypeAlaisDeclaration:Primitive*/ dynamic | /* XXX LastTypeNode not supported yet*/ */ > obj);
+  external Transition<Datum> attrTween(
+      String name,
+      Func3<Datum, num, String,
+          Func1<num, /*XXX TypeAlaisDeclaration:Primitive*/ dynamic>> tween);
+  external Transition<Datum> style(
+      String name, /*XXX TypeAlaisDeclaration:Primitive*/ dynamic value,
+      [String priority]);
+  external Transition<Datum> style(
+      String name,
+      Func3<Datum, num,
+          num, /*XXX TypeAlaisDeclaration:Primitive*/ dynamic> value,
+      [String priority]);
+  external Transition<Datum> style(Map<String,
+          dynamic /* /*XXX TypeAlaisDeclaration:Primitive*/ dynamic | /* XXX LastTypeNode not supported yet*/ */ > obj,
+      [String priority]);
+  external Transition<Datum> styleTween(
+      String name,
+      Func3<Datum, num, String,
+          Func1<num, /*XXX TypeAlaisDeclaration:Primitive*/ dynamic>> tween,
+      [String priority]);
+  external Transition<Datum> text(
+      /*XXX TypeAlaisDeclaration:Primitive*/ dynamic value);
+  external Transition<Datum> text(Func3<Datum, num,
+      num, /*XXX TypeAlaisDeclaration:Primitive*/ dynamic> value);
+  external Transition<Datum> tween(
+      String name, Func0<Func1<num, dynamic>> JS$factory);
+  external Transition<Datum> remove();
+  external Transition<Datum> select(String selector);
+  external Transition<Datum> select(Func2<Datum, num, EventTarget> selector);
+  external Transition<dynamic> selectAll(String selector);
+  external Transition<dynamic> selectAll(
+      Func2<Datum, num, List<EventTarget>> selector);
+  external Transition<Datum> filter(String selector);
+  external Transition<Datum> filter(Func2<Datum, num, bool> selector);
+  external Transition<Datum> each(
+      String type, Func2<Datum, num, dynamic> listener);
+  external Transition<Datum> each(Func2<Datum, num, dynamic> listener);
+  external Transition<Datum> call(
+      Function /* (transition: Transition<Datum>, ...args: any[]) => any */ func,
+      List<dynamic> args);
+  external bool empty();
+  external EventTarget node();
+  external num size();
+}
+
+external Func1<num, num> ease(String /* "linear" */ type);
+external Func1<num, num> ease(String /* "linear-in" */ type);
+external Func1<num, num> ease(String /* "linear-out" */ type);
+external Func1<num, num> ease(String /* "linear-in-out" */ type);
+external Func1<num, num> ease(String /* "linear-out-in" */ type);
+external Func1<num, num> ease(String /* "poly" */ type, num k);
+external Func1<num, num> ease(String /* "poly-in" */ type, num k);
+external Func1<num, num> ease(String /* "poly-out" */ type, num k);
+external Func1<num, num> ease(String /* "poly-in-out" */ type, num k);
+external Func1<num, num> ease(String /* "poly-out-in" */ type, num k);
+external Func1<num, num> ease(String /* "quad" */ type);
+external Func1<num, num> ease(String /* "quad-in" */ type);
+external Func1<num, num> ease(String /* "quad-out" */ type);
+external Func1<num, num> ease(String /* "quad-in-out" */ type);
+external Func1<num, num> ease(String /* "quad-out-in" */ type);
+external Func1<num, num> ease(String /* "cubic" */ type);
+external Func1<num, num> ease(String /* "cubic-in" */ type);
+external Func1<num, num> ease(String /* "cubic-out" */ type);
+external Func1<num, num> ease(String /* "cubic-in-out" */ type);
+external Func1<num, num> ease(String /* "cubic-out-in" */ type);
+external Func1<num, num> ease(String /* "sin" */ type);
+external Func1<num, num> ease(String /* "sin-in" */ type);
+external Func1<num, num> ease(String /* "sin-out" */ type);
+external Func1<num, num> ease(String /* "sin-in-out" */ type);
+external Func1<num, num> ease(String /* "sin-out-in" */ type);
+external Func1<num, num> ease(String /* "circle" */ type);
+external Func1<num, num> ease(String /* "circle-in" */ type);
+external Func1<num, num> ease(String /* "circle-out" */ type);
+external Func1<num, num> ease(String /* "circle-in-out" */ type);
+external Func1<num, num> ease(String /* "circle-out-in" */ type);
+external Func1<num, num> ease(String /* "elastic" */ type, [num a, num b]);
+external Func1<num, num> ease(String /* "elastic-in" */ type, [num a, num b]);
+external Func1<num, num> ease(String /* "elastic-out" */ type, [num a, num b]);
+external Func1<num, num> ease(String /* "elastic-in-out" */ type,
+    [num a, num b]);
+external Func1<num, num> ease(String /* "elastic-out-in" */ type,
+    [num a, num b]);
+external Func1<num, num> ease(String /* "back" */ type, num s);
+external Func1<num, num> ease(String /* "back-in" */ type, num s);
+external Func1<num, num> ease(String /* "back-out" */ type, num s);
+external Func1<num, num> ease(String /* "back-in-out" */ type, num s);
+external Func1<num, num> ease(String /* "back-out-in" */ type, num s);
+external Func1<num, num> ease(String /* "bounce" */ type);
+external Func1<num, num> ease(String /* "bounce-in" */ type);
+external Func1<num, num> ease(String /* "bounce-out" */ type);
+external Func1<num, num> ease(String /* "bounce-in-out" */ type);
+external Func1<num, num> ease(String /* "bounce-out-in" */ type);
+external Func1<num, num> ease(String type, List<dynamic> args);
+external void timer(Func0<dynamic> func, [num delay, num time]);
+
+// Module timer
+external void flush();
+
+// End module timer
+@JS('d3.BaseEvent')
+abstract class BaseEvent {
+  // @Ignore
+  BaseEvent.fakeConstructor$();
+  external String get type;
+  external set type(String v);
+  external Event get sourceEvent;
+  external set sourceEvent(Event v);
+}
+
+/**
+	  * Define a D3-specific ZoomEvent per https://github.com/mbostock/d3/wiki/Zoom-Behavior#event
+	  */
+@JS('d3.ZoomEvent')
+abstract class ZoomEvent implements BaseEvent {
+  // @Ignore
+  ZoomEvent.fakeConstructor$();
+  external num get scale;
+  external set scale(num v);
+  external List<dynamic /* num | num */ > /* Tuple  num , num */ get translate;
+  external set translate(
+      List<dynamic /* num | num */ > /* Tuple  num , num */ v);
+}
+
+/**
+	  * Define a D3-specific DragEvent per https://github.com/mbostock/d3/wiki/Drag-Behavior#on
+	  */
+@JS('d3.DragEvent')
+abstract class DragEvent implements BaseEvent {
+  // @Ignore
+  DragEvent.fakeConstructor$();
+  external num get x;
+  external set x(num v);
+  external num get y;
+  external set y(num v);
+  external num get dx;
+  external set dx(num v);
+  external num get dy;
+  external set dy(num v);
+}
+
+/**
+   * The current event's value. Use this variable in a handler registered with `selection.on`.
+   */
+@JS('event')
+external dynamic /* Event | BaseEvent */ get event;
+@JS('event')
+external set event(v);
+/**
+   * Returns the x and y coordinates of the mouse relative to the provided container element, using d3.event for the mouse's position on the page.
+   * @param container the container element (e.g. an SVG <g> element)
+   */
+external List<dynamic /* num | num */ > /* Tuple  num , num */ mouse(
+    EventTarget container);
+
+/**
+   * Given a container element and a touch identifier, determine the x and y coordinates of the touch.
+   * @param container the container element (e.g., an SVG <svg> element)
+   * @param identifier the given touch identifier
+   */
+external List<dynamic /* num | num */ > /* Tuple  num , num */ touch(
+    EventTarget container, num identifer);
+
+/**
+   * Given a container element, a list of touches, and a touch identifier, determine the x and y coordinates of the touch.
+   * @param container the container element (e.g., an SVG <svg> element)
+   * @param identifier the given touch identifier
+   */
+external List<dynamic /* num | num */ > /* Tuple  num , num */ touch(
+    EventTarget container, TouchList touches, num identifer);
+
+/**
+   * Given a container element and an optional list of touches, return the position of every touch relative to the container.
+   * @param container the container element
+   * @param touches an optional list of touches (defaults to d3.event.touches)
+   */
+external List<List<dynamic /* num | num */ > /* Tuple  num , num */ > touches(
+    EventTarget container,
+    [TouchList touches]);
+
+// NB. this is limited to primitive values due to D3's use of the <, >, and >= operators. Results get weird for object instances.
+
+/**
+   * Compares two primitive values for sorting (in ascending order).
+   */
+external num ascending(
+    /*XXX TypeAlaisDeclaration:Primitive*/ dynamic a, /*XXX TypeAlaisDeclaration:Primitive*/ dynamic b);
+
+/**
+   * Compares two primitive values for sorting (in ascending order).
+   */
+external num descending(
+    /*XXX TypeAlaisDeclaration:Primitive*/ dynamic a, /*XXX TypeAlaisDeclaration:Primitive*/ dynamic b);
+
+/**
+   * Return the minimum value in the array using natural order.
+   */
+external num min(List<num> array);
+
+/**
+   * Return the minimum value in the array using natural order.
+   */
+external String min(List<String> array);
+
+/**
+   * Return the minimum value in the array using natural order.
+   */
+external /*T*/ dynamic min(List< /*T*/ dynamic> array);
+
+/**
+   * Return the minimum value in the array using natural order.
+   */
+external num min(
+    List< /*T*/ dynamic> array, Func2< /*T*/ dynamic, num, num> accessor);
+
+/**
+   * Return the minimum value in the array using natural order.
+   */
+external String min(
+    List< /*T*/ dynamic> array, Func2< /*T*/ dynamic, num, String> accessor);
+
+/**
+   * Return the minimum value in the array using natural order.
+   */
+external /*U*/ dynamic min(List< /*T*/ dynamic> array,
+    Func2< /*T*/ dynamic, num, /*U*/ dynamic> accessor);
+
+/**
+   * Return the maximum value in the array of numbers using natural order.
+   */
+external num max(List<num> array);
+
+/**
+   * Return the maximum value in the array of strings using natural order.
+   */
+external String max(List<String> array);
+
+/**
+   * Return the maximum value in the array of numbers using natural order.
+   */
+external /*T*/ dynamic max(List< /*T*/ dynamic> array);
+
+/**
+   * Return the maximum value in the array using natural order and a projection function to map values to numbers.
+   */
+external num max(
+    List< /*T*/ dynamic> array, Func2< /*T*/ dynamic, num, num> accessor);
+
+/**
+   * Return the maximum value in the array using natural order and a projection function to map values to strings.
+   */
+external String max(
+    List< /*T*/ dynamic> array, Func2< /*T*/ dynamic, num, String> accessor);
+
+/**
+   * Return the maximum value in the array using natural order and a projection function to map values to easily-sorted values.
+   */
+external /*U*/ dynamic max(List< /*T*/ dynamic> array,
+    Func2< /*T*/ dynamic, num, /*U*/ dynamic> accessor);
+
+/**
+   * Return the min and max simultaneously.
+   */
+external List<dynamic /* num | num */ > /* Tuple  num , num */ extent(
+    List<num> array);
+
+/**
+   * Return the min and max simultaneously.
+   */
+external List<
+    dynamic /* String | String */ > /* Tuple  String , String */ extent(
+    List<String> array);
+
+/**
+   * Return the min and max simultaneously.
+   */
+external List<
+    dynamic /* /*T*/ dynamic | /*T*/ dynamic */ > /* Tuple  /*T*/ dynamic , /*T*/ dynamic */ extent(
+    List< /*T*/ dynamic> array);
+
+/**
+   * Return the min and max simultaneously.
+   */
+external List<
+    dynamic /* dynamic /* /*T*/ dynamic | /*XXX TypeAlaisDeclaration:Primitive*/ dynamic */ | dynamic /* /*T*/ dynamic | /*XXX TypeAlaisDeclaration:Primitive*/ dynamic */ */ > /* Tuple  dynamic /* /*T*/ dynamic | /*XXX TypeAlaisDeclaration:Primitive*/ dynamic */ , dynamic /* /*T*/ dynamic | /*XXX TypeAlaisDeclaration:Primitive*/ dynamic */ */ extent(
+    List<
+        dynamic /* /*T*/ dynamic | /*XXX TypeAlaisDeclaration:Primitive*/ dynamic */ > array);
+
+/**
+   * Return the min and max simultaneously.
+   */
+external List<dynamic /* num | num */ > /* Tuple  num , num */ extent(
+    List< /*T*/ dynamic> array, Func2< /*T*/ dynamic, num, num> accessor);
+
+/**
+   * Return the min and max simultaneously.
+   */
+external List<
+    dynamic /* String | String */ > /* Tuple  String , String */ extent(
+    List< /*T*/ dynamic> array, Func2< /*T*/ dynamic, num, String> accessor);
+
+/**
+   * Return the min and max simultaneously.
+   */
+external List<
+    dynamic /* dynamic /* /*U*/ dynamic | /*XXX TypeAlaisDeclaration:Primitive*/ dynamic */ | dynamic /* /*U*/ dynamic | /*XXX TypeAlaisDeclaration:Primitive*/ dynamic */ */ > /* Tuple  dynamic /* /*U*/ dynamic | /*XXX TypeAlaisDeclaration:Primitive*/ dynamic */ , dynamic /* /*U*/ dynamic | /*XXX TypeAlaisDeclaration:Primitive*/ dynamic */ */ extent(
+    List< /*U*/ dynamic> array,
+    Func2< /*T*/ dynamic, num, /*U*/ dynamic> accessor);
+
+/**
+   * Compute the sum of an array of numbers.
+   */
+external num sum(List<num> array);
+
+/**
+   * Compute the sum of an array, using the given accessor to convert values to numbers.
+   */
+external num sum(
+    List< /*T*/ dynamic> array, Func2< /*T*/ dynamic, num, num> accessor);
+external num mean(List<num> array);
+external num mean(
+    List< /*T*/ dynamic> array, Func2< /*T*/ dynamic, num, num> accessor);
+external num quantile(List<num> array, num p);
+external num variance(List<num> array);
+external num variance(
+    List< /*T*/ dynamic> array, Func2< /*T*/ dynamic, num, num> accessor);
+external num deviation(List<num> array);
+external num deviation(
+    List< /*T*/ dynamic> array, Func2< /*T*/ dynamic, num, num> accessor);
+external num bisectLeft(List<num> array, num x, [num lo, num hi]);
+external num bisectLeft(List<String> array, String x, [num lo, num hi]);
+@JS('bisect')
+external /* XXX TypeQuery */ bisectRight get bisect;
+@JS('bisect')
+external set bisect(v);
+external num bisectRight(List< /*T*/ dynamic> array, /*T*/ dynamic x,
+    [num lo, num hi]);
+external dynamic bisector(Func1< /*T*/ dynamic, /*U*/ dynamic> accessor);
+external dynamic bisector(Func2< /*T*/ dynamic, /*U*/ dynamic, num> comparator);
+external List< /*T*/ dynamic> shuffle(List< /*T*/ dynamic> array,
+    [num lo, num hi]);
+
+/**
+   * Returns the enumerable property names of the specified object.
+   * @param object a JavaScript object
+   */
+external List<String> keys(Object object);
+
+/**
+   * Returns an array containing the property values of the specified object.
+   */
+external List< /*T*/ dynamic> values(Map<String, /*T*/ dynamic> object);
+
+/**
+   * Returns an array containing the property values of the specified object.
+   */
+external List< /*T*/ dynamic> values(Map<num, /*T*/ dynamic> object);
+
+/**
+   * Returns an array containing the property values of the specified object.
+   */
+external List<dynamic> values(Object object);
+
+/**
+   * Returns an array of key-value pairs containing the property values of the specified object.
+   */
+external List<dynamic> entries(Map<String, /*T*/ dynamic> object);
+
+/**
+   * Returns an array of key-value pairs containing the property values of the specified object.
+   */
+external List<dynamic> entries(Map<num, /*T*/ dynamic> object);
+
+/**
+   * Returns an array of key-value pairs containing the property values of the specified object.
+   */
+external List<dynamic> entries(Object object);
+
+/**
+   * A shim for ES6 maps. The implementation uses a JavaScript object internally, and thus keys are limited to strings.
+   */
+@JS('d3.Map')
+abstract class Map<T> {
+  // @Ignore
+  Map.fakeConstructor$();
+  /**
+       * Does the map contain the given key?
+       */
+  external bool has(String key);
+
+  /**
+       * Retrieve the value for the given key. Returns undefined if there is no value stored.
+       */
+  external T JS$get(String key);
+
+  /**
+       * Set the value for the given key. Returns the new value.
+       */
+  external T JS$set(String key, T value);
+
+  /**
+       * Remove the value for the given key. Returns true if there was a value and false otherwise.
+       */
+  external bool remove(String key);
+
+  /**
+       * Returns an array of all keys in arbitrary order.
+       */
+  external List<String> keys();
+
+  /**
+       * Returns an array of all values in arbitrary order.
+       */
+  external List<T> values();
+
+  /**
+       * Returns an array of key-value objects in arbitrary order.
+       */
+  external List<dynamic> entries();
+
+  /**
+       * Calls the function for each key and value pair in the map. The 'this' context is the map itself.
+       */
+  external void forEach(Func2<String, T, dynamic> func);
+
+  /**
+       * Is this map empty?
+       */
+  external bool empty();
+
+  /**
+       * Returns the number of elements stored in the map.
+       */
+  external num size();
+}
+
+/**
+   * Constructs an initially empty map.
+   */
+external Map< /*T*/ dynamic> map();
+
+/**
+   * Construct a new map by copying keys and values from the given one.
+   */
+external Map< /*T*/ dynamic> map(Map< /*T*/ dynamic> object);
+
+/**
+   * Construct a new map by copying enumerable properties and values from the given object.
+   */
+external Map< /*T*/ dynamic> map(Map<String, /*T*/ dynamic> object);
+
+/**
+   * Construct a new map by copying enumerable properties and values from the given object.
+   */
+external Map< /*T*/ dynamic> map(Map<num, /*T*/ dynamic> object);
+
+/**
+   * Construct a new map by copying elements from the array. The key function is used to identify each object.
+   */
+external Map< /*T*/ dynamic> map(
+    List< /*T*/ dynamic> array, Func2< /*T*/ dynamic, num, String> key);
+
+/**
+   * Construct a new map by copying enumerable properties and values from the given object.
+   */
+external Map<dynamic> map(Object object);
+
+/**
+   * A shim for ES6 sets. Is only able to store strings.
+   */
+@JS('d3.Set')
+abstract class Set {
+  // @Ignore
+  Set.fakeConstructor$();
+  /**
+       * Is the given string stored in this set?
+       */
+  external bool has(String value);
+
+  /**
+       * Add the string to this set. Returns the value.
+       */
+  external String add(String value);
+
+  /**
+       * Remove the given value from the set. Returns true if it was stored, and false otherwise.
+       */
+  external bool remove(String value);
+
+  /**
+       * Returns an array of the strings stored in this set.
+       */
+  external List<String> values();
+
+  /**
+       * Calls a given function for each value in the set. The return value of the function is ignored. The this context of the function is the set itself.
+       */
+  external void forEach(Func1<String, dynamic> func);
+
+  /**
+       * Is this set empty?
+       */
+  external bool empty();
+
+  /**
+       * Returns the number of values stored in this set.
+       */
+  external num size();
+}
+
+/**
+   * Creates an initially-empty set.
+   */
+external Set JS$set();
+
+/**
+   * Initializes a set from the given array of strings.
+   */
+external Set JS$set(List<String> array);
+
+/**
+   * Merges the specified arrays into a single array.
+   */
+external List< /*T*/ dynamic> merge(List<List< /*T*/ dynamic>> arrays);
+
+/**
+   * Generates a 0-based numeric sequence. The output range does not include 'stop'.
+   */
+external List<num> range(num stop);
+
+/**
+   * Generates a numeric sequence starting from the given start and stop values. 'step' defaults to 1. The output range does not include 'stop'.
+   */
+external List<num> range(num start, num stop, [num step]);
+
+/**
+   * Given the specified array, return an array corresponding to the list of indices in 'keys'.
+   */
+external List< /*T*/ dynamic> permute(
+    Map<num, /*T*/ dynamic> array, List<num> keys);
+
+/**
+   * Given the specified object, return an array corresponding to the list of property names in 'keys'.
+   */
+external List< /*T*/ dynamic> permute(
+    Map<String, /*T*/ dynamic> object, List<String> keys);
+
+// TODO construct n-tuples from n input arrays
+external List<List< /*T*/ dynamic>> zip(List<List< /*T*/ dynamic>> arrays);
+external List<List< /*T*/ dynamic>> transpose(
+    List<List< /*T*/ dynamic>> matrix);
+
+/**
+   * For each adjacent pair of elements in the specified array, returns a new array of tuples of elements i and i - 1.
+   * Returns the empty array if the input array has fewer than two elements.
+   */
+external List<
+    List<
+        dynamic /* /*T*/ dynamic | /*T*/ dynamic */ > /* Tuple  /*T*/ dynamic , /*T*/ dynamic */ > pairs(
+    List< /*T*/ dynamic> array);
+
+@JS('d3.Nest')
+abstract class Nest<T> {
+  // @Ignore
+  Nest.fakeConstructor$();
+  external Nest<T> key(Func1<T, String> func);
+  external Nest<T> sortKeys(Func2<String, String, num> comparator);
+  external Nest<T> sortValues(Func2<T, T, num> comparator);
+  external Nest<T> rollup(Func1<List<T>, /*U*/ dynamic> func);
+  external Map<String, dynamic> map(List<T> array);
+  external Map<dynamic> map(List<T> array, /* XXX TypeQuery */ d3.map mapType);
+  external List<dynamic> entries(List<T> array);
+}
+
+external Nest< /*T*/ dynamic> nest();
+
+// Module random
+external Func0<num> normal([num mean, num deviation]);
+external Func0<num> logNormal([num mean, num deviation]);
+external Func0<num> bates(num count);
+external Func0<num> irwinHall(num count);
+
+// End module random
+@JS('d3.Transform')
+abstract class Transform {
+  // @Ignore
+  Transform.fakeConstructor$();
+  external num get rotate;
+  external set rotate(num v);
+  external List<dynamic /* num | num */ > /* Tuple  num , num */ get translate;
+  external set translate(
+      List<dynamic /* num | num */ > /* Tuple  num , num */ v);
+  external num get skew;
+  external set skew(num v);
+  external List<dynamic /* num | num */ > /* Tuple  num , num */ get scale;
+  external set scale(List<dynamic /* num | num */ > /* Tuple  num , num */ v);
+  external String toString();
+}
+
+external Transform transform(String transform);
+external Func1<num, String> format(String specifier);
+
+@JS('d3.FormatPrefix')
+abstract class FormatPrefix {
+  // @Ignore
+  FormatPrefix.fakeConstructor$();
+  external String get symbol;
+  external set symbol(String v);
+  external num scale(num n);
+}
+
+external FormatPrefix formatPrefix(num value, [num precision]);
+external num round(num x, [num n]);
+external String requote(String string);
+@JS('rgb')
+external dynamic get rgb;
+@JS('rgb')
+external set rgb(v);
+
+@JS('d3.Rgb')
+abstract class Rgb implements Color {
+  // @Ignore
+  Rgb.fakeConstructor$();
+  external num get r;
+  external set r(num v);
+  external num get g;
+  external set g(num v);
+  external num get b;
+  external set b(num v);
+  external Rgb brighter([num k]);
+  external Rgb darker([num k]);
+  external Hsl hsl();
+  external String toString();
+}
+
+@JS('hsl')
+external dynamic get hsl;
+@JS('hsl')
+external set hsl(v);
+
+@JS('d3.Hsl')
+abstract class Hsl implements Color {
+  // @Ignore
+  Hsl.fakeConstructor$();
+  external num get h;
+  external set h(num v);
+  external num get s;
+  external set s(num v);
+  external num get l;
+  external set l(num v);
+  external Hsl brighter([num k]);
+  external Hsl darker([num k]);
+  external Rgb rgb();
+  external String toString();
+}
+
+@JS('hcl')
+external dynamic get hcl;
+@JS('hcl')
+external set hcl(v);
+
+@JS('d3.Hcl')
+abstract class Hcl implements Color {
+  // @Ignore
+  Hcl.fakeConstructor$();
+  external num get h;
+  external set h(num v);
+  external num get c;
+  external set c(num v);
+  external num get l;
+  external set l(num v);
+  external Hcl brighter([num k]);
+  external Hcl darker([num k]);
+}
+
+@JS('lab')
+external dynamic get lab;
+@JS('lab')
+external set lab(v);
+
+@JS('d3.Lab')
+abstract class Lab implements Color {
+  // @Ignore
+  Lab.fakeConstructor$();
+  external num get l;
+  external set l(num v);
+  external num get a;
+  external set a(num v);
+  external num get b;
+  external set b(num v);
+  external Lab brighter([num k]);
+  external Lab darker([num k]);
+  external Rgb rgb();
+  external String toString();
+}
+
+@JS('color')
+external dynamic get color;
+@JS('color')
+external set color(v);
+
+@JS('d3.Color')
+abstract class Color {
+  // @Ignore
+  Color.fakeConstructor$();
+  external Rgb rgb();
+}
+
+// Module ns
+@JS('d3.ns.Qualified')
+abstract class Qualified {
+  // @Ignore
+  Qualified.fakeConstructor$();
+  external String get space;
+  external set space(String v);
+  external String get local;
+  external set local(String v);
+}
+
+@JS('prefix')
+external Map<String, String> get prefix;
+@JS('prefix')
+external set prefix(v);
+external dynamic /* Qualified | String */ qualify(String name);
+
+// End module ns
+external /*T*/ dynamic functor(/*T*/ dynamic value);
+external Func0< /*T*/ dynamic> functor(/*T*/ dynamic value);
+external dynamic rebind(dynamic target, dynamic source, List<String> names);
+external Dispatch dispatch(List<String> names);
+
+@JS('d3.Dispatch')
+abstract class Dispatch {
+  // @Ignore
+  Dispatch.fakeConstructor$();
+  external Function /* (...args: any[]) => void */ on(String type);
+  external Dispatch on(
+      String type, Function /* (...args: any[]) => any */ listener);
+}
+
+// Module scale
+external Identity identity();
+
+@JS('d3.scale.Identity')
+abstract class Identity {
+  // @Ignore
+  Identity.fakeConstructor$();
+  external num invert(num n);
+  external List<num> domain();
+  external Identity domain(List<num> numbers);
+  external List<num> range();
+  external Identity range(List<num> numbers);
+  external List<num> ticks([num count]);
+  external Func1<num, String> tickFormat([num count, String format]);
+  external Identity copy();
+}
+
+external Linear<num, num> linear();
+external Linear< /*Output*/ dynamic, /*Output*/ dynamic> linear();
+external Linear< /*Range*/ dynamic, /*Output*/ dynamic> linear();
+
+@JS('d3.scale.Linear')
+abstract class Linear<Range, Output> {
+  // @Ignore
+  Linear.fakeConstructor$();
+  external num invert(num y);
+  external List<num> domain();
+  external Linear<Range, Output> domain(List<num> numbers);
+  external List<Range> range();
+  external Linear<Range, Output> range(List<Range> values);
+  external Linear<num, num> rangeRound(List<num> values);
+  external Func2<Range, Range, Func1<num, Output>> interpolate();
+  external Linear<Range, Output> interpolate(
+      Func2<Range, Range, Func1<num, Output>> JS$factory);
+  external bool clamp();
+  external Linear<Range, Output> clamp(bool clamp);
+  external Linear<Range, Output> nice([num count]);
+  external List<num> ticks([num count]);
+  external Func1<num, String> tickFormat([num count, String format]);
+  external Linear<Range, Output> copy();
+}
+
+external Pow<num, num> sqrt();
+external Pow< /*Output*/ dynamic, /*Output*/ dynamic> sqrt();
+external Pow< /*Range*/ dynamic, /*Output*/ dynamic> sqrt();
+external Pow<num, num> pow();
+external Pow< /*Output*/ dynamic, /*Output*/ dynamic> pow();
+external Pow< /*Range*/ dynamic, /*Output*/ dynamic> pow();
+
+@JS('d3.scale.Pow')
+abstract class Pow<Range, Output> {
+  // @Ignore
+  Pow.fakeConstructor$();
+  external num invert(num y);
+  external List<num> domain();
+  external Pow<Range, Output> domain(List<num> numbers);
+  external List<Range> range();
+  external Pow<Range, Output> range(List<Range> values);
+  external Pow<num, num> rangeRound(List<num> values);
+  external num exponent();
+  external Pow<Range, Output> exponent(num k);
+  external Func2<Range, Range, Func1<num, Output>> interpolate();
+  external Pow<Range, Output> interpolate(
+      Func2<Range, Range, Func1<num, Output>> JS$factory);
+  external bool clamp();
+  external Pow<Range, Output> clamp(bool clamp);
+  external Pow<Range, Output> nice([num m]);
+  external List<num> ticks([num count]);
+  external Func1<num, String> tickFormat([num count, String format]);
+  external Pow<Range, Output> copy();
+}
+
+external Log<num, num> log();
+external Log< /*Output*/ dynamic, /*Output*/ dynamic> log();
+external Log< /*Range*/ dynamic, /*Output*/ dynamic> log();
+
+@JS('d3.scale.Log')
+abstract class Log<Range, Output> {
+  // @Ignore
+  Log.fakeConstructor$();
+  external num invert(num y);
+  external List<num> domain();
+  external Log<Range, Output> domain(List<num> numbers);
+  external List<Range> range();
+  external Log<Range, Output> range(List<Range> values);
+  external Log<num, num> rangeRound(List<num> values);
+  external num base();
+  external Log<Range, Output> base(num base);
+  external Func2<Range, Range, Func1<num, Output>> interpolate();
+  external Log<Range, Output> interpolate(
+      Func2<Range, Range, Func1<num, Output>> JS$factory);
+  external bool clamp();
+  external Log<Range, Output> clamp(bool clamp);
+  external Log<Range, Output> nice();
+  external List<num> ticks();
+  external Func1<num, String> tickFormat([num count, String format]);
+  external Log<Range, Output> copy();
+}
+
+external Quantize< /*T*/ dynamic> quantize();
+
+@JS('d3.scale.Quantize')
+abstract class Quantize<T> {
+  // @Ignore
+  Quantize.fakeConstructor$();
+  external List<dynamic /* num | num */ > /* Tuple  num , num */ invertExtent(
+      T y);
+  external List<num> domain();
+  external Quantize<T> domain(List<num> numbers);
+  external List<T> range();
+  external Quantize<T> range(List<T> values);
+  external Quantize<T> copy();
+}
+
+external Quantile< /*T*/ dynamic> quantile();
+
+@JS('d3.scale.Quantile')
+abstract class Quantile<T> {
+  // @Ignore
+  Quantile.fakeConstructor$();
+  external List<dynamic /* num | num */ > /* Tuple  num , num */ invertExtent(
+      T y);
+  external List<num> domain();
+  external Quantile<T> domain(List<num> numbers);
+  external List<T> range();
+  external Quantile<T> range(List<T> values);
+  external List<num> quantiles();
+  external Quantile<T> copy();
+}
+
+external Threshold<num, /*Range*/ dynamic> threshold();
+external Threshold< /*Domain*/ dynamic, /*Range*/ dynamic> threshold();
+
+@JS('d3.scale.Threshold')
+abstract class Threshold<Domain, Range> {
+  // @Ignore
+  Threshold.fakeConstructor$();
+  external List<
+      dynamic /* Domain | Domain */ > /* Tuple  Domain , Domain */ invertExtent(
+      Range y);
+  external List<Domain> domain();
+  external Threshold<Domain, Range> domain(List<Domain> domain);
+  external List<Range> range();
+  external Threshold<Domain, Range> range(List<Range> values);
+  external Threshold<Domain, Range> copy();
+}
+
+external Ordinal<String, /*Range*/ dynamic> ordinal();
+external Ordinal< /*Domain*/ dynamic, /*Range*/ dynamic> ordinal();
+external Ordinal<String, String> category10();
+external Ordinal< /*Domain*/ dynamic, String> category10();
+external Ordinal<String, String> category20();
+external Ordinal< /*Domain*/ dynamic, String> category20();
+external Ordinal<String, String> category20b();
+external Ordinal< /*Domain*/ dynamic, String> category20b();
+external Ordinal<String, String> category20c();
+external Ordinal< /*Domain*/ dynamic, String> category20c();
+
+@JS('d3.scale.Ordinal')
+abstract class Ordinal<Domain extends dynamic, Range> {
+  // @Ignore
+  Ordinal.fakeConstructor$();
+  external List<Domain> domain();
+  external Ordinal<Domain, Range> domain(List<Domain> values);
+  external List<Range> range();
+  external Ordinal<Domain, Range> range(List<Range> values);
+  external Ordinal<Domain, num> rangePoints(
+      List<dynamic /* num | num */ > /* Tuple  num , num */ interval,
+      [num padding]);
+  external Ordinal<Domain, num> rangeRoundPoints(
+      List<dynamic /* num | num */ > /* Tuple  num , num */ interval,
+      [num padding]);
+  external Ordinal<Domain, num> rangeBands(
+      List<dynamic /* num | num */ > /* Tuple  num , num */ interval,
+      [num padding,
+      num outerPadding]);
+  external Ordinal<Domain, num> rangeRoundBands(
+      List<dynamic /* num | num */ > /* Tuple  num , num */ interval,
+      [num padding,
+      num outerPadding]);
+  external num rangeBand();
+  external List<dynamic /* num | num */ > /* Tuple  num , num */ rangeExtent();
+  external Ordinal<Domain, Range> copy();
+}
+
+// End module scale
+external Func1<num, num> interpolate(num a, num b);
+external Func1<num, String> interpolate(String a, String b);
+external Func1<num, String> interpolate(
+    dynamic /* String | Color */ a, Color b);
+external Func1<num, String> interpolate(
+    List<dynamic /* String | Color */ > a, List<Color> b);
+external Func1<num, List< /*Output*/ dynamic>> interpolate(
+    List< /*Range*/ dynamic> a, List< /*Output*/ dynamic> b);
+external Func1<num, List< /*Output*/ dynamic>> interpolate(
+    List< /*Range*/ dynamic> a, List< /*Range*/ dynamic> b);
+external Func1<num, Map<String, String>> interpolate(
+    Map<String, dynamic /* String | Color */ > a, Map<String, Color> b);
+external Func1<num, Map<String, /*Output*/ dynamic>> interpolate(
+    Map<String, /*Range*/ dynamic> a, Map<String, /*Output*/ dynamic> b);
+external Func1<num, Map<String, /*Output*/ dynamic>> interpolate(
+    Map<String, /*Range*/ dynamic> a, Map<String, /*Range*/ dynamic> b);
+external Func1<num, num> interpolateNumber(num a, num b);
+external Func1<num, num> interpolateRound(num a, num b);
+external Func1<num, String> interpolateString(String a, String b);
+external Func1<num, String> interpolateRgb(
+    dynamic /* String | Color */ a, dynamic /* String | Color */ b);
+external Func1<num, String> interpolateHsl(
+    dynamic /* String | Color */ a, dynamic /* String | Color */ b);
+external Func1<num, String> interpolateLab(
+    dynamic /* String | Color */ a, dynamic /* String | Color */ b);
+external Func1<num, String> interpolateHcl(
+    dynamic /* String | Color */ a, dynamic /* String | Color */ b);
+external Func1<num, List<String>> interpolateArray(
+    List<dynamic /* String | Color */ > a, List<Color> b);
+external Func1<num, List< /*Output*/ dynamic>> interpolateArray(
+    List< /*Range*/ dynamic> a, List< /*Range*/ dynamic> b);
+external Func1<num, List< /*Output*/ dynamic>> interpolateArray(
+    List< /*Range*/ dynamic> a, List< /*Output*/ dynamic> b);
+external Func1<num, Map<String, String>> interpolateObject(
+    Map<String, dynamic /* String | Color */ > a, Map<String, Color> b);
+external Func1<num, Map<String, /*Output*/ dynamic>> interpolateObject(
+    Map<String, /*Range*/ dynamic> a, Map<String, /*Output*/ dynamic> b);
+external Func1<num, Map<String, /*Output*/ dynamic>> interpolateObject(
+    Map<String, /*Range*/ dynamic> a, Map<String, /*Range*/ dynamic> b);
+external Func1<num, String> interpolateTransform(
+    dynamic /* String | Transform */ a, dynamic /* String | Transform */ b);
+external dynamic interpolateZoom(
+    List<dynamic /* num | num */ > /* Tuple  num , num , num */ a,
+    List<dynamic /* num | num */ > /* Tuple  num , num , num */ b);
+@JS('interpolators')
+external List<Func2<dynamic, dynamic, Func1<num, dynamic>>> get interpolators;
+@JS('interpolators')
+external set interpolators(v);
+// Module time
+@JS('second')
+external Interval get second;
+@JS('second')
+external set second(v);
+@JS('minute')
+external Interval get minute;
+@JS('minute')
+external set minute(v);
+@JS('hour')
+external Interval get hour;
+@JS('hour')
+external set hour(v);
+@JS('day')
+external Interval get day;
+@JS('day')
+external set day(v);
+@JS('week')
+external Interval get week;
+@JS('week')
+external set week(v);
+@JS('sunday')
+external Interval get sunday;
+@JS('sunday')
+external set sunday(v);
+@JS('monday')
+external Interval get monday;
+@JS('monday')
+external set monday(v);
+@JS('tuesday')
+external Interval get tuesday;
+@JS('tuesday')
+external set tuesday(v);
+@JS('wednesday')
+external Interval get wednesday;
+@JS('wednesday')
+external set wednesday(v);
+@JS('thursday')
+external Interval get thursday;
+@JS('thursday')
+external set thursday(v);
+@JS('friday')
+external Interval get friday;
+@JS('friday')
+external set friday(v);
+@JS('saturday')
+external Interval get saturday;
+@JS('saturday')
+external set saturday(v);
+@JS('month')
+external Interval get month;
+@JS('month')
+external set month(v);
+@JS('year')
+external Interval get year;
+@JS('year')
+external set year(v);
+
+@JS('d3.time.Interval')
+abstract class Interval {
+  // @Ignore
+  Interval.fakeConstructor$();
+  external DateTime floor(DateTime d);
+  external DateTime round(DateTime d);
+  external DateTime ceil(DateTime d);
+  external List<DateTime> range(DateTime start, DateTime stop, [num step]);
+  external DateTime offset(DateTime date, num step);
+  external dynamic get utc;
+  external set utc(dynamic v);
+}
+
+external List<DateTime> seconds(DateTime start, DateTime stop, [num step]);
+external List<DateTime> minutes(DateTime start, DateTime stop, [num step]);
+external List<DateTime> hours(DateTime start, DateTime stop, [num step]);
+external List<DateTime> days(DateTime start, DateTime stop, [num step]);
+external List<DateTime> weeks(DateTime start, DateTime stop, [num step]);
+external List<DateTime> sundays(DateTime start, DateTime stop, [num step]);
+external List<DateTime> mondays(DateTime start, DateTime stop, [num step]);
+external List<DateTime> tuesdays(DateTime start, DateTime stop, [num step]);
+external List<DateTime> wednesdays(DateTime start, DateTime stop, [num step]);
+external List<DateTime> thursdays(DateTime start, DateTime stop, [num step]);
+external List<DateTime> fridays(DateTime start, DateTime stop, [num step]);
+external List<DateTime> saturdays(DateTime start, DateTime stop, [num step]);
+external List<DateTime> months(DateTime start, DateTime stop, [num step]);
+external List<DateTime> years(DateTime start, DateTime stop, [num step]);
+external num dayOfYear(DateTime d);
+external num weekOfYear(DateTime d);
+external num sundayOfYear(DateTime d);
+external num mondayOfYear(DateTime d);
+external num tuesdayOfYear(DateTime d);
+external num wednesdayOfYear(DateTime d);
+external num fridayOfYear(DateTime d);
+external num saturdayOfYear(DateTime d);
+external Format format(String specifier);
+
+// Module format
+external Format multi(List<
+    List<
+        dynamic /* String | Func1< DateTime , dynamic /* bool | num */> */ > /* Tuple  String , Func1< DateTime , dynamic /* bool | num */> */ > formats);
+external Format utc(String specifier);
+
+// Module utc
+external Format multi(List<
+    List<
+        dynamic /* String | Func1< DateTime , dynamic /* bool | num */> */ > /* Tuple  String , Func1< DateTime , dynamic /* bool | num */> */ > formats);
+
+// End module utc
+@JS('iso')
+external Format get iso;
+@JS('iso')
+external set iso(v);
+
+// End module format
+@JS('d3.time.Format')
+abstract class Format {
+  // @Ignore
+  Format.fakeConstructor$();
+  external DateTime parse(String input);
+}
+
+external Scale<num, num> scale();
+external Scale< /*Output*/ dynamic, /*Output*/ dynamic> scale();
+external Scale< /*Range*/ dynamic, /*Output*/ dynamic> scale();
+
+// Module scale
+external Scale<num, num> utc();
+external Scale< /*Output*/ dynamic, /*Output*/ dynamic> utc();
+external Scale< /*Range*/ dynamic, /*Output*/ dynamic> utc();
+
+// End module scale
+@JS('d3.time.Scale')
+abstract class Scale<Range, Output> {
+  // @Ignore
+  Scale.fakeConstructor$();
+  external DateTime invert(num y);
+  external List<DateTime> domain();
+  external Scale<Range, Output> domain(List<num> dates);
+  external Scale<Range, Output> domain(List<DateTime> dates);
+  external Scale<Range, Output> nice();
+  external Scale<Range, Output> nice(Interval interval, [num step]);
+  external List<Range> range();
+  external Scale<Range, Output> range(List<Range> values);
+  external Scale<num, num> rangeRound(List<num> values);
+  external Func2<Range, Range, Func1<num, Output>> interpolate();
+  external Scale<Range, Output> interpolate(
+      Func2<Range, Range, Func1<num, Output>> JS$factory);
+  external bool clamp();
+  external Scale<Range, Output> clamp(bool clamp);
+  external List<DateTime> ticks();
+  external List<DateTime> ticks(Interval interval, [num step]);
+  external List<DateTime> ticks(num count);
+  external Func1<DateTime, String> tickFormat(num count);
+  external Scale<Range, Output> copy();
+}
+// End module time
+
+// Module behavior
+external Drag< /*Datum*/ dynamic> drag();
+
+@JS('d3.behavior.Drag')
+abstract class Drag<Datum> {
+  // @Ignore
+  Drag.fakeConstructor$();
+  external Func2<Datum, num, dynamic> on(String type);
+  external Drag<Datum> on(String type, Func2<Datum, num, dynamic> listener);
+  external Func2<Datum, num, dynamic> origin();
+  external Drag<Datum> origin(Func2<Datum, num, dynamic> accessor);
+}
+
+external Zoom< /*Datum*/ dynamic> zoom();
+
+// Module zoom
+@JS('d3.behavior.zoom.Scale')
+abstract class Scale {
+  // @Ignore
+  Scale.fakeConstructor$();
+  external List<num> domain();
+  external Scale domain(List<num> values);
+  external num invert(num y);
+  external Scale range(List<num> values);
+  external List<num> range();
+}
+
+// End module zoom
+@JS('d3.behavior.Zoom')
+abstract class Zoom<Datum> {
+  // @Ignore
+  Zoom.fakeConstructor$();
+  external List<dynamic /* num | num */ > /* Tuple  num , num */ translate();
+  external Zoom<Datum> translate(
+      List<dynamic /* num | num */ > /* Tuple  num , num */ translate);
+  external num scale();
+  external Zoom<Datum> scale(num scale);
+  external List<dynamic /* num | num */ > /* Tuple  num , num */ scaleExtent();
+  external Zoom<Datum> scaleExtent(
+      List<dynamic /* num | num */ > /* Tuple  num , num */ extent);
+  external List<dynamic /* num | num */ > /* Tuple  num , num */ center();
+  external Zoom<Datum> center(
+      List<dynamic /* num | num */ > /* Tuple  num , num */ center);
+  external List<dynamic /* num | num */ > /* Tuple  num , num */ size();
+  external Zoom<Datum> size(
+      List<dynamic /* num | num */ > /* Tuple  num , num */ size);
+  external zoom.Scale x();
+  external Zoom<Datum> x(zoom.Scale x);
+  external zoom.Scale y();
+  external Zoom<Datum> y(zoom.Scale y);
+  external Func2<Datum, num, dynamic> on(String type);
+  external Zoom<Datum> on(String type, Func2<Datum, num, dynamic> listener);
+  external void event(Selection<Datum> selection);
+  external void event(Transition<Datum> transition);
+}
+// End module behavior
+
+// Module geo
+external Path path();
+
+@JS('d3.geo.Path')
+abstract class Path {
+  // @Ignore
+  Path.fakeConstructor$();
+  external num area(dynamic feature);
+  external List<dynamic /* num | num */ > /* Tuple  num , num */ centroid(
+      dynamic feature);
+  external List<
+      dynamic /* List < dynamic /* num | num */ > /* Tuple  num , num */ | List < dynamic /* num | num */ > /* Tuple  num , num */ */ > /* Tuple  List < dynamic /* num | num */ > /* Tuple  num , num */ , List < dynamic /* num | num */ > /* Tuple  num , num */ */ bounds(
+      dynamic feature);
+  external dynamic /* Transform | /* XXX LastTypeNode not supported yet*/ */ projection();
+  external Path projection(Transform stream);
+  external Path projection(Func1<
+      List<dynamic /* num | num */ > /* Tuple  num , num */,
+      List<dynamic /* num | num */ > /* Tuple  num , num */ > projection);
+  external dynamic /* num | /* XXX LastTypeNode not supported yet*/ */ pointRadius();
+  external Path pointRadius(num radius);
+  external Path pointRadius(Func2<dynamic, num, num> radius);
+  external CanvasRenderingContext2D context();
+  external Path context(CanvasRenderingContext2D context);
+}
+
+external Graticule graticule();
+
+@JS('d3.geo.Graticule')
+abstract class Graticule {
+  // @Ignore
+  Graticule.fakeConstructor$();
+  external List<dynamic> lines();
+  external dynamic outline();
+  external List<
+      dynamic /* List < dynamic /* num | num */ > /* Tuple  num , num */ | List < dynamic /* num | num */ > /* Tuple  num , num */ */ > /* Tuple  List < dynamic /* num | num */ > /* Tuple  num , num */ , List < dynamic /* num | num */ > /* Tuple  num , num */ */ extent();
+  external Graticule extent(List<
+      dynamic /* List < dynamic /* num | num */ > /* Tuple  num , num */ | List < dynamic /* num | num */ > /* Tuple  num , num */ */ > /* Tuple  List < dynamic /* num | num */ > /* Tuple  num , num */ , List < dynamic /* num | num */ > /* Tuple  num , num */ */ extent);
+  external List<
+      dynamic /* List < dynamic /* num | num */ > /* Tuple  num , num */ | List < dynamic /* num | num */ > /* Tuple  num , num */ */ > /* Tuple  List < dynamic /* num | num */ > /* Tuple  num , num */ , List < dynamic /* num | num */ > /* Tuple  num , num */ */ majorExtent();
+  external Graticule majorExtent(List<
+      dynamic /* List < dynamic /* num | num */ > /* Tuple  num , num */ | List < dynamic /* num | num */ > /* Tuple  num , num */ */ > /* Tuple  List < dynamic /* num | num */ > /* Tuple  num , num */ , List < dynamic /* num | num */ > /* Tuple  num , num */ */ extent);
+  external List<
+      dynamic /* List < dynamic /* num | num */ > /* Tuple  num , num */ | List < dynamic /* num | num */ > /* Tuple  num , num */ */ > /* Tuple  List < dynamic /* num | num */ > /* Tuple  num , num */ , List < dynamic /* num | num */ > /* Tuple  num , num */ */ minorExtent();
+  external Graticule minorExtent(List<
+      dynamic /* List < dynamic /* num | num */ > /* Tuple  num , num */ | List < dynamic /* num | num */ > /* Tuple  num , num */ */ > /* Tuple  List < dynamic /* num | num */ > /* Tuple  num , num */ , List < dynamic /* num | num */ > /* Tuple  num , num */ */ extent);
+  external List<dynamic /* num | num */ > /* Tuple  num , num */ step();
+  external Graticule step(
+      List<dynamic /* num | num */ > /* Tuple  num , num */ step);
+  external List<dynamic /* num | num */ > /* Tuple  num , num */ majorStep();
+  external Graticule majorStep(
+      List<dynamic /* num | num */ > /* Tuple  num , num */ step);
+  external List<dynamic /* num | num */ > /* Tuple  num , num */ minorStep();
+  external Graticule minorStep(
+      List<dynamic /* num | num */ > /* Tuple  num , num */ step);
+  external num precision();
+  external Graticule precision(num precision);
+}
+
+external Circle circle();
+
+@JS('d3.geo.Circle')
+abstract class Circle {
+  // @Ignore
+  Circle.fakeConstructor$();
+  external dynamic /* List < dynamic /* num | num */ > /* Tuple  num , num */ | /* XXX LastTypeNode not supported yet*/ */ origin();
+  external Circle origin(
+      List<dynamic /* num | num */ > /* Tuple  num , num */ origin);
+  external Circle origin(
+      Function /* (...args: any[]) => [number, number] */ origin);
+  external num angle();
+  external Circle angle(num angle);
+  external num precision();
+  external Circle precision(num precision);
+}
+
+external num area(dynamic feature);
+external List<dynamic /* num | num */ > /* Tuple  num , num */ centroid(
+    dynamic feature);
+external List<
+    dynamic /* List < dynamic /* num | num */ > /* Tuple  num , num */ | List < dynamic /* num | num */ > /* Tuple  num , num */ */ > /* Tuple  List < dynamic /* num | num */ > /* Tuple  num , num */ , List < dynamic /* num | num */ > /* Tuple  num , num */ */ bounds(
+    dynamic feature);
+external num distance(List<dynamic /* num | num */ > /* Tuple  num , num */ a,
+    List<dynamic /* num | num */ > /* Tuple  num , num */ b);
+external num length(dynamic feature);
+external Func1<num,
+    List<dynamic /* num | num */ > /* Tuple  num , num */ > interpolate(
+    List<dynamic /* num | num */ > /* Tuple  num , num */ a,
+    List<dynamic /* num | num */ > /* Tuple  num , num */ b);
+external Rotation rotation(
+    dynamic /* List < dynamic /* num | num */ > /* Tuple  num , num */ | List < dynamic /* num | num */ > /* Tuple  num , num , num */ */ rotate);
+
+@JS('d3.geo.Rotation')
+abstract class Rotation {
+  // @Ignore
+  Rotation.fakeConstructor$();
+  external List<dynamic /* num | num */ > /* Tuple  num , num */ invert(
+      List<dynamic /* num | num */ > /* Tuple  num , num */ location);
+}
+
+external void stream(dynamic object, Listener listener);
+
+@JS('d3.geo.Listener')
+abstract class Listener {
+  // @Ignore
+  Listener.fakeConstructor$();
+  external void point(num x, num y, num z);
+  external void lineStart();
+  external void lineEnd();
+  external void polygonStart();
+  external void polygonEnd();
+  external void sphere();
+}
+
+external Transform transform(TransformMethods methods);
+
+@JS('d3.geo.TransformMethods')
+abstract class TransformMethods {
+  // @Ignore
+  TransformMethods.fakeConstructor$();
+  external void point(num x, num y, num z);
+  external void lineStart();
+  external void lineEnd();
+  external void polygonStart();
+  external void polygonEnd();
+  external void sphere();
+}
+
+@JS('d3.geo.Transform')
+abstract class Transform {
+  // @Ignore
+  Transform.fakeConstructor$();
+  external Listener stream(Listener stream);
+}
+
+external ClipExtent clipExtent();
+
+@JS('d3.geo.ClipExtent')
+abstract class ClipExtent implements Transform {
+  // @Ignore
+  ClipExtent.fakeConstructor$();
+  external List<
+      dynamic /* List < dynamic /* num | num */ > /* Tuple  num , num */ | List < dynamic /* num | num */ > /* Tuple  num , num */ */ > /* Tuple  List < dynamic /* num | num */ > /* Tuple  num , num */ , List < dynamic /* num | num */ > /* Tuple  num , num */ */ extent();
+  external ClipExtent extent(List<
+      dynamic /* List < dynamic /* num | num */ > /* Tuple  num , num */ | List < dynamic /* num | num */ > /* Tuple  num , num */ */ > /* Tuple  List < dynamic /* num | num */ > /* Tuple  num , num */ , List < dynamic /* num | num */ > /* Tuple  num , num */ */ extent);
+}
+
+external InvertibleProjection projection(RawInvertibleProjection raw);
+external Projection projection(RawProjection raw);
+external Function /* (...args: any[]) => InvertibleProjection */ projectionMutator(
+    Function /* (...args: any[]) => RawInvertibleProjection */ JS$factory);
+external Function /* (...args: any[]) => Projection */ projectionMutator(
+    Function /* (...args: any[]) => RawProjection */ JS$factory);
+external ConicProjection albers();
+external ConicProjection albersUsa();
+external InvertibleProjection azimuthalEqualArea();
+
+// Module azimuthalEqualArea
+external List<dynamic /* num | num */ > /* Tuple  num , num */ raw(
+    num lambda, num phi);
+
+// Module raw
+external List<dynamic /* num | num */ > /* Tuple  num , num */ invert(
+    num x, num y);
+
+// End module raw
+
+// End module azimuthalEqualArea
+external InvertibleProjection azimuthalEquidistant();
+
+// Module azimuthalEquidistant
+external List<dynamic /* num | num */ > /* Tuple  num , num */ raw(
+    num lambda, num phi);
+
+// Module raw
+external List<dynamic /* num | num */ > /* Tuple  num , num */ invert(
+    num x, num y);
+
+// End module raw
+
+// End module azimuthalEquidistant
+external ConicProjection conicConformal();
+
+// Module conicConformal
+external RawInvertibleProjection raw(num phi0, num phi1);
+
+// End module conicConformal
+external ConicProjection conicEqualArea();
+
+// Module conicEqualArea
+external RawInvertibleProjection raw(num phi0, num phi1);
+
+// End module conicEqualArea
+external ConicProjection conicEquidistant();
+
+// Module conicEquidistant
+external RawInvertibleProjection raw(num phi0, num phi1);
+
+// End module conicEquidistant
+external InvertibleProjection equirectangular();
+
+// Module equirectangular
+external List<dynamic /* num | num */ > /* Tuple  num , num */ raw(
+    num lambda, num phi);
+
+// Module raw
+external List<dynamic /* num | num */ > /* Tuple  num , num */ invert(
+    num x, num y);
+
+// End module raw
+
+// End module equirectangular
+external InvertibleProjection gnomonic();
+
+// Module gnomonic
+external List<dynamic /* num | num */ > /* Tuple  num , num */ raw(
+    num lambda, num phi);
+
+// Module raw
+external List<dynamic /* num | num */ > /* Tuple  num , num */ invert(
+    num x, num y);
+
+// End module raw
+
+// End module gnomonic
+external InvertibleProjection mercator();
+
+// Module mercator
+external List<dynamic /* num | num */ > /* Tuple  num , num */ raw(
+    num lambda, num phi);
+
+// Module raw
+external List<dynamic /* num | num */ > /* Tuple  num , num */ invert(
+    num x, num y);
+
+// End module raw
+
+// End module mercator
+external InvertibleProjection orthographic();
+
+// Module orthographic
+external List<dynamic /* num | num */ > /* Tuple  num , num */ raw(
+    num lambda, num phi);
+
+// Module raw
+external List<dynamic /* num | num */ > /* Tuple  num , num */ invert(
+    num x, num y);
+
+// End module raw
+
+// End module orthographic
+external InvertibleProjection stereographic();
+
+// Module stereographic
+external List<dynamic /* num | num */ > /* Tuple  num , num */ raw(
+    num lambda, num phi);
+
+// Module raw
+external List<dynamic /* num | num */ > /* Tuple  num , num */ invert(
+    num x, num y);
+
+// End module raw
+
+// End module stereographic
+external InvertibleProjection transverseMercator();
+
+// Module transverseMercator
+external List<dynamic /* num | num */ > /* Tuple  num , num */ raw(
+    num lambda, num phi);
+
+// Module raw
+external List<dynamic /* num | num */ > /* Tuple  num , num */ invert(
+    num x, num y);
+
+// End module raw
+
+// End module transverseMercator
+@JS('d3.geo.Projection')
+abstract class Projection {
+  // @Ignore
+  Projection.fakeConstructor$();
+  external List<dynamic /* num | num */ > /* Tuple  num , num , num */ rotate();
+  external Projection rotate(
+      List<dynamic /* num | num */ > /* Tuple  num , num , num */ rotation);
+  external List<dynamic /* num | num */ > /* Tuple  num , num */ center();
+  external Projection center(
+      List<dynamic /* num | num */ > /* Tuple  num , num */ location);
+  external List<dynamic /* num | num */ > /* Tuple  num , num */ translate();
+  external Projection translate(
+      List<dynamic /* num | num */ > /* Tuple  num , num */ point);
+  external num scale();
+  external Projection scale(num scale);
+  external num clipAngle();
+  external Projection clipAngle(num angle);
+  external List<
+      dynamic /* List < dynamic /* num | num */ > /* Tuple  num , num */ | List < dynamic /* num | num */ > /* Tuple  num , num */ */ > /* Tuple  List < dynamic /* num | num */ > /* Tuple  num , num */ , List < dynamic /* num | num */ > /* Tuple  num , num */ */ clipExtent();
+  external Projection clipExtent(List<
+      dynamic /* List < dynamic /* num | num */ > /* Tuple  num , num */ | List < dynamic /* num | num */ > /* Tuple  num , num */ */ > /* Tuple  List < dynamic /* num | num */ > /* Tuple  num , num */ , List < dynamic /* num | num */ > /* Tuple  num , num */ */ extent);
+  external num precision();
+  external Projection precision(num precision);
+  external Listener stream(Listener listener);
+}
+
+@JS('d3.geo.InvertibleProjection')
+abstract class InvertibleProjection implements Projection {
+  // @Ignore
+  InvertibleProjection.fakeConstructor$();
+  external List<dynamic /* num | num */ > /* Tuple  num , num */ invert(
+      List<dynamic /* num | num */ > /* Tuple  num , num */ point);
+}
+
+@JS('d3.geo.ConicProjection')
+abstract class ConicProjection implements InvertibleProjection {
+  // @Ignore
+  ConicProjection.fakeConstructor$();
+  external List<dynamic /* num | num */ > /* Tuple  num , num */ parallels();
+  external ConicProjection parallels(
+      List<dynamic /* num | num */ > /* Tuple  num , num */ parallels);
+  external List<dynamic /* num | num */ > /* Tuple  num , num , num */ rotate();
+  external ConicProjection rotate(
+      List<dynamic /* num | num */ > /* Tuple  num , num , num */ rotation);
+  external List<dynamic /* num | num */ > /* Tuple  num , num */ center();
+  external ConicProjection center(
+      List<dynamic /* num | num */ > /* Tuple  num , num */ location);
+  external List<dynamic /* num | num */ > /* Tuple  num , num */ translate();
+  external ConicProjection translate(
+      List<dynamic /* num | num */ > /* Tuple  num , num */ point);
+  external num scale();
+  external ConicProjection scale(num scale);
+  external num clipAngle();
+  external ConicProjection clipAngle(num angle);
+  external List<
+      dynamic /* List < dynamic /* num | num */ > /* Tuple  num , num */ | List < dynamic /* num | num */ > /* Tuple  num , num */ */ > /* Tuple  List < dynamic /* num | num */ > /* Tuple  num , num */ , List < dynamic /* num | num */ > /* Tuple  num , num */ */ clipExtent();
+  external ConicProjection clipExtent(List<
+      dynamic /* List < dynamic /* num | num */ > /* Tuple  num , num */ | List < dynamic /* num | num */ > /* Tuple  num , num */ */ > /* Tuple  List < dynamic /* num | num */ > /* Tuple  num , num */ , List < dynamic /* num | num */ > /* Tuple  num , num */ */ extent);
+  external num precision();
+  external ConicProjection precision(num precision);
+}
+
+typedef List<dynamic /* num | num */ > /* Tuple  num , num */ RawProjection(
+    num lambda, num phi);
+
+@JS('d3.geo.RawInvertibleProjection')
+abstract class RawInvertibleProjection implements RawProjection {
+  // @Ignore
+  RawInvertibleProjection.fakeConstructor$();
+  external List<dynamic /* num | num */ > /* Tuple  num , num */ invert(
+      num x, num y);
+}
+// End module geo
+
+// Module svg
+external Line<List<dynamic /* num | num */ > /* Tuple  num , num */ > line();
+external Line< /*T*/ dynamic> line();
+
+@JS('d3.svg.Line')
+abstract class Line<T> {
+  // @Ignore
+  Line.fakeConstructor$();
+  external dynamic /* num | /* XXX LastTypeNode not supported yet*/ */ x();
+  external Line<T> x(num x);
+  external Line<T> x(Func2<T, num, num> x);
+  external dynamic /* num | /* XXX LastTypeNode not supported yet*/ */ y();
+  external Line<T> y(num x);
+  external Line<T> y(Func2<T, num, num> y);
+  external dynamic /* String | /* XXX LastTypeNode not supported yet*/ */ interpolate();
+  external Line<T> interpolate(String /* "linear" */ interpolate);
+  external Line<T> interpolate(String /* "linear-closed" */ interpolate);
+  external Line<T> interpolate(String /* "step" */ interpolate);
+  external Line<T> interpolate(String /* "step-before" */ interpolate);
+  external Line<T> interpolate(String /* "step-after" */ interpolate);
+  external Line<T> interpolate(String /* "basis" */ interpolate);
+  external Line<T> interpolate(String /* "basis-open" */ interpolate);
+  external Line<T> interpolate(String /* "basis-closed" */ interpolate);
+  external Line<T> interpolate(String /* "bundle" */ interpolate);
+  external Line<T> interpolate(String /* "cardinal" */ interpolate);
+  external Line<T> interpolate(String /* "cardinal-open" */ interpolate);
+  external Line<T> interpolate(String /* "cardinal-closed" */ interpolate);
+  external Line<T> interpolate(String /* "monotone" */ interpolate);
+  external Line<T> interpolate(
+      dynamic /* String | /* XXX LastTypeNode not supported yet*/ */ interpolate);
+  external num tension();
+  external Line<T> tension(num tension);
+  external Func2<T, num, bool> defined();
+  external Line<T> defined(Func2<T, num, bool> defined);
+}
+
+// Module line
+external Radial<
+    List<dynamic /* num | num */ > /* Tuple  num , num */ > radial();
+external Radial< /*T*/ dynamic> radial();
+
+@JS('d3.svg.line.Radial')
+abstract class Radial<T> {
+  // @Ignore
+  Radial.fakeConstructor$();
+  external dynamic /* num | /* XXX LastTypeNode not supported yet*/ */ radius();
+  external Radial<T> radius(num radius);
+  external Radial<T> radius(Func2<T, num, num> radius);
+  external dynamic /* num | /* XXX LastTypeNode not supported yet*/ */ angle();
+  external Radial<T> angle(num angle);
+  external Radial<T> angle(Func2<T, num, num> angle);
+  external dynamic /* String | /* XXX LastTypeNode not supported yet*/ */ interpolate();
+  external Radial<T> interpolate(String /* "linear" */ interpolate);
+  external Radial<T> interpolate(String /* "linear-closed" */ interpolate);
+  external Radial<T> interpolate(String /* "step" */ interpolate);
+  external Radial<T> interpolate(String /* "step-before" */ interpolate);
+  external Radial<T> interpolate(String /* "step-after" */ interpolate);
+  external Radial<T> interpolate(String /* "basis" */ interpolate);
+  external Radial<T> interpolate(String /* "basis-open" */ interpolate);
+  external Radial<T> interpolate(String /* "basis-closed" */ interpolate);
+  external Radial<T> interpolate(String /* "bundle" */ interpolate);
+  external Radial<T> interpolate(String /* "cardinal" */ interpolate);
+  external Radial<T> interpolate(String /* "cardinal-open" */ interpolate);
+  external Radial<T> interpolate(String /* "cardinal-closed" */ interpolate);
+  external Radial<T> interpolate(String /* "monotone" */ interpolate);
+  external Radial<T> interpolate(
+      dynamic /* String | /* XXX LastTypeNode not supported yet*/ */ interpolate);
+  external num tension();
+  external Radial<T> tension(num tension);
+  external Func2<T, num, bool> defined();
+  external Radial<T> defined(Func2<T, num, bool> defined);
+}
+
+// End module line
+external Area<List<dynamic /* num | num */ > /* Tuple  num , num */ > area();
+external Area< /*T*/ dynamic> area();
+
+@JS('d3.svg.Area')
+abstract class Area<T> {
+  // @Ignore
+  Area.fakeConstructor$();
+  external dynamic /* num | /* XXX LastTypeNode not supported yet*/ */ x();
+  external Area<T> x(num x);
+  external Area<T> x(Func2<T, num, num> x);
+  external dynamic /* num | /* XXX LastTypeNode not supported yet*/ */ x0();
+  external Area<T> x0(num x0);
+  external Area<T> x0(Func2<T, num, num> x0);
+  external dynamic /* num | /* XXX LastTypeNode not supported yet*/ */ x1();
+  external Area<T> x1(num x1);
+  external Area<T> x1(Func2<T, num, num> x1);
+  external dynamic /* num | /* XXX LastTypeNode not supported yet*/ */ y();
+  external Area<T> y(num y);
+  external Area<T> y(Func2<T, num, num> y);
+  external dynamic /* num | /* XXX LastTypeNode not supported yet*/ */ y0();
+  external Area<T> y0(num y0);
+  external Area<T> y0(Func2<T, num, num> y0);
+  external dynamic /* num | /* XXX LastTypeNode not supported yet*/ */ y1();
+  external Area<T> y1(num y1);
+  external Area<T> y1(Func2<T, num, num> y1);
+  external dynamic /* String | /* XXX LastTypeNode not supported yet*/ */ interpolate();
+  external Area<T> interpolate(String /* "linear" */ interpolate);
+  external Area<T> interpolate(String /* "step" */ interpolate);
+  external Area<T> interpolate(String /* "step-before" */ interpolate);
+  external Area<T> interpolate(String /* "step-after" */ interpolate);
+  external Area<T> interpolate(String /* "basis" */ interpolate);
+  external Area<T> interpolate(String /* "basis-open" */ interpolate);
+  external Area<T> interpolate(String /* "cardinal" */ interpolate);
+  external Area<T> interpolate(String /* "cardinal-open" */ interpolate);
+  external Area<T> interpolate(String /* "monotone" */ interpolate);
+  external Area<T> interpolate(
+      dynamic /* String | /* XXX LastTypeNode not supported yet*/ */ interpolate);
+  external num tension();
+  external Area<T> tension(num tension);
+  external Func2<T, num, bool> defined();
+  external Area<T> defined(Func2<T, num, bool> defined);
+}
+
+// Module area
+external Radial<
+    List<dynamic /* num | num */ > /* Tuple  num , num */ > radial();
+external Radial< /*T*/ dynamic> radial();
+
+@JS('d3.svg.area.Radial')
+abstract class Radial<T> {
+  // @Ignore
+  Radial.fakeConstructor$();
+  external dynamic /* num | /* XXX LastTypeNode not supported yet*/ */ radius();
+  external Radial<T> radius(num radius);
+  external Radial<T> radius(Func2<T, num, num> radius);
+  external dynamic /* num | /* XXX LastTypeNode not supported yet*/ */ innerRadius();
+  external Radial<T> innerRadius(num innerRadius);
+  external Radial<T> innerRadius(Func2<T, num, num> innerRadius);
+  external dynamic /* num | /* XXX LastTypeNode not supported yet*/ */ outerRadius();
+  external Radial<T> outerRadius(num outerRadius);
+  external Radial<T> outerRadius(Func2<T, num, num> outerRadius);
+  external dynamic /* num | /* XXX LastTypeNode not supported yet*/ */ angle();
+  external Radial<T> angle(num angle);
+  external Radial<T> angle(Func2<T, num, num> angle);
+  external dynamic /* num | /* XXX LastTypeNode not supported yet*/ */ startAngle();
+  external Radial<T> startAngle(num startAngle);
+  external Radial<T> startAngle(Func2<T, num, num> startAngle);
+  external dynamic /* num | /* XXX LastTypeNode not supported yet*/ */ endAngle();
+  external Radial<T> endAngle(num endAngle);
+  external Radial<T> endAngle(Func2<T, num, num> endAngle);
+  external dynamic /* String | /* XXX LastTypeNode not supported yet*/ */ interpolate();
+  external Radial<T> interpolate(String /* "linear" */ interpolate);
+  external Radial<T> interpolate(String /* "step" */ interpolate);
+  external Radial<T> interpolate(String /* "step-before" */ interpolate);
+  external Radial<T> interpolate(String /* "step-after" */ interpolate);
+  external Radial<T> interpolate(String /* "basis" */ interpolate);
+  external Radial<T> interpolate(String /* "basis-open" */ interpolate);
+  external Radial<T> interpolate(String /* "cardinal" */ interpolate);
+  external Radial<T> interpolate(String /* "cardinal-open" */ interpolate);
+  external Radial<T> interpolate(String /* "monotone" */ interpolate);
+  external Radial<T> interpolate(
+      dynamic /* String | /* XXX LastTypeNode not supported yet*/ */ interpolate);
+  external num tension();
+  external Radial<T> tension(num tension);
+  external Func2<T, num, bool> defined();
+  external Radial<T> defined(Func2<T, num, bool> defined);
+}
+
+// End module area
+external Arc<arc.Arc> arc();
+external Arc< /*T*/ dynamic> arc();
+
+// Module arc
+@JS('d3.svg.arc.Arc')
+abstract class Arc {
+  // @Ignore
+  Arc.fakeConstructor$();
+  external num get innerRadius;
+  external set innerRadius(num v);
+  external num get outerRadius;
+  external set outerRadius(num v);
+  external num get startAngle;
+  external set startAngle(num v);
+  external num get endAngle;
+  external set endAngle(num v);
+  external num get padAngle;
+  external set padAngle(num v);
+}
+
+// End module arc
+@JS('d3.svg.Arc')
+abstract class Arc<T> {
+  // @Ignore
+  Arc.fakeConstructor$();
+  external Func2<T, num, num> innerRadius();
+  external Arc<T> innerRadius(num radius);
+  external Arc<T> innerRadius(Func2<T, num, num> radius);
+  external Func2<T, num, num> outerRadius();
+  external Arc<T> outerRadius(num radius);
+  external Arc<T> outerRadius(Func2<T, num, num> radius);
+  external Func2<T, num, num> cornerRadius();
+  external Arc<T> cornerRadius(num radius);
+  external Arc<T> cornerRadius(Func2<T, num, num> radius);
+  external dynamic /* String | /* XXX LastTypeNode not supported yet*/ */ padRadius();
+  external Arc<T> padRadius(String /* "auto" */ radius);
+  external Arc<T> padRadius(String radius);
+  external Arc<T> padRadius(Func2<T, num, num> radius);
+  external Func2<T, num, num> startAngle();
+  external Arc<T> startAngle(num angle);
+  external Arc<T> startAngle(Func2<T, num, num> angle);
+  external Func2<T, num, num> endAngle();
+  external Arc<T> endAngle(num angle);
+  external Arc<T> endAngle(Func2<T, num, num> angle);
+  external Func2<T, num, num> padAngle();
+  external Arc<T> padAngle(num angle);
+  external Arc<T> padAngle(Func2<T, num, num> angle);
+  external List<dynamic /* num | num */ > /* Tuple  num , num */ centroid(T d,
+      [num i]);
+}
+
+external Symbol<dynamic> symbol();
+external Symbol< /*T*/ dynamic> symbol();
+
+@JS('d3.svg.Symbol')
+abstract class Symbol<T> {
+  // @Ignore
+  Symbol.fakeConstructor$();
+  external Func2<T, num, String> type();
+  external Symbol<T> type(String type);
+  external Symbol<T> type(Func2<T, num, String> type);
+  external Func2<T, String, num> size();
+  external Symbol<T> size(num size);
+  external Symbol<T> size(Func2<T, num, num> size);
+}
+
+@JS('symbolTypes')
+external List<String> get symbolTypes;
+@JS('symbolTypes')
+external set symbolTypes(v);
+external Chord<chord.Link<chord.Node>, chord.Node> chord();
+external Chord<chord.Link< /*Node*/ dynamic>, /*Node*/ dynamic> chord();
+external Chord< /*Link*/ dynamic, /*Node*/ dynamic> chord();
+
+// Module chord
+@JS('d3.svg.chord.Link')
+abstract class Link<Node> {
+  // @Ignore
+  Link.fakeConstructor$();
+  external Node get source;
+  external set source(Node v);
+  external Node get target;
+  external set target(Node v);
+}
+
+@JS('d3.svg.chord.Node')
+abstract class Node {
+  // @Ignore
+  Node.fakeConstructor$();
+  external num get radius;
+  external set radius(num v);
+  external num get startAngle;
+  external set startAngle(num v);
+  external num get endAngle;
+  external set endAngle(num v);
+}
+
+// End module chord
+@JS('d3.svg.Chord')
+abstract class Chord<Link, Node> {
+  // @Ignore
+  Chord.fakeConstructor$();
+  external Func2<Link, num, Node> source();
+  external Chord<Link, Node> source(Node source);
+  external Chord<Link, Node> source(Func2<Link, num, Node> source);
+  external Func2<Link, num, Node> target();
+  external Chord<Link, Node> target(Node target);
+  external Chord<Link, Node> target(Func2<Link, num, Node> target);
+  external Func2<Node, num, num> radius();
+  external Chord<Link, Node> radius(num radius);
+  external Chord<Link, Node> radius(Func2<Node, num, num> radius);
+  external Func2<Node, num, num> startAngle();
+  external Chord<Link, Node> startAngle(num angle);
+  external Chord<Link, Node> startAngle(Func2<Node, num, num> angle);
+  external Func2<Node, num, num> endAngle();
+  external Chord<Link, Node> endAngle(num angle);
+  external Chord<Link, Node> endAngle(Func2<Node, num, num> angle);
+}
+
+external Diagonal<diagonal.Link<diagonal.Node>, diagonal.Node> diagonal();
+external Diagonal<
+    diagonal.Link< /*Node*/ dynamic>, /*Node*/ dynamic> diagonal();
+external Diagonal< /*Link*/ dynamic, /*Node*/ dynamic> diagonal();
+
+// Module diagonal
+@JS('d3.svg.diagonal.Link')
+abstract class Link<Node> {
+  // @Ignore
+  Link.fakeConstructor$();
+  external Node get source;
+  external set source(Node v);
+  external Node get target;
+  external set target(Node v);
+}
+
+@JS('d3.svg.diagonal.Node')
+abstract class Node {
+  // @Ignore
+  Node.fakeConstructor$();
+  external num get x;
+  external set x(num v);
+  external num get y;
+  external set y(num v);
+}
+
+// End module diagonal
+@JS('d3.svg.Diagonal')
+abstract class Diagonal<Link, Node> {
+  // @Ignore
+  Diagonal.fakeConstructor$();
+  external Func2<Link, num, Node> source();
+  external Diagonal<Link, Node> source(Node source);
+  external Diagonal<Link, Node> source(Func2<Link, num, Node> source);
+  external Func2<Link, num, Node> target();
+  external Diagonal<Link, Node> target(Node target);
+  external Diagonal<Link, Node> target(Func2<Link, num, Node> target);
+  external Func2<Node, num,
+      List<dynamic /* num | num */ > /* Tuple  num , num */ > projection();
+  external Diagonal<Link, Node> projection(Func2<Node, num,
+      List<dynamic /* num | num */ > /* Tuple  num , num */ > projection);
+}
+
+// Module diagonal
+external Radial<Link<Node>, Node> radial();
+external Radial<Link< /*Node*/ dynamic>, /*Node*/ dynamic> radial();
+external Radial< /*Link*/ dynamic, /*Node*/ dynamic> radial();
+
+@JS('d3.svg.diagonal.Radial')
+abstract class Radial<Link, Node> {
+  // @Ignore
+  Radial.fakeConstructor$();
+  external Func2<Link, num, Node> source();
+  external Radial<Link, Node> source(Node source);
+  external Radial<Link, Node> source(Func2<Link, num, Node> source);
+  external Func2<Link, num, Node> target();
+  external Radial<Link, Node> target(Node target);
+  external Radial<Link, Node> target(Func2<Link, num, Node> target);
+  external Func2<Node, num,
+      List<dynamic /* num | num */ > /* Tuple  num , num */ > projection();
+  external Radial<Link, Node> projection(Func2<Node, num,
+      List<dynamic /* num | num */ > /* Tuple  num , num */ > projection);
+}
+
+// End module diagonal
+external Axis axis();
+
+@JS('d3.svg.Axis')
+abstract class Axis {
+  // @Ignore
+  Axis.fakeConstructor$();
+  external dynamic scale();
+  external Axis scale(dynamic scale);
+  external String orient();
+  external Axis orient(String orientation);
+  external List<dynamic> ticks();
+  external Axis ticks(List<dynamic> args);
+  external List<dynamic> tickValues();
+  external Axis tickValues(List<dynamic> values);
+  external num tickSize();
+  external Axis tickSize(num size);
+  external Axis tickSize(num inner, num outer);
+  external num innerTickSize();
+  external Axis innerTickSize(num size);
+  external num outerTickSize();
+  external Axis outerTickSize(num size);
+  external num tickPadding();
+  external Axis tickPadding(num padding);
+  external Func1<dynamic, String> tickFormat();
+  external Axis tickFormat(Func1<dynamic, String> format);
+  external Axis tickFormat(String format);
+}
+
+external Brush<dynamic> brush();
+external Brush< /*T*/ dynamic> brush();
+
+// Module brush
+@JS('d3.svg.brush.Scale')
+abstract class Scale {
+  // @Ignore
+  Scale.fakeConstructor$();
+  external List<num> domain();
+  external Scale domain(List<num> domain);
+  external List<num> range();
+  external Scale range(List<num> range);
+  external num invert(num y);
+}
+
+// End module brush
+@JS('d3.svg.Brush')
+abstract class Brush<T> {
+  // @Ignore
+  Brush.fakeConstructor$();
+  external void event(Selection<T> selection);
+  external void event(Transition<T> selection);
+  external brush.Scale x();
+  external Brush<T> x(brush.Scale x);
+  external brush.Scale y();
+  external Brush<T> y(brush.Scale y);
+  external dynamic /* List < dynamic /* num | num */ > /* Tuple  num , num */ | List < dynamic /* List < dynamic /* num | num */ > /* Tuple  num , num */ | List < dynamic /* num | num */ > /* Tuple  num , num */ */ > /* Tuple  List < dynamic /* num | num */ > /* Tuple  num , num */ , List < dynamic /* num | num */ > /* Tuple  num , num */ */ */ extent();
+  external Brush<T> extent(
+      dynamic /* List < dynamic /* num | num */ > /* Tuple  num , num */ | List < dynamic /* List < dynamic /* num | num */ > /* Tuple  num , num */ | List < dynamic /* num | num */ > /* Tuple  num , num */ */ > /* Tuple  List < dynamic /* num | num */ > /* Tuple  num , num */ , List < dynamic /* num | num */ > /* Tuple  num , num */ */ */ extent);
+  external dynamic /* bool | List < dynamic /* bool | bool */ > /* Tuple  bool , bool */ */ clamp();
+  external Brush<T> clamp(
+      dynamic /* bool | List < dynamic /* bool | bool */ > /* Tuple  bool , bool */ */ clamp);
+  external void clear();
+  external bool empty();
+  external VoidFunc2<T, num> on(String /* "brushstart" */ type);
+  external VoidFunc2<T, num> on(String /* "brush" */ type);
+  external VoidFunc2<T, num> on(String /* "brushend" */ type);
+  external VoidFunc2<T, num> on(String type);
+  external Brush<T> on(
+      String /* "brushstart" */ type, VoidFunc2<T, num> listener);
+  external Brush<T> on(String /* "brush" */ type, VoidFunc2<T, num> listener);
+  external Brush<T> on(
+      String /* "brushend" */ type, VoidFunc2<T, num> listener);
+  external Brush<T> on(String type, VoidFunc2<T, num> listener);
+}
+
+// End module svg
+external Xhr xhr(String url,
+    [String mimeType, VoidFunc2<dynamic, dynamic> callback]);
+external Xhr xhr(String url, VoidFunc2<dynamic, dynamic> callback);
+
+@JS('d3.Xhr')
+abstract class Xhr {
+  // @Ignore
+  Xhr.fakeConstructor$();
+  external String header(String name);
+  external Xhr header(String name, String value);
+  external String mimeType();
+  external Xhr mimeType(String type);
+  external String responseType();
+  external Xhr responseType(String type);
+  external Func1<HttpRequest, dynamic> response();
+  external Xhr response(Func1<HttpRequest, dynamic> value);
+  external Xhr JS$get([VoidFunc2<dynamic, dynamic> callback]);
+  external Xhr post([dynamic data, VoidFunc2<dynamic, dynamic> callback]);
+  external Xhr post(VoidFunc2<dynamic, dynamic> callback);
+  external Xhr send(String method,
+      [dynamic data, VoidFunc2<dynamic, dynamic> callback]);
+  external Xhr send(String method, VoidFunc2<dynamic, dynamic> callback);
+  external Xhr abort();
+  external VoidFunc1<HttpRequest> on(String /* "beforesend" */ type);
+  external VoidFunc1<HttpRequest> on(String /* "progress" */ type);
+  external VoidFunc1<dynamic> on(String /* "load" */ type);
+  external VoidFunc1<dynamic> on(String /* "error" */ type);
+  external Function /* (...args: any[]) => void */ on(String type);
+  external Xhr on(
+      String /* "beforesend" */ type, VoidFunc1<HttpRequest> listener);
+  external Xhr on(
+      String /* "progress" */ type, VoidFunc1<HttpRequest> listener);
+  external Xhr on(String /* "load" */ type, VoidFunc1<dynamic> listener);
+  external Xhr on(String /* "error" */ type, VoidFunc1<dynamic> listener);
+  external Xhr on(
+      String type, Function /* (...args: any[]) => void */ listener);
+}
+
+external Xhr text(String url,
+    [String mimeType, VoidFunc2<dynamic, String> callback]);
+external Xhr text(String url, VoidFunc2<dynamic, String> callback);
+external Xhr json(String url, [VoidFunc2<dynamic, dynamic> callback]);
+external Xhr xml(String url,
+    [String mimeType, VoidFunc2<dynamic, dynamic> callback]);
+external Xhr xml(String url, VoidFunc2<dynamic, dynamic> callback);
+external Xhr html(String url, [VoidFunc2<dynamic, DocumentFragment> callback]);
+@JS('csv')
+external Dsv get csv;
+@JS('csv')
+external set csv(v);
+@JS('tsv')
+external Dsv get tsv;
+@JS('tsv')
+external set tsv(v);
+external Dsv dsv(String delimiter, String mimeType);
+
+@JS('d3.Dsv')
+abstract class Dsv {
+  // @Ignore
+  Dsv.fakeConstructor$();
+  external List<Map<String, String>> parse(String string);
+  external List< /*T*/ dynamic> parse(
+      String string, Func2<Map<String, String>, num, /*T*/ dynamic> accessor);
+  external List<List<String>> parseRows(String string);
+  external List< /*T*/ dynamic> parseRows(
+      String string, Func2<List<String>, num, /*T*/ dynamic> accessor);
+  external String format(List<Object> rows);
+  external String formatRows(List<List<String>> rows);
+}
+
+@JS('d3.DsvXhr')
+abstract class DsvXhr<T> implements Xhr {
+  // @Ignore
+  DsvXhr.fakeConstructor$();
+  external Func1<Map<String, String>, T> row();
+  external DsvXhr< /*U*/ dynamic> row(
+      Func1<Map<String, String>, /*U*/ dynamic> accessor);
+  external String header(String name);
+  external DsvXhr<T> header(String name, String value);
+  external String mimeType();
+  external DsvXhr<T> mimeType(String type);
+  external String responseType();
+  external DsvXhr<T> responseType(String type);
+  external Func1<HttpRequest, dynamic> response();
+  external DsvXhr<T> response(Func1<HttpRequest, dynamic> value);
+  external DsvXhr<T> JS$get([VoidFunc2<dynamic, T> callback]);
+  external DsvXhr<T> post([dynamic data, VoidFunc2<dynamic, T> callback]);
+  external DsvXhr<T> post(VoidFunc2<dynamic, T> callback);
+  external DsvXhr<T> send(String method,
+      [dynamic data, VoidFunc2<dynamic, T> callback]);
+  external DsvXhr<T> send(String method, VoidFunc2<dynamic, T> callback);
+  external DsvXhr<T> abort();
+  external VoidFunc1<HttpRequest> on(String /* "beforesend" */ type);
+  external VoidFunc1<HttpRequest> on(String /* "progress" */ type);
+  external VoidFunc1<T> on(String /* "load" */ type);
+  external VoidFunc1<dynamic> on(String /* "error" */ type);
+  external Function /* (...args: any[]) => void */ on(String type);
+  external DsvXhr<T> on(
+      String /* "beforesend" */ type, VoidFunc1<HttpRequest> listener);
+  external DsvXhr<T> on(
+      String /* "progress" */ type, VoidFunc1<HttpRequest> listener);
+  external DsvXhr<T> on(String /* "load" */ type, VoidFunc1<T> listener);
+  external DsvXhr<T> on(String /* "error" */ type, VoidFunc1<dynamic> listener);
+  external DsvXhr<T> on(
+      String type, Function /* (...args: any[]) => void */ listener);
+}
+
+external Locale locale(LocaleDefinition definition);
+
+@JS('d3.LocaleDefinition')
+abstract class LocaleDefinition {
+  // @Ignore
+  LocaleDefinition.fakeConstructor$();
+  external String get decimal;
+  external set decimal(String v);
+  external String get thousands;
+  external set thousands(String v);
+  external List<num> get grouping;
+  external set grouping(List<num> v);
+  external List<
+      dynamic /* String | String */ > /* Tuple  String , String */ get currency;
+  external set currency(
+      List<dynamic /* String | String */ > /* Tuple  String , String */ v);
+  external String get dateTime;
+  external set dateTime(String v);
+  external String get date;
+  external set date(String v);
+  external String get time;
+  external set time(String v);
+  external List<
+      dynamic /* String | String */ > /* Tuple  String , String */ get periods;
+  external set periods(
+      List<dynamic /* String | String */ > /* Tuple  String , String */ v);
+  external List<
+      dynamic /* String | String */ > /* Tuple  String , String , String , String , String , String , String */ get days;
+  external set days(List<
+      dynamic /* String | String */ > /* Tuple  String , String , String , String , String , String , String */ v);
+  external List<
+      dynamic /* String | String */ > /* Tuple  String , String , String , String , String , String , String */ get shortDays;
+  external set shortDays(List<
+      dynamic /* String | String */ > /* Tuple  String , String , String , String , String , String , String */ v);
+  external List<
+      dynamic /* String | String */ > /* Tuple  String , String , String , String , String , String , String , String , String , String , String , String */ get months;
+  external set months(List<
+      dynamic /* String | String */ > /* Tuple  String , String , String , String , String , String , String , String , String , String , String , String */ v);
+  external List<
+      dynamic /* String | String */ > /* Tuple  String , String , String , String , String , String , String , String , String , String , String , String */ get shortMonths;
+  external set shortMonths(List<
+      dynamic /* String | String */ > /* Tuple  String , String , String , String , String , String , String , String , String , String , String , String */ v);
+}
+
+@JS('d3.Locale')
+abstract class Locale {
+  // @Ignore
+  Locale.fakeConstructor$();
+  external Func1<num, String> numberFormat(String specifier);
+  external dynamic get timeFormat;
+  external set timeFormat(dynamic v);
+}
+
+// Module layout
+external Bundle<bundle.Node> bundle();
+external Bundle< /*T*/ dynamic> bundle();
+
+// Module bundle
+@JS('d3.layout.bundle.Node')
+abstract class Node {
+  // @Ignore
+  Node.fakeConstructor$();
+  external Node get parent;
+  external set parent(Node v);
+}
+
+@JS('d3.layout.bundle.Link')
+abstract class Link<T extends Node> {
+  // @Ignore
+  Link.fakeConstructor$();
+  external T get source;
+  external set source(T v);
+  external T get target;
+  external set target(T v);
+}
+
+// End module bundle
+typedef List<List<T>> Bundle<T extends bundle.Node>(List<bundle.Link<T>> links);
+external Chord chord();
+
+// Module chord
+@JS('d3.layout.chord.Link')
+abstract class Link {
+  // @Ignore
+  Link.fakeConstructor$();
+  external Node get source;
+  external set source(Node v);
+  external Node get target;
+  external set target(Node v);
+}
+
+@JS('d3.layout.chord.Node')
+abstract class Node {
+  // @Ignore
+  Node.fakeConstructor$();
+  external num get index;
+  external set index(num v);
+  external num get subindex;
+  external set subindex(num v);
+  external num get startAngle;
+  external set startAngle(num v);
+  external num get endAngle;
+  external set endAngle(num v);
+  external num get value;
+  external set value(num v);
+}
+
+@JS('d3.layout.chord.Group')
+abstract class Group {
+  // @Ignore
+  Group.fakeConstructor$();
+  external num get index;
+  external set index(num v);
+  external num get startAngle;
+  external set startAngle(num v);
+  external num get endAngle;
+  external set endAngle(num v);
+  external num get value;
+  external set value(num v);
+}
+
+// End module chord
+@JS('d3.layout.Chord')
+abstract class Chord {
+  // @Ignore
+  Chord.fakeConstructor$();
+  external List<List<num>> matrix();
+  external Chord matrix(List<List<num>> matrix);
+  external num padding();
+  external Chord padding(num padding);
+  external Func2<num, num, num> sortGroups();
+  external Chord sortGroups(Func2<num, num, num> comparator);
+  external Func2<num, num, num> sortSubgroups();
+  external Chord sortSubgroups(Func2<num, num, num> comparator);
+  external Func2<num, num, num> sortChords();
+  external Chord sortChords(Func2<num, num, num> comparator);
+  external List<chord.Link> chords();
+  external List<chord.Group> groups();
+}
+
+external Cluster<cluster.Result> cluster();
+external Cluster< /*T*/ dynamic> cluster();
+
+// Module cluster
+@JS('d3.layout.cluster.Result')
+abstract class Result {
+  // @Ignore
+  Result.fakeConstructor$();
+  external Result get parent;
+  external set parent(Result v);
+  external List<Result> get children;
+  external set children(List<Result> v);
+  external num get depth;
+  external set depth(num v);
+  external num get x;
+  external set x(num v);
+  external num get y;
+  external set y(num v);
+}
+
+@JS('d3.layout.cluster.Link')
+abstract class Link<T extends Result> {
+  // @Ignore
+  Link.fakeConstructor$();
+  external T get source;
+  external set source(T v);
+  external T get target;
+  external set target(T v);
+}
+
+// End module cluster
+@JS('d3.layout.Cluster')
+abstract class Cluster<T extends cluster.Result> {
+  // @Ignore
+  Cluster.fakeConstructor$();
+  external List<T> nodes(T root);
+  external List<cluster.Link<T>> links(List<T> nodes);
+  external Func1<T, List<T>> children();
+  external Cluster<T> children(Func1<T, List<T>> accessor);
+  external Func2<T, T, num> sort();
+  external Cluster<T> sort(Func2<T, T, num> comparator);
+  external Func2<T, T, num> separation();
+  external Cluster<T> separation(Func2<T, T, num> separation);
+  external List<dynamic /* num | num */ > /* Tuple  num , num */ size();
+  external Cluster<T> size(
+      List<dynamic /* num | num */ > /* Tuple  num , num */ size);
+  external List<dynamic /* num | num */ > /* Tuple  num , num */ nodeSize();
+  external Cluster<T> nodeSize(
+      List<dynamic /* num | num */ > /* Tuple  num , num */ nodeSize);
+  external Func1<T, num> value();
+  external Cluster<T> value(Func1<T, num> value);
+}
+
+external Force<force.Link<force.Node>, force.Node> force();
+external Force<force.Link< /*Node*/ dynamic>, /*Node*/ dynamic> force();
+external Force< /*Link*/ dynamic, /*Node*/ dynamic> force();
+
+// Module force
+@JS('d3.layout.force.Link')
+abstract class Link<T extends Node> {
+  // @Ignore
+  Link.fakeConstructor$();
+  external T get source;
+  external set source(T v);
+  external T get target;
+  external set target(T v);
+}
+
+@JS('d3.layout.force.Node')
+abstract class Node {
+  // @Ignore
+  Node.fakeConstructor$();
+  external num get index;
+  external set index(num v);
+  external num get x;
+  external set x(num v);
+  external num get y;
+  external set y(num v);
+  external num get px;
+  external set px(num v);
+  external num get py;
+  external set py(num v);
+  external bool get fixed;
+  external set fixed(bool v);
+  external num get weight;
+  external set weight(num v);
+}
+
+@JS('d3.layout.force.Event')
+abstract class Event {
+  // @Ignore
+  Event.fakeConstructor$();
+  external String get type;
+  external set type(String v);
+  external num get alpha;
+  external set alpha(num v);
+}
+
+// End module force
+@JS('d3.layout.Force')
+abstract class Force<Link extends force.Link<force.Node>,
+    Node extends force.Node> {
+  // @Ignore
+  Force.fakeConstructor$();
+  external List<dynamic /* num | num */ > /* Tuple  num , num */ size();
+  external Force<Link, Node> size(
+      List<dynamic /* num | num */ > /* Tuple  num , num */ size);
+  external dynamic /* num | /* XXX LastTypeNode not supported yet*/ */ linkDistance();
+  external Force<Link, Node> linkDistance(num distance);
+  external Force<Link, Node> linkDistance(Func2<Link, num, num> distance);
+  external dynamic /* num | /* XXX LastTypeNode not supported yet*/ */ linkStrength();
+  external Force<Link, Node> linkStrength(num strength);
+  external Force<Link, Node> linkStrength(Func2<Link, num, num> strength);
+  external num friction();
+  external Force<Link, Node> friction(num friction);
+  external dynamic /* num | /* XXX LastTypeNode not supported yet*/ */ charge();
+  external Force<Link, Node> charge(num charge);
+  external Force<Link, Node> charge(Func2<Node, num, num> charge);
+  external num chargeDistance();
+  external Force<Link, Node> chargeDistance(num distance);
+  external num theta();
+  external Force<Link, Node> theta(num theta);
+  external num gravity();
+  external Force<Link, Node> gravity(num gravity);
+  external List<Node> nodes();
+  external Force<Link, Node> nodes(List<Node> nodes);
+  external List<Link> links();
+  external Force<Link, Node> links(List<dynamic> links);
+  external Force<Link, Node> links(List<Link> links);
+  external Force<Link, Node> start();
+  external num alpha();
+  external Force<Link, Node> alpha(num value);
+  external Force<Link, Node> resume();
+  external Force<Link, Node> stop();
+  external VoidFunc1<force.Event> on(String type);
+  external Force<Link, Node> on(String type, VoidFunc1<force.Event> listener);
+  external behavior.Drag<Node> drag();
+  external void drag(Selection<Node> selection);
+}
+
+external Hierarchy<hierarchy.Result> hierarchy();
+external Hierarchy< /*T*/ dynamic> hierarchy();
+
+// Module hierarchy
+@JS('d3.layout.hierarchy.Result')
+abstract class Result {
+  // @Ignore
+  Result.fakeConstructor$();
+  external Result get parent;
+  external set parent(Result v);
+  external List<Result> get children;
+  external set children(List<Result> v);
+  external num get value;
+  external set value(num v);
+  external num get depth;
+  external set depth(num v);
+}
+
+// End module hierarchy
+@JS('d3.layout.Hierarchy')
+abstract class Hierarchy<T extends hierarchy.Result> {
+  // @Ignore
+  Hierarchy.fakeConstructor$();
+  external Func1<T, List<T>> children();
+  external Hierarchy<T> children(Func1<T, List<T>> accessor);
+  external Func2<T, T, num> sort();
+  external Hierarchy<T> sort(Func2<T, T, num> comparator);
+  external Func1<T, num> value();
+  external Hierarchy<T> value(Func1<T, num> accessor);
+  external List<T> revalue(T root);
+}
+
+external Histogram<num> histogram();
+external Histogram< /*T*/ dynamic> histogram();
+
+// Module histogram
+@JS('d3.layout.histogram.Bin')
+abstract class Bin<T> implements Array<T> {
+  // @Ignore
+  Bin.fakeConstructor$();
+  external num get x;
+  external set x(num v);
+  external num get dx;
+  external set dx(num v);
+  external num get y;
+  external set y(num v);
+}
+
+// End module histogram
+@JS('d3.layout.Histogram')
+abstract class Histogram<T> {
+  // @Ignore
+  Histogram.fakeConstructor$();
+  external Func2<T, num, num> value();
+  external Histogram<T> value(Func2<T, num, num> value);
+  external Func2<List<T>, num,
+      List<dynamic /* num | num */ > /* Tuple  num , num */ > range();
+  external Histogram<T> range(Func2<List<T>, num,
+      List<dynamic /* num | num */ > /* Tuple  num , num */ > range);
+  external Func3<List<dynamic /* num | num */ > /* Tuple  num , num */, List<T>,
+      num, List<num>> bins();
+  external Histogram<T> bins(num count);
+  external Histogram<T> bins(List<num> thresholds);
+  external Histogram<T> bins(Func3<
+      List<dynamic /* num | num */ > /* Tuple  num , num */,
+      List<T>,
+      num,
+      List<num>> func);
+  external bool frequency();
+  external Histogram<T> frequency(bool frequency);
+}
+
+external Pack<pack.Node> pack();
+external Pack< /*T*/ dynamic> pack();
+
+// Module pack
+@JS('d3.layout.pack.Node')
+abstract class Node {
+  // @Ignore
+  Node.fakeConstructor$();
+  external Node get parent;
+  external set parent(Node v);
+  external List<Node> get children;
+  external set children(List<Node> v);
+  external num get value;
+  external set value(num v);
+  external num get depth;
+  external set depth(num v);
+  external num get x;
+  external set x(num v);
+  external num get y;
+  external set y(num v);
+  external num get r;
+  external set r(num v);
+}
+
+@JS('d3.layout.pack.Link')
+abstract class Link<T extends Node> {
+  // @Ignore
+  Link.fakeConstructor$();
+  external Node get source;
+  external set source(Node v);
+  external Node get target;
+  external set target(Node v);
+}
+
+// End module pack
+@JS('d3.layout.Pack')
+abstract class Pack<T extends pack.Node> {
+  // @Ignore
+  Pack.fakeConstructor$();
+  external List<T> nodes(T root);
+  external List<pack.Link<T>> links(List<T> nodes);
+  external Func2<T, num, List<T>> children();
+  external Pack<T> children(Func2<T, num, List<T>> children);
+  external Func2<T, T, num> sort();
+  external Pack<T> sort(Func2<T, T, num> comparator);
+  external Func1<T, num> value();
+  external Pack<T> value(Func1<T, num> value);
+  external List<dynamic /* num | num */ > /* Tuple  num , num */ size();
+  external Pack<T> size(
+      List<dynamic /* num | num */ > /* Tuple  num , num */ size);
+  external dynamic /* num | /* XXX LastTypeNode not supported yet*/ */ radius();
+  external Pack<T> radius(num radius);
+  external Pack<T> radius(Func1<T, num> radius);
+  external num padding();
+  external Pack<T> padding(num padding);
+}
+
+external Pie<num> pie();
+external Pie< /*T*/ dynamic> pie();
+
+// Module pie
+@JS('d3.layout.pie.Arc')
+abstract class Arc<T> {
+  // @Ignore
+  Arc.fakeConstructor$();
+  external num get value;
+  external set value(num v);
+  external num get startAngle;
+  external set startAngle(num v);
+  external num get endAngle;
+  external set endAngle(num v);
+  external num get padAngle;
+  external set padAngle(num v);
+  external T get data;
+  external set data(T v);
+}
+
+// End module pie
+@JS('d3.layout.Pie')
+abstract class Pie<T> {
+  // @Ignore
+  Pie.fakeConstructor$();
+  external Func2<T, num, num> value();
+  external Pie<T> value(Func2<T, num, num> accessor);
+  external Func2<T, T, num> sort();
+  external Pie<T> sort(Func2<T, T, num> comparator);
+  external dynamic /* num | /* XXX LastTypeNode not supported yet*/ */ startAngle();
+  external Pie<T> startAngle(num angle);
+  external Pie<T> startAngle(Func2<List<T>, num, num> angle);
+  external dynamic /* num | /* XXX LastTypeNode not supported yet*/ */ endAngle();
+  external Pie<T> endAngle(num angle);
+  external Pie<T> endAngle(Func2<List<T>, num, num> angle);
+  external dynamic /* num | /* XXX LastTypeNode not supported yet*/ */ padAngle();
+  external Pie<T> padAngle(num angle);
+  external Pie<T> padAngle(Func2<List<T>, num, num> angle);
+}
+
+external Stack<List<stack.Value>, stack.Value> stack();
+external Stack<List< /*Value*/ dynamic>, /*Value*/ dynamic> stack();
+external Stack< /*Series*/ dynamic, /*Value*/ dynamic> stack();
+
+// Module stack
+@JS('d3.layout.stack.Value')
+abstract class Value {
+  // @Ignore
+  Value.fakeConstructor$();
+  external num get x;
+  external set x(num v);
+  external num get y;
+  external set y(num v);
+  external num get y0;
+  external set y0(num v);
+}
+
+// End module stack
+@JS('d3.layout.Stack')
+abstract class Stack<Series, Value> {
+  // @Ignore
+  Stack.fakeConstructor$();
+  external Func2<Series, num, List<Value>> values();
+  external Stack<Series, Value> values(
+      Func2<Series, num, List<Value>> accessor);
+  external Func1<List<List<dynamic /* num | num */ > /* Tuple  num , num */ >,
+      List<num>> offset();
+  external Stack<Series, Value> offset(String /* "silhouette" */ offset);
+  external Stack<Series, Value> offset(String /* "wiggle" */ offset);
+  external Stack<Series, Value> offset(String /* "expand" */ offset);
+  external Stack<Series, Value> offset(String /* "zero" */ offset);
+  external Stack<Series, Value> offset(String offset);
+  external Stack<Series, Value> offset(Func1<
+      List<List<dynamic /* num | num */ > /* Tuple  num , num */ >,
+      List<num>> offset);
+  external Func1<List<List<dynamic /* num | num */ > /* Tuple  num , num */ >,
+      List<num>> order();
+  external Stack<Series, Value> order(String /* "inside-out" */ order);
+  external Stack<Series, Value> order(String /* "reverse" */ order);
+  external Stack<Series, Value> order(String /* "default" */ order);
+  external Stack<Series, Value> order(String order);
+  external Stack<Series, Value> order(Func1<
+      List<List<dynamic /* num | num */ > /* Tuple  num , num */ >,
+      List<num>> order);
+  external Func2<Value, num, num> x();
+  external Stack<Series, Value> x(Func2<Value, num, num> accessor);
+  external Func2<Value, num, num> y();
+  external Stack<Series, Value> y(Func2<Value, num, num> accesor);
+  external VoidFunc3<Value, num, num> out();
+  external Stack<Series, Value> out(VoidFunc3<Value, num, num> setter);
+}
+
+external Tree<tree.Node> tree();
+external Tree< /*T*/ dynamic> tree();
+
+// Module tree
+@JS('d3.layout.tree.Link')
+abstract class Link<T extends Node> {
+  // @Ignore
+  Link.fakeConstructor$();
+  external T get source;
+  external set source(T v);
+  external T get target;
+  external set target(T v);
+}
+
+@JS('d3.layout.tree.Node')
+abstract class Node {
+  // @Ignore
+  Node.fakeConstructor$();
+  external Node get parent;
+  external set parent(Node v);
+  external List<Node> get children;
+  external set children(List<Node> v);
+  external num get depth;
+  external set depth(num v);
+  external num get x;
+  external set x(num v);
+  external num get y;
+  external set y(num v);
+}
+
+// End module tree
+@JS('d3.layout.Tree')
+abstract class Tree<T> {
+  // @Ignore
+  Tree.fakeConstructor$();
+  external List<T> nodes(T root, [num index]);
+  external List<tree.Link<T>> links(List<T> nodes);
+  external Func2<T, num, List<T>> children();
+  external Tree<T> children(Func2<T, num, List<T>> children);
+  external Func2<T, T, num> separation();
+  external Tree<T> separation(Func2<T, T, num> separation);
+  external List<dynamic /* num | num */ > /* Tuple  num , num */ size();
+  external Tree<T> size(
+      List<dynamic /* num | num */ > /* Tuple  num , num */ size);
+  external List<dynamic /* num | num */ > /* Tuple  num , num */ nodeSize();
+  external Tree<T> nodeSize(
+      List<dynamic /* num | num */ > /* Tuple  num , num */ size);
+  external Func2<T, T, num> sort();
+  external Tree<T> sort(Func2<T, T, num> comparator);
+  external Func2<T, num, num> value();
+  external Tree<T> value(Func2<T, num, num> value);
+}
+
+external Treemap<treemap.Node> treemap();
+external Treemap< /*T*/ dynamic> treemap();
+
+// Module treemap
+@JS('d3.layout.treemap.Node')
+abstract class Node {
+  // @Ignore
+  Node.fakeConstructor$();
+  external Node get parent;
+  external set parent(Node v);
+  external List<Node> get children;
+  external set children(List<Node> v);
+  external num get value;
+  external set value(num v);
+  external num get depth;
+  external set depth(num v);
+  external num get x;
+  external set x(num v);
+  external num get y;
+  external set y(num v);
+  external num get dx;
+  external set dx(num v);
+  external num get dy;
+  external set dy(num v);
+}
+
+@JS('d3.layout.treemap.Link')
+abstract class Link<T extends Node> {
+  // @Ignore
+  Link.fakeConstructor$();
+  external T get source;
+  external set source(T v);
+  external T get target;
+  external set target(T v);
+} /* XXX TypeAliasDeclaration not supported. */
+
+// End module treemap
+@JS('d3.layout.Treemap')
+abstract class Treemap<T extends treemap.Node> {
+  // @Ignore
+  Treemap.fakeConstructor$();
+  external List<T> nodes(T root, [num index]);
+  external List<treemap.Link<T>> links(List<T> nodes);
+  external Func2<T, num, List<T>> children();
+  external Treemap<T> children(Func2<T, num, List<T>> children);
+  external Func2<T, T, num> sort();
+  external Treemap<T> sort(Func2<T, T, num> comparator);
+  external Func2<T, num, num> value();
+  external Treemap<T> value(Func2<T, num, num> value);
+  external List<dynamic /* num | num */ > /* Tuple  num , num */ size();
+  external Treemap<T> size(
+      List<dynamic /* num | num */ > /* Tuple  num , num */ size);
+  external Func2<T, num, treemap.Padding> padding();
+  external Treemap<T> padding(treemap.Padding padding);
+  external Treemap<T> padding(Func2<T, num, treemap.Padding> padding);
+  external bool round();
+  external Treemap<T> round(bool round);
+  external bool sticky();
+  external bool sticky(bool sticky);
+  external String mode();
+  external Treemap<T> mode(String /* "squarify" */ mode);
+  external Treemap<T> mode(String /* "slice" */ mode);
+  external Treemap<T> mode(String /* "dice" */ mode);
+  external Treemap<T> mode(String /* "slice-dice" */ mode);
+  external Treemap<T> mode(String mode);
+  external num ratio();
+  external Treemap<T> ratio(num ratio);
+}
+// End module layout
+
+// Module geom
+external Voronoi<
+    List<dynamic /* num | num */ > /* Tuple  num , num */ > voronoi();
+external Voronoi< /*T*/ dynamic> voronoi();
+
+// Module voronoi
+@JS('d3.geom.voronoi.Link')
+abstract class Link<T> {
+  // @Ignore
+  Link.fakeConstructor$();
+  external T get source;
+  external set source(T v);
+  external T get target;
+  external set target(T v);
+}
+
+// End module voronoi
+@JS('d3.geom.Voronoi')
+abstract class Voronoi<T> {
+  // @Ignore
+  Voronoi.fakeConstructor$();
+  external Func1<T, num> x();
+  external Voronoi<T> x(Func1<T, num> x);
+  external Func1<T, num> y();
+  external Voronoi<T> y(Func1<T, num> y);
+  external List<
+      dynamic /* List < dynamic /* num | num */ > /* Tuple  num , num */ | List < dynamic /* num | num */ > /* Tuple  num , num */ */ > /* Tuple  List < dynamic /* num | num */ > /* Tuple  num , num */ , List < dynamic /* num | num */ > /* Tuple  num , num */ */ clipExtent();
+  external Voronoi<T> clipExtent(List<
+      dynamic /* List < dynamic /* num | num */ > /* Tuple  num , num */ | List < dynamic /* num | num */ > /* Tuple  num , num */ */ > /* Tuple  List < dynamic /* num | num */ > /* Tuple  num , num */ , List < dynamic /* num | num */ > /* Tuple  num , num */ */ extent);
+  external List<voronoi.Link<T>> links(List<T> data);
+  external List<List<dynamic /* T | T */ > /* Tuple  T , T , T */ > triangles(
+      List<T> data);
+}
+
+/**
+       * @deprecated use d3.geom.voronoi().triangles() instead
+       */
+external List<
+    List<
+        dynamic /* List < dynamic /* num | num */ > /* Tuple  num , num */ | List < dynamic /* num | num */ > /* Tuple  num , num */ */ > /* Tuple  List < dynamic /* num | num */ > /* Tuple  num , num */ , List < dynamic /* num | num */ > /* Tuple  num , num */ , List < dynamic /* num | num */ > /* Tuple  num , num */ */ > delaunay(
+    List<List<dynamic /* num | num */ > /* Tuple  num , num */ > vertices);
+external Quadtree<
+    List<dynamic /* num | num */ > /* Tuple  num , num */ > quadtree();
+external quadtree.Quadtree< /*T*/ dynamic> quadtree(List< /*T*/ dynamic> nodes,
+    [num x1, num y1, num x2, num y2]);
+
+// Module quadtree
+@JS('d3.geom.quadtree.Node')
+abstract class Node<T> {
+  // @Ignore
+  Node.fakeConstructor$();
+  external List<
+      dynamic /* Node < T > | Node < T > */ > /* Tuple  Node < T > , Node < T > , Node < T > , Node < T > */ get nodes;
+  external set nodes(List<
+      dynamic /* Node < T > | Node < T > */ > /* Tuple  Node < T > , Node < T > , Node < T > , Node < T > */ v);
+  external bool get leaf;
+  external set leaf(bool v);
+  external T get point;
+  external set point(T v);
+  external num get x;
+  external set x(num v);
+  external num get y;
+  external set y(num v);
+}
+
+@JS('d3.geom.quadtree.Quadtree')
+abstract class Quadtree<T> implements Node<T> {
+  // @Ignore
+  Quadtree.fakeConstructor$();
+  external void add(T point);
+  external void visit(
+      Function /* (node: Node<T>, x1: number, y1: number, x2: number, y2: number) => boolean | void */ callback);
+  external T find(List<dynamic /* num | num */ > /* Tuple  num , num */ point);
+}
+
+// End module quadtree
+@JS('d3.geom.Quadtree')
+abstract class Quadtree<T> {
+  // @Ignore
+  Quadtree.fakeConstructor$();
+  external Func2<T, num, num> x();
+  external Quadtree<T> x(num x);
+  external Quadtree<T> x(Func2<T, num, num> x);
+  external Func2<T, num, num> y();
+  external Quadtree<T> y(num y);
+  external Quadtree<T> y(Func2<T, num, num> y);
+  external List<
+      dynamic /* List < dynamic /* num | num */ > /* Tuple  num , num */ | List < dynamic /* num | num */ > /* Tuple  num , num */ */ > /* Tuple  List < dynamic /* num | num */ > /* Tuple  num , num */ , List < dynamic /* num | num */ > /* Tuple  num , num */ */ extent();
+  external Quadtree<T> extent(List<
+      dynamic /* List < dynamic /* num | num */ > /* Tuple  num , num */ | List < dynamic /* num | num */ > /* Tuple  num , num */ */ > /* Tuple  List < dynamic /* num | num */ > /* Tuple  num , num */ , List < dynamic /* num | num */ > /* Tuple  num , num */ */ extent);
+}
+
+external List<List<dynamic /* num | num */ > /* Tuple  num , num */ > hull(
+    List<List<dynamic /* num | num */ > /* Tuple  num , num */ > vertices);
+external Hull<List<dynamic /* num | num */ > /* Tuple  num , num */ > hull();
+external Hull< /*T*/ dynamic> hull();
+
+@JS('d3.geom.Hull')
+abstract class Hull<T> {
+  // @Ignore
+  Hull.fakeConstructor$();
+  external Func1<T, num> x();
+  external Hull<T> x(Func1<T, num> x);
+  external Func1<T, num> y();
+  external Hull<T> y(Func1<T, num> y);
+}
+
+external Polygon polygon(
+    List<List<dynamic /* num | num */ > /* Tuple  num , num */ > vertices);
+
+@JS('d3.geom.Polygon')
+abstract class Polygon {
+  // @Ignore
+  Polygon.fakeConstructor$();
+  external num area();
+  external List<dynamic /* num | num */ > /* Tuple  num , num */ centroid();
+  external List<List<dynamic /* num | num */ > /* Tuple  num , num */ > clip(
+      List<List<dynamic /* num | num */ > /* Tuple  num , num */ > subject);
+}
+// End module geom
+/* XXX: Export assignment not supported yet. */
+
+// End module d3
+
+// we need this to exist
+
+/* Skipping interface TouchList*/
