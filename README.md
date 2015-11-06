@@ -1,6 +1,6 @@
 # atom-flutter-dev
 
-[![Build Status](https://travis-ci.org/flutter/atom-flutter-dev.svg)](https://travis-ci.org/flutter/atom-flutter-dev)
+[![Build Status](https://travis-ci.org/flutter/atom-flutter-dev.svg?branch=master)](https://travis-ci.org/flutter/atom-flutter-dev)
 
 A Flutter development environment for Atom.
 
