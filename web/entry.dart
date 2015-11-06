@@ -8,13 +8,12 @@ import 'package:logging/logging.dart';
 main() {
   print('*** hello from flutter ***');
 
-  // TODO: Default to warning.
   Logger.root.level = Level.INFO;
-  Logger.root.onRecord.listen((LogRecord r) {
-    String tag = '${r.level.name.toLowerCase()} • ${r.loggerName}:';
-    print('${tag} ${r.message}');
-    if (r.error != null) print('${tag}   ${r.error}');
-  });
+  // Logger.root.onRecord.listen((LogRecord r) {
+  //   String tag = '${r.level.name.toLowerCase()} • ${r.loggerName}:';
+  //   print('${tag} ${r.message}');
+  //   if (r.error != null) print('${tag}   ${r.error}');
+  // });
 
   registerPackage(new FlutterDevPackage());
 }
