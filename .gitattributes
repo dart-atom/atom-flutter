@@ -6,4 +6,4 @@
 *.yaml text
 *.png binary
 
-web/ddc linguist-vendored
+web/ddc/* linguist-vendored
