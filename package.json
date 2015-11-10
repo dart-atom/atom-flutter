@@ -1,5 +1,5 @@
 {
-  "name": "flutter-dev",
+  "name": "flutter",
   "main": "./web/entry_all.js",
   "version": "0.1.0",
   "description": "A Flutter development environment for Atom.",

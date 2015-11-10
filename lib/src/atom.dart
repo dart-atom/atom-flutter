@@ -2,27 +2,38 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-import 'package:js/js.dart';
-
-@JS('module.exports')
-dynamic exports;
+import 'dart:js';
 
 void registerPackage(AtomPackage package) {
-  print('foo');
+  print('** registerPackage() called **');
 
-  exports['activate'] = package.packageActivated;
-  exports['deactivate'] = package.packageDeactivated;
-  // exports['config'] = jsify(_package.config());
-  // exports['serialize'] = _package.serialize;
+  final JsObject exports = context['module']['exports'];
 
-  print('bar');
+  exports['activate'] = package.activate;
+  exports['deactivate'] = package.deactivate;
+  exports['config'] = jsify(package.config());
+  exports['serialize'] = package.serialize;
+
+  print('** registerPackage() exited **');
 }
 
 abstract class AtomPackage {
   AtomPackage();
 
   Map config() => {};
-  void packageActivated([dynamic state]) { }
-  void packageDeactivated() { }
+  void activate([dynamic state]) {
+    print('** AtomPackage.activate() **');
+  }
+  void deactivate() {
+    print('** AtomPackage.deactivate() **');
+  }
   dynamic serialize() => {};
+}
+
+JsObject jsify(obj) {
+  if (obj == null) return null;
+  if (obj is JsObject) return obj;
+  if (obj is List || obj is Map) return new JsObject.jsify(obj);
+  //if (obj is ProxyHolder) return obj.obj;
+  return obj;
 }

@@ -2,20 +2,27 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-import 'package:logging/logging.dart';
-
 import 'src/atom.dart';
 
 export 'src/atom.dart' show registerPackage;
 
-final Logger _logger = new Logger('flutter_dev');
-
 class FlutterDevPackage extends AtomPackage {
-  void packageActivated([dynamic state]) {
-    _logger.info('activated');
+  void activate([dynamic state]) {
+    print('** FlutterDevPackage.activate() **');
   }
 
-  void packageDeactivated() {
-    _logger.info('deactivated');
+  void deactivate() {
+    print('** FlutterDevPackage.deactivate() **');
+  }
+
+  Map config() {
+    return {
+      'flutterRoot': {
+        'title': 'FLUTTER_ROOT',
+        'description': 'The location of the Flutter SDK.',
+        'type': 'string',
+        'default': ''
+      }
+    };
   }
 }

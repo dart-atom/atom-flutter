@@ -33,7 +33,5 @@ require('./ddc/dev_compiler/runtime/dart/math.js');
 require('./ddc/dev_compiler/runtime/dart/mirrors.js');
 require('./ddc/dev_compiler/runtime/dart/typed_data.js');
 require('./ddc/entry.js');
-require('./ddc/js/js.js');
-require('./ddc/logging/logging.js');
 
 dart_library.start('entry');

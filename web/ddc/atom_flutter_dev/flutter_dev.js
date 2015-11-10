@@ -1,28 +1,26 @@
 dart_library.library('atom_flutter_dev/flutter_dev', null, /* Imports */[
   "dart/_runtime",
   'atom_flutter_dev/src/atom',
-  'logging/logging'
+  'dart/core'
 ], /* Lazy imports */[
-], function(exports, dart, atom, logging) {
+], function(exports, dart, atom, core) {
   'use strict';
   let dartx = dart.dartx;
   dart.export(exports, atom, ['registerPackage'], []);
-  dart.defineLazyProperties(exports, {
-    get _logger() {
-      return logging.Logger.new('flutter_dev');
-    }
-  });
   class FlutterDevPackage extends atom.AtomPackage {
     FlutterDevPackage() {
       super.AtomPackage();
     }
-    packageActivated(state) {
+    activate(state) {
       if (state === void 0)
         state = null;
-      exports._logger.info('activated');
+      core.print('** FlutterDevPackage.activate() **');
     }
-    packageDeactivated() {
-      exports._logger.info('deactivated');
+    deactivate() {
+      core.print('** FlutterDevPackage.deactivate() **');
+    }
+    config() {
+      return dart.map({flutterRoot: dart.map({title: 'FLUTTER_ROOT', description: 'The location of the Flutter SDK.', type: 'string', default: ''})});
     }
   }
   // Exports:
