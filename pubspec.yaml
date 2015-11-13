@@ -13,4 +13,5 @@ dependencies:
   # logging: ^0.11.0
 
 dev_dependencies:
-  grinder: ^0.8.0
+  #dev_compiler: 0.1.10
+  grinder: ^0.8.0+1

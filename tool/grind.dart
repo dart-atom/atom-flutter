@@ -17,8 +17,12 @@ analyze() {
 build() async {
   // dart ../../dev_compiler/bin/dev_compiler.dart -oweb/ddc web/entry.dart
 
+  // TODO: DDC can't be executed via `pub run`.
+  // PubApp ddc = new PubApp.local('dev_compiler');
+  // await ddc.runAsync(['-oweb/ddc', 'web/entry.dart']);
+
   await new DevCompiler().compileAsync(
-    getFile('web/entry.dart'), getDir('web/ddc'));
+      getFile('web/entry.dart'), getDir('web/ddc'));
 
   // Generate web/entry_all.js by traversing the web/ddc output directory.
   Directory ddcDir = getDir('web/ddc');
@@ -68,3 +72,9 @@ module.exports = {
 @DefaultTask()
 @Depends(analyze, build)
 bot() => null;
+
+@Task('Generate a DDC analysis report')
+report() {
+  return new DevCompiler().analyzeAsync(
+    getFile('web/entry.dart'), htmlReport: true);
+}
