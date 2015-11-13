@@ -35,3 +35,15 @@ require('./ddc/dev_compiler/runtime/dart/typed_data.js');
 require('./ddc/entry.js');
 
 dart_library.start('entry');
+
+module.exports = {
+  activate: function(arg) {
+    console.log('** activate **');
+    global.flutter.activate(arg);
+  },
+
+  deactivate: function() {
+    console.log('** deactivate **');
+    global.flutter.deactivate();
+  }
+};

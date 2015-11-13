@@ -9,7 +9,14 @@ dart_library.library('entry', null, /* Imports */[
   let dartx = dart.dartx;
   function main() {
     core.print('** flutter-dev main() called **');
-    atom.registerPackage(new flutter_dev.FlutterDevPackage());
+    let flutterPackage = new flutter_dev.FlutterDevPackage()
+    atom.registerPackage(flutterPackage);
+    global.flutter = {
+      activate: flutterPackage.activate,
+      deactivate: flutterPackage.deactivate,
+      config: flutterPackage.config(),
+      serialize: flutterPackage.serialize
+    };
   }
   dart.fn(main);
   // Exports:
