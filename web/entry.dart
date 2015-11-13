@@ -5,6 +5,5 @@
 import 'package:atom_flutter_dev/flutter_dev.dart';
 
 main() {
-  print('** flutter-dev main() called **');
   registerPackage(new FlutterDevPackage());
 }

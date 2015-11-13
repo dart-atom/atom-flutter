@@ -14,13 +14,13 @@ dart_library.library('atom_flutter_dev/flutter_dev', null, /* Imports */[
     activate(state) {
       if (state === void 0)
         state = null;
-      core.print('** FlutterDevPackage.activate() **');
-    }
-    deactivate() {
-      core.print('** FlutterDevPackage.deactivate() **');
+      core.print('flutter package activated');
     }
     config() {
       return dart.map({flutterRoot: dart.map({title: 'FLUTTER_ROOT', description: 'The location of the Flutter SDK.', type: 'string', default: ''})});
+    }
+    deactivate() {
+      core.print('flutter package deactivated');
     }
   }
   // Exports:

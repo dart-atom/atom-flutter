@@ -5,29 +5,23 @@
 import 'dart:js';
 
 void registerPackage(AtomPackage package) {
-  print('** registerPackage() called **');
+  Map flutter = {
+    'activate': package.activate,
+    'deactivate': package.deactivate,
+    'config': jsify(package.config()),
+    'serialize': package.serialize
+  };
 
-  final JsObject exports = context['module']['exports'];
-
-  exports['activate'] = package.activate;
-  exports['deactivate'] = package.deactivate;
-  exports['config'] = jsify(package.config());
-  exports['serialize'] = package.serialize;
-
-  print('** registerPackage() exited **');
+  context['flutter'] = jsify(flutter);
 }
 
 abstract class AtomPackage {
   AtomPackage();
 
+  void activate([dynamic state]) { }
   Map config() => {};
-  void activate([dynamic state]) {
-    print('** AtomPackage.activate() **');
-  }
-  void deactivate() {
-    print('** AtomPackage.deactivate() **');
-  }
   dynamic serialize() => {};
+  void deactivate() { }
 }
 
 JsObject jsify(obj) {

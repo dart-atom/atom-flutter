@@ -38,12 +38,12 @@ dart_library.start('entry');
 
 module.exports = {
   activate: function(arg) {
-    console.log('** activate **');
     global.flutter.activate(arg);
   },
 
+  config: global.flutter.config,
+
   deactivate: function() {
-    console.log('** deactivate **');
     global.flutter.deactivate();
   }
 };
