@@ -47,7 +47,21 @@ global.dart_library = require('./ddc/dev_compiler/runtime/dart_library.js');
 ${paths.map((path) => "require('${path}');").join('\n')}
 
 dart_library.start('entry');
+
+module.exports = {
+  activate: function(arg) {
+    global.flutter.activate(arg);
+  },
+
+  config: global.flutter.config,
+
+  deactivate: function() {
+    global.flutter.deactivate();
+  }
+};
 ''';
+
+  log('Generated ${entryJsFile.path}.');
   entryJsFile.writeAsStringSync(contents);
 }
 

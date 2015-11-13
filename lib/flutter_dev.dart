@@ -8,11 +8,7 @@ export 'src/atom.dart' show registerPackage;
 
 class FlutterDevPackage extends AtomPackage {
   void activate([dynamic state]) {
-    print('** FlutterDevPackage.activate() **');
-  }
-
-  void deactivate() {
-    print('** FlutterDevPackage.deactivate() **');
+    print('flutter package activated');
   }
 
   Map config() {
@@ -24,5 +20,9 @@ class FlutterDevPackage extends AtomPackage {
         'default': ''
       }
     };
+  }
+
+  void deactivate() {
+    print('flutter package deactivated');
   }
 }

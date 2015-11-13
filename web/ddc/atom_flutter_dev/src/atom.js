@@ -1,46 +1,38 @@
 dart_library.library('atom_flutter_dev/src/atom', null, /* Imports */[
   "dart/_runtime",
-  'dart/core',
-  'dart/js'
+  'dart/js',
+  'dart/core'
 ], /* Lazy imports */[
-], function(exports, dart, core, js) {
+], function(exports, dart, js, core) {
   'use strict';
   let dartx = dart.dartx;
   function registerPackage(package$) {
-    core.print('** registerPackage() called **');
-    let exports = dart.as(dart.dindex(js.context.get('module'), 'exports'), js.JsObject);
-    exports.set('activate', dart.bind(package$, 'activate'));
-    exports.set('deactivate', dart.bind(package$, 'deactivate'));
-    exports.set('config', jsify(package$.config()));
-    exports.set('serialize', dart.bind(package$, 'serialize'));
-    core.print('** registerPackage() exited **');
+    let flutter = dart.map({activate: dart.bind(package$, 'activate'), deactivate: dart.bind(package$, 'deactivate'), config: jsify(package$.config()), serialize: dart.bind(package$, 'serialize')});
+    js.context.set('flutter', jsify(flutter));
   }
   dart.fn(registerPackage, () => dart.definiteFunctionType(dart.void, [AtomPackage]));
   class AtomPackage extends core.Object {
     AtomPackage() {
     }
-    config() {
-      return dart.map();
-    }
     activate(state) {
       if (state === void 0)
         state = null;
-      core.print('** AtomPackage.activate() **');
     }
-    deactivate() {
-      core.print('** AtomPackage.deactivate() **');
+    config() {
+      return dart.map();
     }
     serialize() {
       return dart.map();
     }
+    deactivate() {}
   }
   dart.setSignature(AtomPackage, {
     constructors: () => ({AtomPackage: [AtomPackage, []]}),
     methods: () => ({
-      config: [core.Map, []],
       activate: [dart.void, [], [dart.dynamic]],
-      deactivate: [dart.void, []],
-      serialize: [dart.dynamic, []]
+      config: [core.Map, []],
+      serialize: [dart.dynamic, []],
+      deactivate: [dart.void, []]
     })
   });
   function jsify(obj) {
