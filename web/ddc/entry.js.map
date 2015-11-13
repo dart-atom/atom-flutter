@@ -1,1 +1,1 @@
-{"version":3,"sourceRoot":"","sources":[],"names":[],"mappings":"","file":"entry.js"}
+{"version":3,"sourceRoot":"","sources":["../entry.dart"],"names":["registerPackage"],"mappings":";;;;;;;;AAMA,kBAAO;AACL,IAAA,AAAAA,oBAAe,CAAC,mCAAuB,CAAC;AAAC,GAE3C;;AAAA","file":"entry.js"}
