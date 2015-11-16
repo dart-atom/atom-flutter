@@ -2,13 +2,19 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+//import 'package:atom/node/shell.dart';
+
 import 'src/atom.dart';
 
 export 'src/atom.dart' show registerPackage;
 
 class FlutterDevPackage extends AtomPackage {
+  FlutterDevPackage() : super('flutter');
+
   void activate([dynamic state]) {
     print('flutter package activated');
+
+    //shell.openExternal('http://www.cheese.com/');
   }
 
   Map config() {

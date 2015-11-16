@@ -9,7 +9,7 @@ dart_library.library('atom_flutter_dev/flutter_dev', null, /* Imports */[
   dart.export(exports, atom, ['registerPackage'], []);
   class FlutterDevPackage extends atom.AtomPackage {
     FlutterDevPackage() {
-      super.AtomPackage();
+      super.AtomPackage('flutter');
     }
     activate(state) {
       if (state === void 0)
@@ -23,6 +23,9 @@ dart_library.library('atom_flutter_dev/flutter_dev', null, /* Imports */[
       core.print('flutter package deactivated');
     }
   }
+  dart.setSignature(FlutterDevPackage, {
+    constructors: () => ({FlutterDevPackage: [FlutterDevPackage, []]})
+  });
   // Exports:
   exports.FlutterDevPackage = FlutterDevPackage;
 });
