@@ -16,7 +16,9 @@ void registerPackage(AtomPackage package) {
 }
 
 abstract class AtomPackage {
-  AtomPackage();
+  final String name;
+
+  AtomPackage(this.name);
 
   void activate([dynamic state]) { }
   Map config() => {};

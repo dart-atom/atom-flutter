@@ -16,8 +16,6 @@ analyze() {
 @Task()
 build() async {
   // dart ../../dev_compiler/bin/dev_compiler.dart -oweb/ddc web/entry.dart
-
-  // TODO: DDC can't be executed via `pub run`.
   // PubApp ddc = new PubApp.local('dev_compiler');
   // await ddc.runAsync(['-oweb/ddc', 'web/entry.dart']);
 

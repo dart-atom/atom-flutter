@@ -12,7 +12,8 @@ dart_library.library('atom_flutter_dev/src/atom', null, /* Imports */[
   }
   dart.fn(registerPackage, () => dart.definiteFunctionType(dart.void, [AtomPackage]));
   class AtomPackage extends core.Object {
-    AtomPackage() {
+    AtomPackage(name) {
+      this.name = name;
     }
     activate(state) {
       if (state === void 0)
@@ -27,7 +28,7 @@ dart_library.library('atom_flutter_dev/src/atom', null, /* Imports */[
     deactivate() {}
   }
   dart.setSignature(AtomPackage, {
-    constructors: () => ({AtomPackage: [AtomPackage, []]}),
+    constructors: () => ({AtomPackage: [AtomPackage, [core.String]]}),
     methods: () => ({
       activate: [dart.void, [], [dart.dynamic]],
       config: [core.Map, []],
