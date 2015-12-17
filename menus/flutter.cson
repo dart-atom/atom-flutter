@@ -1,0 +1,10 @@
+'menu': [{
+    label: 'Packages'
+    submenu: [{
+      label: 'Flutter'
+      submenu: [
+        {label: 'Hey from Flutter', command: 'flutter:flutter-hey'}
+      ]
+    }]
+  }
+]

@@ -9,10 +9,12 @@
     "dart"
   ],
   "repository": "https://github.com/flutter/atom-flutter-dev",
-  "license": "BSD",
+  "license": "BSD-3-Clause",
   "engines": {
     "atom": ">=1.0.0 <2.0.0"
   },
-  "dependencies": {},
-  "packages": []
+  "dependencies": {
+  },
+  "required-packages": [
+  ]
 }

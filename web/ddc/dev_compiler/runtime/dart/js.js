@@ -12,7 +12,7 @@ dart_library.library('dart/js', null, /* Imports */[
       return _wrapToDart(dart.global);
     }
   });
-  let _jsObject = Symbol('_jsObject');
+  const _jsObject = Symbol('_jsObject');
   class JsObject extends core.Object {
     _fromJs(jsObject) {
       this[_jsObject] = jsObject;
@@ -166,9 +166,9 @@ dart_library.library('dart/js', null, /* Imports */[
     }),
     methods: () => ({apply: [dart.dynamic, [core.List], {thisArg: dart.dynamic}]})
   });
-  let _checkIndex = Symbol('_checkIndex');
-  let _checkInsertIndex = Symbol('_checkInsertIndex');
-  let JsArray$ = dart.generic(function(E) {
+  const _checkIndex = Symbol('_checkIndex');
+  const _checkInsertIndex = Symbol('_checkInsertIndex');
+  const JsArray$ = dart.generic(function(E) {
     class JsArray extends dart.mixin(JsObject, collection.ListMixin$(E)) {
       JsArray() {
         super._fromJs([]);
@@ -318,7 +318,7 @@ dart_library.library('dart/js', null, /* Imports */[
     return o instanceof Blob || o instanceof Event || window.KeyRange && o instanceof KeyRange || o instanceof ImageData || o instanceof Node || window.TypedData && o instanceof TypedData || o instanceof Window;
   }
   dart.fn(_isBrowserType, core.bool, [dart.dynamic]);
-  let _dartObj = Symbol('_dartObj');
+  const _dartObj = Symbol('_dartObj');
   class _DartObject extends core.Object {
     _DartObject(dartObj) {
       this[_dartObj] = dartObj;
@@ -335,9 +335,9 @@ dart_library.library('dart/js', null, /* Imports */[
     } else if (dart.is(o, JsObject)) {
       return dart.dload(o, _jsObject);
     } else if (dart.is(o, core.Function)) {
-      return _putIfAbsent(exports._jsProxies, o, _wrapDartFunction);
+      return _putIfAbsent(_jsProxies, o, _wrapDartFunction);
     } else {
-      return _putIfAbsent(exports._jsProxies, o, dart.fn(o => new _DartObject(o), _DartObject, [dart.dynamic]));
+      return _putIfAbsent(_jsProxies, o, dart.fn(o => new _DartObject(o), _DartObject, [dart.dynamic]));
     }
   }
   dart.fn(_convertToJS);
@@ -346,7 +346,7 @@ dart_library.library('dart/js', null, /* Imports */[
       let args = Array.prototype.map.call(arguments, _convertToDart);
       return _convertToJS(f(...args));
     };
-    dart.dsetindex(exports._dartProxies, wrapper, f);
+    dart.dsetindex(_dartProxies, wrapper, f);
     return wrapper;
   }
   dart.fn(_wrapDartFunction);
@@ -359,7 +359,7 @@ dart_library.library('dart/js', null, /* Imports */[
     } else if (dart.is(o, _DartObject) && dart.jsobject != dart.realRuntimeType(o)) {
       return dart.dload(o, _dartObj);
     } else {
-      return _putIfAbsent(exports._dartProxies, o, _wrapToDart);
+      return _putIfAbsent(_dartProxies, o, _wrapToDart);
     }
   }
   dart.fn(_convertToDart, core.Object, [dart.dynamic]);
@@ -373,14 +373,8 @@ dart_library.library('dart/js', null, /* Imports */[
     return new JsObject._fromJs(o);
   }
   dart.fn(_wrapToDart, JsObject, [dart.dynamic]);
-  dart.defineLazyProperties(exports, {
-    get _dartProxies() {
-      return new WeakMap();
-    },
-    get _jsProxies() {
-      return new WeakMap();
-    }
-  });
+  const _dartProxies = new WeakMap();
+  const _jsProxies = new WeakMap();
   function _putIfAbsent(weakMap, o, getValue) {
     let value = weakMap.get(o);
     if (value == null) {
@@ -390,8 +384,33 @@ dart_library.library('dart/js', null, /* Imports */[
     return value;
   }
   dart.fn(_putIfAbsent, core.Object, [dart.dynamic, dart.dynamic, dart.functionType(dart.dynamic, [dart.dynamic])]);
-  let __CastType0$ = dart.generic(function(E) {
-    let __CastType0 = dart.typedef('__CastType0', () => dart.functionType(dart.dynamic, [E]));
+  function allowInterop(f) {
+    return f;
+  }
+  dart.fn(allowInterop, core.Function, [core.Function]);
+  dart.defineLazyProperties(exports, {
+    get _interopCaptureThisExpando() {
+      return new (core.Expando$(core.Function))();
+    },
+    set _interopCaptureThisExpando(_) {}
+  });
+  function allowInteropCaptureThis(f) {
+    let ret = exports._interopCaptureThisExpando.get(f);
+    if (ret == null) {
+      ret = dart.as(function() {
+        let args = [this];
+        for (let arg of arguments) {
+          args.push(arg);
+        }
+        return f(...args);
+      }, core.Function);
+      exports._interopCaptureThisExpando.set(f, ret);
+    }
+    return ret;
+  }
+  dart.fn(allowInteropCaptureThis, core.Function, [core.Function]);
+  const __CastType0$ = dart.generic(function(E) {
+    const __CastType0 = dart.typedef('__CastType0', () => dart.functionType(dart.dynamic, [E]));
     return __CastType0;
   });
   let __CastType0 = __CastType0$();
@@ -400,4 +419,6 @@ dart_library.library('dart/js', null, /* Imports */[
   exports.JsFunction = JsFunction;
   exports.JsArray$ = JsArray$;
   exports.JsArray = JsArray;
+  exports.allowInterop = allowInterop;
+  exports.allowInteropCaptureThis = allowInteropCaptureThis;
 });

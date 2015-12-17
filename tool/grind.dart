@@ -16,11 +16,12 @@ analyze() {
 @Task()
 build() async {
   // dart ../../dev_compiler/bin/dev_compiler.dart -oweb/ddc web/entry.dart
-  // PubApp ddc = new PubApp.local('dev_compiler');
-  // await ddc.runAsync(['-oweb/ddc', 'web/entry.dart']);
-
-  await new DevCompiler().compileAsync(
-      getFile('web/entry.dart'), getDir('web/ddc'));
+  PubApp ddc = new PubApp.global('dev_compiler');
+  await ddc.runAsync([
+    '--no-destructure-named-params',
+    '-oweb/ddc',
+    'web/entry.dart'
+  ]);
 
   // Generate web/entry_all.js by traversing the web/ddc output directory.
   Directory ddcDir = getDir('web/ddc');
@@ -28,14 +29,12 @@ build() async {
       .where((entity) => entity is File && entity.path.endsWith('.js'))
       .toList();
 
-  files.removeWhere((file) => file.path.endsWith('dart_utils.js'));
   files.removeWhere((file) => file.path.endsWith('dart_library.js'));
   files.removeWhere((file) => file.path.endsWith('harmony_feature_check.js'));
 
-  List<String> paths = files
+  List<String> paths = new List.from(files
       .map((file) => file.path)
-      .map((path) => path.replaceAll('web/ddc/', './ddc/'))
-      .toList();
+      .map((path) => path.replaceAll('web/ddc/', './ddc/')));
 
   File entryJsFile = getFile('web/entry_all.js');
   String contents = '''
@@ -43,7 +42,6 @@ build() async {
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-global.dart_utils = require('./ddc/dev_compiler/runtime/dart_utils.js');
 global.dart_library = require('./ddc/dev_compiler/runtime/dart_library.js');
 
 ${paths.map((path) => "require('${path}');").join('\n')}
@@ -56,6 +54,10 @@ module.exports = {
   },
 
   config: global.flutter.config,
+
+  serialize: function(arg) {
+    return global.flutter.serialize();
+  },
 
   deactivate: function() {
     global.flutter.deactivate();

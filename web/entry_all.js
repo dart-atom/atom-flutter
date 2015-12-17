@@ -2,11 +2,12 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
-global.dart_utils = require('./ddc/dev_compiler/runtime/dart_utils.js');
 global.dart_library = require('./ddc/dev_compiler/runtime/dart_library.js');
 
+require('./ddc/atom/atom.js');
+require('./ddc/atom/src/js.js');
+require('./ddc/atom/utils/disposable.js');
 require('./ddc/atom_flutter_dev/flutter_dev.js');
-require('./ddc/atom_flutter_dev/src/atom.js');
 require('./ddc/dev_compiler/runtime/dart/_classes.js');
 require('./ddc/dev_compiler/runtime/dart/_errors.js');
 require('./ddc/dev_compiler/runtime/dart/_foreign_helper.js');
@@ -23,6 +24,7 @@ require('./ddc/dev_compiler/runtime/dart/_operations.js');
 require('./ddc/dev_compiler/runtime/dart/_rtti.js');
 require('./ddc/dev_compiler/runtime/dart/_runtime.js');
 require('./ddc/dev_compiler/runtime/dart/_types.js');
+require('./ddc/dev_compiler/runtime/dart/_utils.js');
 require('./ddc/dev_compiler/runtime/dart/async.js');
 require('./ddc/dev_compiler/runtime/dart/collection.js');
 require('./ddc/dev_compiler/runtime/dart/convert.js');
@@ -33,6 +35,7 @@ require('./ddc/dev_compiler/runtime/dart/math.js');
 require('./ddc/dev_compiler/runtime/dart/mirrors.js');
 require('./ddc/dev_compiler/runtime/dart/typed_data.js');
 require('./ddc/entry.js');
+require('./ddc/logging/logging.js');
 
 dart_library.start('entry');
 
@@ -42,6 +45,10 @@ module.exports = {
   },
 
   config: global.flutter.config,
+
+  serialize: function(arg) {
+    return global.flutter.serialize();
+  },
 
   deactivate: function() {
     global.flutter.deactivate();

@@ -1,6 +1,6 @@
 dart_library.library('entry', null, /* Imports */[
   "dart/_runtime",
-  'atom_flutter_dev/src/atom',
+  'atom/atom',
   'atom_flutter_dev/flutter_dev'
 ], /* Lazy imports */[
 ], function(exports, dart, atom, flutter_dev) {
