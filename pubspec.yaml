@@ -11,10 +11,8 @@ dependencies:
   atom:
     git: https://github.com/dart-atom/atom.dart.git
     # path: ../../atom/atom.dart
-  # func: ^0.1.0
-  # js: 0.6.0-beta.7
-  # logging: ^0.11.0
+  logging: ^0.11.0
 
 dev_dependencies:
-  #dev_compiler: 0.1.11
+  #dev_compiler: 0.1.12
   grinder: ^0.8.0+1
