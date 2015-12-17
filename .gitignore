@@ -4,6 +4,6 @@
 .pub/
 .settings/
 build/
-#packages
+packages
 .packages
 pubspec.lock
