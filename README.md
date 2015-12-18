@@ -1,6 +1,6 @@
-# atom-flutter-dev
+# atom-flutter
 
-[![Build Status](https://travis-ci.org/flutter/atom-flutter-dev.svg?branch=master)](https://travis-ci.org/flutter/atom-flutter-dev)
+[![Build Status](https://travis-ci.org/flutter/atom-flutter.svg?branch=master)](https://travis-ci.org/flutter/atom-flutter)
 
 A Flutter development environment for Atom.
 
@@ -16,4 +16,4 @@ For info about the existing Dart plugin for Atom, see the
 
 Please file feature requests and bugs at the [issue tracker][tracker].
 
-[tracker]: https://github.com/flutter/atom-flutter-dev/issues
+[tracker]: https://github.com/flutter/atom-flutter/issues

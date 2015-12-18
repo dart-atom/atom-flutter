@@ -3,7 +3,7 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'package:atom/atom.dart';
-import 'package:atom_flutter_dev/flutter_dev.dart';
+import 'package:atom_flutter/flutter.dart';
 
 main() {
   registerPackage(new FlutterDevPackage());

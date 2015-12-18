@@ -1,8 +1,8 @@
-name: atom_flutter_dev
+name: atom_flutter
 version: 0.0.1
 description: A Flutter development environment for Atom.
 author: Flutter Team <flutter-dev@googlegroups.com>
-homepage: https://github.com/flutter/atom-flutter-dev
+homepage: https://github.com/flutter/atom-flutter
 
 environment:
   sdk: '>=1.8.0 <2.0.0'
