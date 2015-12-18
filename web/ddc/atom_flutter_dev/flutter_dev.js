@@ -1,32 +1,38 @@
 dart_library.library('atom_flutter_dev/flutter_dev', null, /* Imports */[
   "dart/_runtime",
   'atom/atom',
+  'atom/utils/disposable',
   'dart/async',
-  'dart/core'
+  'dart/core',
+  'atom/utils/package_deps'
 ], /* Lazy imports */[
-], function(exports, dart, atom, async, core) {
+], function(exports, dart, atom, disposable, async, core, package_deps) {
   'use strict';
   let dartx = dart.dartx;
+  const _init = Symbol('_init');
   class FlutterDevPackage extends atom.AtomPackage {
     FlutterDevPackage() {
+      this.disposables = new disposable.Disposables();
       super.AtomPackage('flutter');
     }
     activate(state) {
-      if (state === void 0)
-        state = null;
-      atom.atom.notifications.addInfo('Flutter plugin installed.');
-      async.Future.delayed(new core.Duration({seconds: 4})).then(dart.fn(_ => {
-        atom.atom.notifications.addSuccess('Plus, futures work!');
+      if (state === void 0) state = null;
+      async.Future.delayed(core.Duration.ZERO, dart.fn(() => {
+        package_deps.install('Flutter', this, {justNotify: true});
       }));
+      this[_init]();
     }
-    config() {
-      return dart.map({flutterRoot: dart.map({title: 'FLUTTER_ROOT', description: 'The location of the Flutter SDK.', type: 'string', default: ''})});
+    [_init]() {}
+    deactivate() {
+      this.disposables.dispose();
     }
-    deactivate() {}
   }
   dart.setSignature(FlutterDevPackage, {
     constructors: () => ({FlutterDevPackage: [FlutterDevPackage, []]}),
-    methods: () => ({activate: [dart.void, [], [dart.dynamic]]})
+    methods: () => ({
+      activate: [dart.void, [], [dart.dynamic]],
+      [_init]: [dart.void, []]
+    })
   });
   // Exports:
   exports.FlutterDevPackage = FlutterDevPackage;

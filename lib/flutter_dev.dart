@@ -5,30 +5,40 @@
 import 'dart:async';
 
 import 'package:atom/atom.dart';
+import 'package:atom/utils/disposable.dart';
+import 'package:atom/utils/package_deps.dart' as package_deps;
+
+// import 'menus/getting_started.dart';
 
 class FlutterDevPackage extends AtomPackage {
+  Disposables disposables = new Disposables();
+
   FlutterDevPackage() : super('flutter');
 
   void activate([dynamic state]) {
-    atom.notifications.addInfo('Flutter plugin installed.');
-
-    new Future.delayed(new Duration(seconds: 4)).then((_) {
-      atom.notifications.addSuccess('Plus, futures work!');
+    new Future.delayed(Duration.ZERO, () {
+      package_deps.install('Flutter', this, justNotify: true);
     });
+
+    _init();
   }
 
-  Map config() {
-    return {
-      'flutterRoot': {
-        'title': 'FLUTTER_ROOT',
-        'description': 'The location of the Flutter SDK.',
-        'type': 'string',
-        'default': ''
-      }
-    };
+  void _init() {
+    // disposables.add(new GettingStarted());
   }
+
+  // Map config() {
+  //   return {
+  //     'flutterRoot': {
+  //       'title': 'FLUTTER_ROOT',
+  //       'description': 'The location of the Flutter SDK.',
+  //       'type': 'string',
+  //       'default': ''
+  //     }
+  //   };
+  // }
 
   void deactivate() {
-
+    disposables.dispose();
   }
 }

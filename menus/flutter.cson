@@ -1,10 +1,15 @@
-'menu': [{
+'menu': [
+  {
     label: 'Packages'
-    submenu: [{
-      label: 'Flutter'
-      submenu: [
-        {label: 'Hey from Flutter', command: 'flutter:flutter-hey'}
-      ]
-    }]
+    submenu: [
+      {
+        label: 'Flutter'
+        submenu: [
+          { label: 'Create new Flutter project…', command: 'flutter:create-project'}
+          { type: 'separator' }
+          { label: 'Getting Started…', command: 'flutter:getting-started' }
+        ]
+      }
+    ]
   }
 ]
