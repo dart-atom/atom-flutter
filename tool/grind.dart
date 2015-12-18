@@ -15,7 +15,13 @@ analyze() {
 
 @Task()
 build() async {
-  // dart ../../dev_compiler/bin/dev_compiler.dart -oweb/ddc web/entry.dart
+  // runDartScript(
+  //   '../../dev_compiler/bin/dev_compiler.dart',
+  //   arguments: [
+  //     '--no-destructure-named-params',
+  //     '-oweb/ddc',
+  //     'web/entry.dart']
+  // );
   PubApp ddc = new PubApp.global('dev_compiler');
   await ddc.runAsync([
     '--no-destructure-named-params',
@@ -31,6 +37,15 @@ build() async {
 
   files.removeWhere((file) => file.path.endsWith('dart_library.js'));
   files.removeWhere((file) => file.path.endsWith('harmony_feature_check.js'));
+
+  // In dart:convert, change '= JSON.parse(' to '= window.JSON.parse('.
+  File convertJs = getFile('web/ddc/dev_compiler/runtime/dart/convert.js');
+  convertJs.writeAsStringSync(
+    convertJs.readAsStringSync().replaceAll(
+      '= JSON.parse(',
+      '= window.JSON.parse('
+    )
+  );
 
   List<String> paths = new List.from(files
       .map((file) => file.path)
@@ -50,7 +65,7 @@ dart_library.start('entry');
 
 module.exports = {
   activate: function(arg) {
-    global.flutter.activate(arg);
+    global.flutter.activate(); // TODO: arg);
   },
 
   config: global.flutter.config,

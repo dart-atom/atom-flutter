@@ -2,7 +2,7 @@
   "version": 3,
   "sourceRoot": "",
   "sources": ["../../../../atom/utils/disposable.dart"],
-  "names": [],
-  "mappings": ";;;;;;;AAGA;AAGA",
+  "names": ["catchExceptions","_disposables","disposable","list","e","_logger","st"],
+  "mappings": ";;;;;;;;AAKa,AAAkC;;YAAxB,oBAAW,YAAY,CAAC;;;AAE/C;AAEC;AAED;IAKE,kBAAA;UAAkBA,eAAe;2BAhBnC,yBAcoC;6BAErB,eAAoB;AAAE,AAAC,KAAA,AAAA;QAE3B,UAAqB,EAAE;YAAG,AAAAC,mBAAY,YAAKC,UAAU,CAAC;KAAC;WAEpD,IAAyB,EAAE;YAAGD,AAAA,mBAAY,eAAQE,IAAI,CAAC;KAAC;WAExD,UAAqB,EAAE;YAAG,AAAAF,mBAAY,eAAQC,UAAU,CAAC;KAAC;cAEvD;AACb,4BAA8BD,mBAAY,EAAE;AAC1C,yBAAID,oBAAe,GAAE;AACnB,cAAI;AACF,YAAA,AAAAE,UAAU,UAAU;AAAC,WACtB,QAAQE,CAAC;qCAADA,CAAC;AACR,YAAA,AAAAC,eAAO,QAAQ,0BAA0B,EAAED,CAAC,EAAEE,EAAE,CAAC;AAAC;;AACnD,SACF,MAAM;AACL,UAAA,AAAAJ,UAAU,UAAU;AAAC,SACtB;AAAA,OACF;AAAA,AAED,MAAA,AAAAD,kBAAY,eAAQ;AAAC,KACtB;;;;;;;;;;;;AAEH",
   "file": "disposable.js"
 }

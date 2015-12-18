@@ -9,7 +9,7 @@ dart_library.library('atom/src/js', null, /* Imports */[
 ], function(exports, dart, js, logging, core, async, disposable) {
   'use strict';
   let dartx = dart.dartx;
-  dart.export_(exports, js, ['context', 'JsObject'], []);
+  dart.export_(exports, js, ['context', 'JsObject', 'JsFunction'], []);
   dart.defineLazyProperties(exports, {
     get _logger() {
       return logging.Logger.new("js");
@@ -17,20 +17,15 @@ dart_library.library('atom/src/js', null, /* Imports */[
     set _logger(_) {}
   });
   function jsify(obj) {
-    if (obj == null)
-      return null;
-    if (dart.is(obj, js.JsObject))
-      return obj;
-    if (dart.is(obj, core.List) || dart.is(obj, core.Map))
-      return js.JsObject.jsify(obj);
-    if (dart.is(obj, ProxyHolder))
-      return dart.dload(obj, 'obj');
+    if (obj == null) return null;
+    if (dart.is(obj, js.JsObject)) return obj;
+    if (dart.is(obj, core.List) || dart.is(obj, core.Map)) return js.JsObject.jsify(obj);
+    if (dart.is(obj, ProxyHolder)) return dart.dload(obj, 'obj');
     return obj;
   }
   dart.fn(jsify);
   function promiseToFuture(promise) {
-    if (dart.is(promise, js.JsObject))
-      promise = new Promise(dart.as(promise, js.JsObject));
+    if (dart.is(promise, js.JsObject)) promise = new Promise(dart.as(promise, js.JsObject));
     let completer = async.Completer.new();
     dart.dsend(promise, 'then', dart.fn(result => {
       completer.complete(result);
@@ -45,18 +40,12 @@ dart_library.library('atom/src/js', null, /* Imports */[
       this.obj = obj;
     }
     invoke(method, arg1, arg2, arg3) {
-      if (arg1 === void 0)
-        arg1 = null;
-      if (arg2 === void 0)
-        arg2 = null;
-      if (arg3 === void 0)
-        arg3 = null;
-      if (arg1 != null)
-        arg1 = jsify(arg1);
-      if (arg2 != null)
-        arg2 = jsify(arg2);
-      if (arg3 != null)
-        arg3 = jsify(arg3);
+      if (arg1 === void 0) arg1 = null;
+      if (arg2 === void 0) arg2 = null;
+      if (arg3 === void 0) arg3 = null;
+      if (arg1 != null) arg1 = jsify(arg1);
+      if (arg2 != null) arg2 = jsify(arg2);
+      if (arg3 != null) arg3 = jsify(arg3);
       if (arg3 != null) {
         return this.obj.callMethod(method, [arg1, arg2, arg3]);
       } else if (arg2 != null) {
@@ -126,8 +115,7 @@ dart_library.library('atom/src/js', null, /* Imports */[
       }
       then(thenCallback, errorCallback) {
         dart.as(thenCallback, dart.functionType(dart.void, [T]));
-        if (errorCallback === void 0)
-          errorCallback = null;
+        if (errorCallback === void 0) errorCallback = null;
         dart.as(errorCallback, dart.functionType(dart.void, [dart.dynamic]));
         this.invoke("then", thenCallback, errorCallback);
       }
