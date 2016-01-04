@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.0.2
+## 0.1.1
 - Initial publish
 
 ## 0.0.1
