@@ -1,8 +1,0 @@
-{
-  "version": 3,
-  "sourceRoot": "",
-  "sources": ["../entry.dart"],
-  "names": ["registerPackage"],
-  "mappings": ";;;;;;;;AAOA,kBAAO;AACL,IAAA,AAAAA,oBAAe,CAAC,mCAAuB,CAAC;AAAC,GAE3C;;AAAA",
-  "file": "entry.js"
-}

@@ -7,8 +7,11 @@ import 'dart:async';
 import 'package:atom/atom.dart';
 import 'package:atom/utils/disposable.dart';
 import 'package:atom/utils/package_deps.dart' as package_deps;
+import 'package:logging/logging.dart';
 
-// import 'menus/getting_started.dart';
+import 'menus/getting_started.dart';
+
+final Logger _logger = new Logger('flutter');
 
 class FlutterDevPackage extends AtomPackage {
   Disposables disposables = new Disposables();
@@ -16,6 +19,8 @@ class FlutterDevPackage extends AtomPackage {
   FlutterDevPackage() : super('flutter');
 
   void activate([dynamic state]) {
+    _logger.info('activate');
+
     new Future.delayed(Duration.ZERO, () {
       package_deps.install('Flutter', this, justNotify: true);
     });
@@ -24,21 +29,38 @@ class FlutterDevPackage extends AtomPackage {
   }
 
   void _init() {
-    // disposables.add(new GettingStarted());
+    disposables.add(new GettingStarted());
   }
 
-  // Map config() {
-  //   return {
-  //     'flutterRoot': {
-  //       'title': 'FLUTTER_ROOT',
-  //       'description': 'The location of the Flutter SDK.',
-  //       'type': 'string',
-  //       'default': ''
-  //     }
-  //   };
-  // }
+  Map config() {
+    return {
+      'flutterRoot': {
+        'title': 'FLUTTER_ROOT',
+        'description': 'The location of the Flutter SDK.',
+        'type': 'string',
+        'default': ''
+      }
+    };
+  }
 
   void deactivate() {
+    _logger.info('deactivate');
+
     disposables.dispose();
   }
+
+  // void _setupLogging() {
+  //   disposables.add(atom.config.observe('${pluginId}.logging', null, (val) {
+  //     if (val == null) return;
+  //
+  //     for (Level level in Level.LEVELS) {
+  //       if (val.toUpperCase() == level.name) {
+  //         Logger.root.level = level;
+  //         break;
+  //       }
+  //     }
+  //
+  //     _logger.info("logging level: ${Logger.root.level}");
+  //   }));
+  // }
 }
