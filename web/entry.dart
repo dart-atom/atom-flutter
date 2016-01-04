@@ -4,7 +4,18 @@
 
 import 'package:atom/atom.dart';
 import 'package:atom_flutter/flutter.dart';
+import 'package:logging/logging.dart';
 
 main() {
+  // Logger.root.level = Level.WARNING;
+  Logger.root.level = Level.INFO;
+  Logger.root.onRecord.listen((LogRecord r) {
+    String tag = '${r.level.name.toLowerCase()} • ${r.loggerName}:';
+    print('${tag} ${r.message}');
+
+    if (r.error != null) print('${tag}   ${r.error}');
+    if (r.stackTrace != null) print('${tag}   ${r.stackTrace}');
+  });
+
   registerPackage(new FlutterDevPackage());
 }

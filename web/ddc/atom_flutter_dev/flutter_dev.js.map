@@ -1,8 +1,0 @@
-{
-  "version": 3,
-  "sourceRoot": "",
-  "sources": ["../../../atom_flutter_dev/flutter_dev.dart"],
-  "names": ["state","Duration","install","_init","disposables"],
-  "mappings": ";;;;;;;;;;;;AAYA;IAGE,oBAAA;yBAF0B,4BAAiB;AAErB,wBAAM,SAAS;AAAC,AAAA,AAAC,KAAA,AAAA;aAExB,KAAa,EAAG;UAARA,KAAK,aAALA,KAAK;AAC1B,MAAA,qBAAmB,AAAAC,aAAQ,KAAK,EAAE;AAChC,QAAA,AAAaC,oBAAO,CAAC,SAAS,EAAE,IAAI,GAAE,YAAY,IAAI,AAAA,EAAC;AAAC,QACzD,CAAC;AAAC,AAEH,MAAA,AAAAC,WAAK,EAAE;AAAC,KACT;;iBAiBiB;AAChB,MAAA,AAAAC,gBAAW,UAAU;AAAC,KACvB;;;;;;;;;AAEH",
-  "file": "flutter_dev.js"
-}
