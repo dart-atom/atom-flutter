@@ -24,14 +24,6 @@ buildDart2JS() async {
 
   await Dart2js.compileAsync(inputFile, csp: true);
   outputFile.writeAsStringSync(patchDart2JSOutput(outputFile.readAsStringSync()));
-
-  // Patch in the GA UA code; replace "UA-000000-0" with a valid code.
-  final String code = 'UA-67589403-3';
-  log('Patching with the dartlang Google Analytics code.');
-
-  String str = outputFile.readAsStringSync();
-  str = str.replaceAll('"UA-000000-0"', '"${code}"');
-  outputFile.writeAsStringSync(str);
 }
 
 buildDDC() async {

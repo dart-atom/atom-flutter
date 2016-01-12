@@ -5,11 +5,14 @@
 import 'dart:async';
 
 import 'package:atom/atom.dart';
+import 'package:atom/utils/dependencies.dart';
 import 'package:atom/utils/disposable.dart';
 import 'package:atom/utils/package_deps.dart' as package_deps;
 import 'package:logging/logging.dart';
 
 import 'menus/getting_started.dart';
+import 'state.dart';
+import 'usage.dart';
 
 final Logger _logger = new Logger('flutter');
 
@@ -18,8 +21,13 @@ class FlutterDevPackage extends AtomPackage {
 
   FlutterDevPackage() : super('flutter');
 
-  void activate([dynamic state]) {
+  void activate([dynamic pluginState]) {
     _logger.info('activate');
+
+    Dependencies.setGlobalInstance(new Dependencies());
+    deps[AtomPackage] = this;
+
+    state.loadFrom(pluginState);
 
     new Future.delayed(Duration.ZERO, () {
       package_deps.install('Flutter', this, justNotify: true);
@@ -30,6 +38,7 @@ class FlutterDevPackage extends AtomPackage {
 
   void _init() {
     disposables.add(new GettingStarted());
+    disposables.add(new UsageManager());
   }
 
   Map config() {
@@ -38,10 +47,22 @@ class FlutterDevPackage extends AtomPackage {
         'title': 'FLUTTER_ROOT',
         'description': 'The location of the Flutter SDK.',
         'type': 'string',
-        'default': ''
-      }
+        'default': '',
+        'order': 1
+      },
+
+      // google analytics
+      'sendUsage': {
+        'title': 'Report usage information to Google Analytics.',
+        'description': "Report anonymized usage information to Google Analytics.",
+        'type': 'boolean',
+        'default': true,
+        'order': 9
+      },
     };
   }
+
+  dynamic serialize() => state.saveState();
 
   void deactivate() {
     _logger.info('deactivate');
