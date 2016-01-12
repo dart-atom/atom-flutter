@@ -4,6 +4,8 @@
 
 A [Flutter][] development environment for Atom.
 
+![Flutter plugin for Atom screenshot](https://raw.githubusercontent.com/flutter/atom-flutter/master/doc/images/screenshot.png)
+
 ## Features and bugs
 
 Please file feature requests and bugs at the [issue tracker][tracker].
