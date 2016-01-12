@@ -1230,6 +1230,37 @@ self._domRemove = function(element) {
     $desc = $collectedClasses$.Dependencies[1];
     Dependencies.prototype = $desc;
     Dependencies.$__fields__ = ["_instances"];
+    function State(_pluginState, _storables, _controllers) {
+      this._pluginState = _pluginState;
+      this._storables = _storables;
+      this._controllers = _controllers;
+      this.$deferredAction();
+    }
+    State.builtin$cls = "State";
+    if (!("name" in State))
+      State.name = "State";
+    $desc = $collectedClasses$.State[1];
+    State.prototype = $desc;
+    State.$__fields__ = ["_pluginState", "_storables", "_controllers"];
+    function State_saveState_closure($this) {
+      this.$this = $this;
+      this.$deferredAction();
+    }
+    State_saveState_closure.builtin$cls = "State_saveState_closure";
+    if (!("name" in State_saveState_closure))
+      State_saveState_closure.name = "State_saveState_closure";
+    $desc = $collectedClasses$.State_saveState_closure[1];
+    State_saveState_closure.prototype = $desc;
+    State_saveState_closure.$__fields__ = ["$this"];
+    function StateStorable() {
+      this.$deferredAction();
+    }
+    StateStorable.builtin$cls = "StateStorable";
+    if (!("name" in StateStorable))
+      StateStorable.name = "StateStorable";
+    $desc = $collectedClasses$.StateStorable[1];
+    StateStorable.prototype = $desc;
+    StateStorable.$__fields__ = [];
     function install_closure(packageLabel, justNotify) {
       this.packageLabel = packageLabel;
       this.justNotify = justNotify;
@@ -1840,6 +1871,12 @@ self._domRemove = function(element) {
     $desc = $collectedClasses$._AsyncCallbackEntry[1];
     _AsyncCallbackEntry.prototype = $desc;
     _AsyncCallbackEntry.$__fields__ = ["callback", "next"];
+    _AsyncCallbackEntry.prototype.get$callback = function() {
+      return this.callback;
+    };
+    _AsyncCallbackEntry.prototype.get$next = function() {
+      return this.next;
+    };
     function Stream() {
       this.$deferredAction();
     }
@@ -5220,7 +5257,7 @@ self._domRemove = function(element) {
     $desc = $collectedClasses$.FutureSerializer[1];
     FutureSerializer.prototype = $desc;
     FutureSerializer.$__fields__ = ["_operations", "_completers"];
-    return [JS_CONST, Interceptor, JSBool, JSNull, JavaScriptObject, PlainJavaScriptObject, UnknownJavaScriptObject, JavaScriptFunction, JSArray, JSUnmodifiableArray, ArrayIterator, JSNumber, JSInt, JSDouble, JSString, startRootIsolate_closure, startRootIsolate_closure0, _Manager, _IsolateContext, _IsolateContext_handlePing_respond, _EventLoop, _EventLoop__runHelper_next, _IsolateEvent, _MainManagerStub, IsolateNatives__processWorkerMessage_closure, IsolateNatives__startIsolate_runStartFunction, _BaseSendPort, _NativeJsSendPort, _NativeJsSendPort_send_closure, _WorkerSendPort, RawReceivePortImpl, TimerImpl, TimerImpl_internalCallback, TimerImpl_internalCallback0, CapabilityImpl, _Serializer, _Deserializer, ConstantMapView, ConstantMap, ConstantStringMap, _ConstantMapKeyIterable, JSInvocationMirror, ReflectionInfo, Primitives_functionNoSuchMethod_closure, TypeErrorDecoder, NullError, JsNoSuchMethodError, UnknownJsTypeError, unwrapException_saveStackTrace, _StackTrace, invokeClosure_closure, invokeClosure_closure0, invokeClosure_closure1, invokeClosure_closure2, invokeClosure_closure3, Closure, TearOffClosure, StaticClosure, BoundClosure, CastErrorImplementation, RuntimeError, RuntimeType, RuntimeFunctionType, DynamicRuntimeType, TypeImpl, JsLinkedHashMap, JsLinkedHashMap_values_closure, LinkedHashMapCell, LinkedHashMapKeyIterable, LinkedHashMapKeyIterator, initHooks_closure, initHooks_closure0, initHooks_closure1, JSSyntaxRegExp, _MatchImplementation, _AllMatchesIterable, _AllMatchesIterator, StringMatch, registerPackage_closure, registerPackage_closure0, registerPackage_closure1, registerPackage__closure, AtomPackage, AtomPackage_loadPackageJson_closure, AtomPackage_getPackageVersion_closure, Atom, CommandRegistry, CommandRegistry_add_closure, Config, NotificationManager, ViewRegistry, Workspace, PackageManager, TextEditor, BufferedProcess, BufferedProcess_create_closure, AtomEvent, Dependencies, install_closure, install__closure, _installPackage_closure, _installPackage_closure0, _installPackage_closure1, ListIterable, SubListIterable, ListIterator, MappedIterable, EfficientLengthMappedIterable, MappedIterator, MappedListIterable, FixedLengthListMixin, ReversedListIterable, Symbol0, _AsyncRun__initializeScheduleImmediate_internalCallback, _AsyncRun__initializeScheduleImmediate_closure, _AsyncRun__scheduleImmediateJsOverride_internalCallback, _AsyncRun__scheduleImmediateWithSetImmediate_internalCallback, _BroadcastStream, _BroadcastSubscription, _BroadcastStreamController, _SyncBroadcastStreamController, _SyncBroadcastStreamController__sendData_closure, _SyncBroadcastStreamController__sendError_closure, _AsyncBroadcastStreamController, Future, closure0, Future_forEach_closure, Future_forEach__closure, Future_forEach__closure0, Future_doWhile_closure, _Completer, _AsyncCompleter, _FutureListener, _Future, _Future__addListener_closure, _Future__prependListeners_closure, _Future__chainForeignFuture_closure, _Future__chainForeignFuture_closure0, _Future__chainForeignFuture_closure1, _Future__asyncComplete_closure, _Future__asyncComplete_closure0, _Future__asyncCompleteError_closure, _Future__propagateToListeners_handleValueCallback, _Future__propagateToListeners_handleError, _Future__propagateToListeners_handleWhenCompleteCallback, _Future__propagateToListeners_handleWhenCompleteCallback_closure, _AsyncCallbackEntry, Stream, Stream_contains_closure, Stream_contains__closure, Stream_contains__closure0, Stream_contains_closure0, Stream_forEach_closure, Stream_forEach__closure, Stream_forEach__closure0, Stream_forEach_closure0, Stream_length_closure, Stream_length_closure0, Stream_toList_closure, Stream_toList_closure0, StreamSubscription, _StreamController, _StreamController__subscribe_closure, _StreamController__recordCancel_complete, _SyncStreamControllerDispatch, _AsyncStreamControllerDispatch, _AsyncStreamController, _SyncStreamController, _ControllerStream, _ControllerSubscription, _EventSink, _BufferingStreamSubscription, _BufferingStreamSubscription__sendError_sendError, _BufferingStreamSubscription__sendDone_sendDone, _StreamImpl, _DelayedEvent, _DelayedData, _DelayedError, _DelayedDone, _PendingEvents, _PendingEvents_schedule_closure, _StreamImplEvents, _DoneStreamSubscription, _cancelAndError_closure, _cancelAndErrorClosure_closure, _cancelAndValue_closure, _ForwardingStream, _ForwardingStreamSubscription, _MapStream, AsyncError, _Zone, _rootHandleUncaughtError_closure, _RootZone, _RootZone_bindCallback_closure, _RootZone_bindCallback_closure0, _RootZone_bindUnaryCallback_closure, _HashMap, _IdentityHashMap, _HashMapKeyIterable, _HashMapKeyIterator, _LinkedIdentityHashMap, _LinkedHashSet, _LinkedHashSetCell, _LinkedHashSetIterator, _HashSetBase, IterableBase, ListMixin, _UnmodifiableMapMixin, MapView, UnmodifiableMapView, Maps_mapToString_closure, ListQueue, _ListQueueIterator, SetMixin, SetBase, _JsonMap, _JsonMapKeyIterable, Codec, Converter, Encoding, JsonUnsupportedObjectError, JsonCyclicError, JsonCodec, JsonEncoder, JsonDecoder, _JsonStringifier, _JsonStringifier_writeMap_closure, _JsonStringStringifier, Utf8Codec, Utf8Encoder, _Utf8Encoder, NoSuchMethodError_toString_closure, bool, DateTime, $double, Duration, Duration_toString_sixDigits, Duration_toString_twoDigits, Error, NullThrownError, ArgumentError, RangeError, IndexError, NoSuchMethodError, UnsupportedError, UnimplementedError, StateError, ConcurrentModificationError, OutOfMemoryError, StackOverflowError, CyclicInitializationError, _Exception, FormatException, IntegerDivisionByZeroException, Expando, Function, $int, Iterable, Iterator, List, Map, Null, num, Object, Match, StackTrace, String, StringBuffer, Symbol, HtmlElement, AnchorElement, ApplicationCacheErrorEvent, AreaElement, Blob, BodyElement, ButtonElement, CharacterData, DeviceLightEvent, DivElement, DocumentFragment, DomError, DomException, DomRectReadOnly, Element, EmbedElement, ErrorEvent, Event, EventTarget, FieldSetElement, File, FormElement, HttpRequest, HttpRequest_getString_closure, HttpRequest_request_closure, HttpRequestEventTarget, IFrameElement, ImageData, InputElement, KeygenElement, LIElement, MapElement, MediaElement, MediaKeyEvent, MediaKeyMessageEvent, MetaElement, MeterElement, Navigator, NavigatorUserMediaError, Node, OListElement, ObjectElement, OptionElement, OutputElement, ParamElement, PluginPlaceholderElement, PositionError, ProgressElement, ProgressEvent, SelectElement, SpeechRecognitionError, SpeechSynthesisEvent, Storage, Storage_keys_closure, TextAreaElement, Window, _Attr, _ClientRect, _DocumentType, _DomRect, _HTMLFrameSetElement, _EventStream, _EventStreamSubscription, _DOMWindowCrossFrame, KeyRange, AElement, AltGlyphElement, AnimationElement, FEBlendElement, FEColorMatrixElement, FEComponentTransferElement, FECompositeElement, FEConvolveMatrixElement, FEDiffuseLightingElement, FEDisplacementMapElement, FEFloodElement, FEGaussianBlurElement, FEImageElement, FEMergeElement, FEMorphologyElement, FEOffsetElement, FESpecularLightingElement, FETileElement, FETurbulenceElement, FilterElement, GraphicsElement, ImageElement0, MarkerElement, MaskElement, PatternElement, ScriptElement0, SvgElement, SvgSvgElement, SymbolElement, TextContentElement, TextPathElement, TextPositioningElement, UseElement, ViewElement, _GradientElement, _SVGCursorElement, _SVGFEDropShadowElement, _SVGGlyphRefElement, _SVGMPathElement, SqlError, Capability, JsObject, JsObject__convertDataTree__convert, JsFunction, JsArray, JsObject_ListMixin, _convertToJS_closure, _convertToJS_closure0, _wrapToDart_closure, _wrapToDart_closure0, _wrapToDart_closure1, _JSRandom, NativeByteBuffer, NativeTypedData, NativeByteData, NativeTypedArray, NativeTypedArrayOfDouble, NativeTypedArray_ListMixin, NativeTypedArray_ListMixin_FixedLengthListMixin, NativeTypedArrayOfInt, NativeTypedArray_ListMixin0, NativeTypedArray_ListMixin_FixedLengthListMixin0, NativeFloat32List, NativeFloat64List, NativeInt16List, NativeInt32List, NativeInt8List, NativeUint16List, NativeUint32List, NativeUint8ClampedList, NativeUint8List, Disposable, Disposables, StreamSubscriptions, main_closure, FlutterDevPackage, FlutterDevPackage_activate_closure, GettingStarted, promiseToFuture_closure, promiseToFuture_closure0, ProxyHolder, JsDisposable, Promise, Logger, closure, Level, LogRecord, ProcessRunner, ProcessRunner_execSimple_closure, ProcessRunner_execSimple_closure0, ProcessRunner_execSimple_closure1, ProcessRunner_execStreaming_closure2, ProcessRunner_execStreaming_closure1, ProcessRunner_execStreaming_closure, ProcessRunner_execStreaming_closure0, ProcessResult, Shell, Analytics, AnalyticsMock, UsageManager, UsageManager_closure, UsageManager__init_closure, UsageManager__init__closure, AnalyticsHtml, postEncode_closure, ThrottlingBucket, AnalyticsImpl, AnalyticsImpl__sendPayload_closure, AnalyticsImpl__recordFuture_closure, PersistentProperties, PostHandler, HtmlPostHandler, HtmlPostHandler_sendPost_closure, HtmlPersistentProperties, FutureSerializer];
+    return [JS_CONST, Interceptor, JSBool, JSNull, JavaScriptObject, PlainJavaScriptObject, UnknownJavaScriptObject, JavaScriptFunction, JSArray, JSUnmodifiableArray, ArrayIterator, JSNumber, JSInt, JSDouble, JSString, startRootIsolate_closure, startRootIsolate_closure0, _Manager, _IsolateContext, _IsolateContext_handlePing_respond, _EventLoop, _EventLoop__runHelper_next, _IsolateEvent, _MainManagerStub, IsolateNatives__processWorkerMessage_closure, IsolateNatives__startIsolate_runStartFunction, _BaseSendPort, _NativeJsSendPort, _NativeJsSendPort_send_closure, _WorkerSendPort, RawReceivePortImpl, TimerImpl, TimerImpl_internalCallback, TimerImpl_internalCallback0, CapabilityImpl, _Serializer, _Deserializer, ConstantMapView, ConstantMap, ConstantStringMap, _ConstantMapKeyIterable, JSInvocationMirror, ReflectionInfo, Primitives_functionNoSuchMethod_closure, TypeErrorDecoder, NullError, JsNoSuchMethodError, UnknownJsTypeError, unwrapException_saveStackTrace, _StackTrace, invokeClosure_closure, invokeClosure_closure0, invokeClosure_closure1, invokeClosure_closure2, invokeClosure_closure3, Closure, TearOffClosure, StaticClosure, BoundClosure, CastErrorImplementation, RuntimeError, RuntimeType, RuntimeFunctionType, DynamicRuntimeType, TypeImpl, JsLinkedHashMap, JsLinkedHashMap_values_closure, LinkedHashMapCell, LinkedHashMapKeyIterable, LinkedHashMapKeyIterator, initHooks_closure, initHooks_closure0, initHooks_closure1, JSSyntaxRegExp, _MatchImplementation, _AllMatchesIterable, _AllMatchesIterator, StringMatch, registerPackage_closure, registerPackage_closure0, registerPackage_closure1, registerPackage__closure, AtomPackage, AtomPackage_loadPackageJson_closure, AtomPackage_getPackageVersion_closure, Atom, CommandRegistry, CommandRegistry_add_closure, Config, NotificationManager, ViewRegistry, Workspace, PackageManager, TextEditor, BufferedProcess, BufferedProcess_create_closure, AtomEvent, Dependencies, State, State_saveState_closure, StateStorable, install_closure, install__closure, _installPackage_closure, _installPackage_closure0, _installPackage_closure1, ListIterable, SubListIterable, ListIterator, MappedIterable, EfficientLengthMappedIterable, MappedIterator, MappedListIterable, FixedLengthListMixin, ReversedListIterable, Symbol0, _AsyncRun__initializeScheduleImmediate_internalCallback, _AsyncRun__initializeScheduleImmediate_closure, _AsyncRun__scheduleImmediateJsOverride_internalCallback, _AsyncRun__scheduleImmediateWithSetImmediate_internalCallback, _BroadcastStream, _BroadcastSubscription, _BroadcastStreamController, _SyncBroadcastStreamController, _SyncBroadcastStreamController__sendData_closure, _SyncBroadcastStreamController__sendError_closure, _AsyncBroadcastStreamController, Future, closure0, Future_forEach_closure, Future_forEach__closure, Future_forEach__closure0, Future_doWhile_closure, _Completer, _AsyncCompleter, _FutureListener, _Future, _Future__addListener_closure, _Future__prependListeners_closure, _Future__chainForeignFuture_closure, _Future__chainForeignFuture_closure0, _Future__chainForeignFuture_closure1, _Future__asyncComplete_closure, _Future__asyncComplete_closure0, _Future__asyncCompleteError_closure, _Future__propagateToListeners_handleValueCallback, _Future__propagateToListeners_handleError, _Future__propagateToListeners_handleWhenCompleteCallback, _Future__propagateToListeners_handleWhenCompleteCallback_closure, _AsyncCallbackEntry, Stream, Stream_contains_closure, Stream_contains__closure, Stream_contains__closure0, Stream_contains_closure0, Stream_forEach_closure, Stream_forEach__closure, Stream_forEach__closure0, Stream_forEach_closure0, Stream_length_closure, Stream_length_closure0, Stream_toList_closure, Stream_toList_closure0, StreamSubscription, _StreamController, _StreamController__subscribe_closure, _StreamController__recordCancel_complete, _SyncStreamControllerDispatch, _AsyncStreamControllerDispatch, _AsyncStreamController, _SyncStreamController, _ControllerStream, _ControllerSubscription, _EventSink, _BufferingStreamSubscription, _BufferingStreamSubscription__sendError_sendError, _BufferingStreamSubscription__sendDone_sendDone, _StreamImpl, _DelayedEvent, _DelayedData, _DelayedError, _DelayedDone, _PendingEvents, _PendingEvents_schedule_closure, _StreamImplEvents, _DoneStreamSubscription, _cancelAndError_closure, _cancelAndErrorClosure_closure, _cancelAndValue_closure, _ForwardingStream, _ForwardingStreamSubscription, _MapStream, AsyncError, _Zone, _rootHandleUncaughtError_closure, _RootZone, _RootZone_bindCallback_closure, _RootZone_bindCallback_closure0, _RootZone_bindUnaryCallback_closure, _HashMap, _IdentityHashMap, _HashMapKeyIterable, _HashMapKeyIterator, _LinkedIdentityHashMap, _LinkedHashSet, _LinkedHashSetCell, _LinkedHashSetIterator, _HashSetBase, IterableBase, ListMixin, _UnmodifiableMapMixin, MapView, UnmodifiableMapView, Maps_mapToString_closure, ListQueue, _ListQueueIterator, SetMixin, SetBase, _JsonMap, _JsonMapKeyIterable, Codec, Converter, Encoding, JsonUnsupportedObjectError, JsonCyclicError, JsonCodec, JsonEncoder, JsonDecoder, _JsonStringifier, _JsonStringifier_writeMap_closure, _JsonStringStringifier, Utf8Codec, Utf8Encoder, _Utf8Encoder, NoSuchMethodError_toString_closure, bool, DateTime, $double, Duration, Duration_toString_sixDigits, Duration_toString_twoDigits, Error, NullThrownError, ArgumentError, RangeError, IndexError, NoSuchMethodError, UnsupportedError, UnimplementedError, StateError, ConcurrentModificationError, OutOfMemoryError, StackOverflowError, CyclicInitializationError, _Exception, FormatException, IntegerDivisionByZeroException, Expando, Function, $int, Iterable, Iterator, List, Map, Null, num, Object, Match, StackTrace, String, StringBuffer, Symbol, HtmlElement, AnchorElement, ApplicationCacheErrorEvent, AreaElement, Blob, BodyElement, ButtonElement, CharacterData, DeviceLightEvent, DivElement, DocumentFragment, DomError, DomException, DomRectReadOnly, Element, EmbedElement, ErrorEvent, Event, EventTarget, FieldSetElement, File, FormElement, HttpRequest, HttpRequest_getString_closure, HttpRequest_request_closure, HttpRequestEventTarget, IFrameElement, ImageData, InputElement, KeygenElement, LIElement, MapElement, MediaElement, MediaKeyEvent, MediaKeyMessageEvent, MetaElement, MeterElement, Navigator, NavigatorUserMediaError, Node, OListElement, ObjectElement, OptionElement, OutputElement, ParamElement, PluginPlaceholderElement, PositionError, ProgressElement, ProgressEvent, SelectElement, SpeechRecognitionError, SpeechSynthesisEvent, Storage, Storage_keys_closure, TextAreaElement, Window, _Attr, _ClientRect, _DocumentType, _DomRect, _HTMLFrameSetElement, _EventStream, _EventStreamSubscription, _DOMWindowCrossFrame, KeyRange, AElement, AltGlyphElement, AnimationElement, FEBlendElement, FEColorMatrixElement, FEComponentTransferElement, FECompositeElement, FEConvolveMatrixElement, FEDiffuseLightingElement, FEDisplacementMapElement, FEFloodElement, FEGaussianBlurElement, FEImageElement, FEMergeElement, FEMorphologyElement, FEOffsetElement, FESpecularLightingElement, FETileElement, FETurbulenceElement, FilterElement, GraphicsElement, ImageElement0, MarkerElement, MaskElement, PatternElement, ScriptElement0, SvgElement, SvgSvgElement, SymbolElement, TextContentElement, TextPathElement, TextPositioningElement, UseElement, ViewElement, _GradientElement, _SVGCursorElement, _SVGFEDropShadowElement, _SVGGlyphRefElement, _SVGMPathElement, SqlError, Capability, JsObject, JsObject__convertDataTree__convert, JsFunction, JsArray, JsObject_ListMixin, _convertToJS_closure, _convertToJS_closure0, _wrapToDart_closure, _wrapToDart_closure0, _wrapToDart_closure1, _JSRandom, NativeByteBuffer, NativeTypedData, NativeByteData, NativeTypedArray, NativeTypedArrayOfDouble, NativeTypedArray_ListMixin, NativeTypedArray_ListMixin_FixedLengthListMixin, NativeTypedArrayOfInt, NativeTypedArray_ListMixin0, NativeTypedArray_ListMixin_FixedLengthListMixin0, NativeFloat32List, NativeFloat64List, NativeInt16List, NativeInt32List, NativeInt8List, NativeUint16List, NativeUint32List, NativeUint8ClampedList, NativeUint8List, Disposable, Disposables, StreamSubscriptions, main_closure, FlutterDevPackage, FlutterDevPackage_activate_closure, GettingStarted, promiseToFuture_closure, promiseToFuture_closure0, ProxyHolder, JsDisposable, Promise, Logger, closure, Level, LogRecord, ProcessRunner, ProcessRunner_execSimple_closure, ProcessRunner_execSimple_closure0, ProcessRunner_execSimple_closure1, ProcessRunner_execStreaming_closure2, ProcessRunner_execStreaming_closure1, ProcessRunner_execStreaming_closure, ProcessRunner_execStreaming_closure0, ProcessResult, Shell, Analytics, AnalyticsMock, UsageManager, UsageManager_closure, UsageManager__init_closure, UsageManager__init__closure, AnalyticsHtml, postEncode_closure, ThrottlingBucket, AnalyticsImpl, AnalyticsImpl__sendPayload_closure, AnalyticsImpl__recordFuture_closure, PersistentProperties, PostHandler, HtmlPostHandler, HtmlPostHandler_sendPost_closure, HtmlPersistentProperties, FutureSerializer];
   };
   function setupProgram(programData, typesOffset) {
     "use strict";
@@ -9411,9 +9448,6 @@ self._domRemove = function(element) {
     },
     AtomPackage: {
       "^": "Object;",
-      serialize$0: [function() {
-        return P.LinkedHashMap__makeEmpty();
-      }, "call$0", "get$serialize", 0, 0, 0],
       loadPackageJson$0: function() {
         return H.subtypeCast(W.HttpRequest_getString("atom://" + this.id + "/package.json", null, null).then$1(new E.AtomPackage_loadPackageJson_closure()), "$isFuture", [P.Map], "$asFuture");
       },
@@ -9558,6 +9592,31 @@ self._domRemove = function(element) {
           return $.Dependencies__global;
         }}
     }
+  }], ["atom.state", "package:atom_flutter/state.dart",, K, {
+    "^": "",
+    State: {
+      "^": "Object;_pluginState,_storables,_controllers",
+      $index: function(_, key) {
+        return J.$index$asx(this._pluginState, key);
+      },
+      $indexSet: function(_, key, value) {
+        J.$indexSet$ax(this._pluginState, key, value);
+        this._controllers.$index(0, key);
+      },
+      saveState$0: function() {
+        this._storables.forEach$1(0, new K.State_saveState_closure(this));
+        return this._pluginState;
+      }
+    },
+    State_saveState_closure: {
+      "^": "Closure:15;$this",
+      call$2: function(key, storable) {
+        J.$indexSet$ax(this.$this._pluginState, key, C.JsonCodec_null_null.encode$1(storable.toStorable$0()));
+      }
+    },
+    StateStorable: {
+      "^": "Object;"
+    }
   }], ["atom.utils.package_deps", "package:atom/utils/package_deps.dart",, Q, {
     "^": "",
     install: function(packageLabel, $package, justNotify) {
@@ -9569,7 +9628,7 @@ self._domRemove = function(element) {
       t2 = t1._notifications;
       t2.invoke$3("addInfo", "Installing " + H.S($name) + "\u2026", t2._options$5$buttons$description$detail$dismissable$icon(null, null, null, null, null));
       return new X.ProcessRunner(t1._packages.invoke$1("getApmPath"), ["--no-color", "install", $name], null, null, null, H.setRuntimeTypeInfo(new P._AsyncCompleter(H.setRuntimeTypeInfo(new P._Future(0, $.Zone__current, null), [null])), [null]), null, P.StreamController_StreamController(null, null, null, null, false, null), P.StreamController_StreamController(null, null, null, null, false, null)).execSimple$0().then$1(new Q._installPackage_closure($name)).then$1(new Q._installPackage_closure0($name)).catchError$1(new Q._installPackage_closure1($name));
-    }, "call$1", "package_deps___installPackage$closure", 2, 0, 26],
+    }, "call$1", "package_deps___installPackage$closure", 2, 0, 27],
     install_closure: {
       "^": "Closure:6;packageLabel,justNotify",
       call$1: [function(info) {
@@ -9596,7 +9655,7 @@ self._domRemove = function(element) {
       }
     },
     _installPackage_closure: {
-      "^": "Closure:15;name",
+      "^": "Closure:16;name",
       call$1: [function(result) {
         if (J.$eq$(result.get$exit(), 0))
           K.promiseToFuture($.$get$atom()._packages.invoke$2("activatePackage", this.name));
@@ -10021,11 +10080,11 @@ self._domRemove = function(element) {
       var t1, t2;
       for (; t1 = $._nextCallback, t1 != null;) {
         $._lastPriorityCallback = null;
-        t2 = t1.next;
+        t2 = t1.get$next();
         $._nextCallback = t2;
         if (t2 == null)
           $._lastCallback = null;
-        t1.callback.call$0();
+        t1.get$callback().call$0();
       }
     },
     _startMicrotaskLoop: [function() {
@@ -10239,7 +10298,7 @@ self._domRemove = function(element) {
       }, null, null, 2, 0, null, 2, "call"]
     },
     _AsyncRun__initializeScheduleImmediate_closure: {
-      "^": "Closure:16;_box_0,div,span",
+      "^": "Closure:17;_box_0,div,span",
       call$1: function(callback) {
         var t1, t2;
         ++init.globalState.topEventLoop._activeJsAsyncCount;
@@ -10544,7 +10603,7 @@ self._domRemove = function(element) {
         t1._asyncCompleteError$2(error, stackTrace);
       }, function(error) {
         return this.completeError$2(error, null);
-      }, "completeError$1", "call$2", "call$1", "get$completeError", 2, 2, 17, 0, 3, 4]
+      }, "completeError$1", "call$2", "call$1", "get$completeError", 2, 2, 18, 0, 3, 4]
     },
     _AsyncCompleter: {
       "^": "_Completer;future",
@@ -10911,7 +10970,7 @@ self._domRemove = function(element) {
       }, null, null, 2, 0, null, 13, "call"]
     },
     _Future__chainForeignFuture_closure0: {
-      "^": "Closure:18;target",
+      "^": "Closure:19;target",
       call$2: [function(error, stackTrace) {
         this.target._completeError$2(error, stackTrace);
       }, function(error) {
@@ -11058,7 +11117,7 @@ self._domRemove = function(element) {
       }, null, null, 2, 0, null, 2, "call"]
     },
     _AsyncCallbackEntry: {
-      "^": "Object;callback,next"
+      "^": "Object;callback<,next<"
     },
     Stream: {
       "^": "Object;",
@@ -11765,7 +11824,7 @@ self._domRemove = function(element) {
       }, null, null, 0, 0, null, "call"]
     },
     _cancelAndErrorClosure_closure: {
-      "^": "Closure:19;subscription,future",
+      "^": "Closure:20;subscription,future",
       call$2: function(error, stackTrace) {
         return P._cancelAndError(this.subscription, this.future, error, stackTrace);
       }
@@ -11835,7 +11894,7 @@ self._domRemove = function(element) {
       }, 11],
       _handleError$2: [function(error, stackTrace) {
         this._addError$2(error, stackTrace);
-      }, "call$2", "get$_handleError", 4, 0, 20, 3, 4],
+      }, "call$2", "get$_handleError", 4, 0, 21, 3, 4],
       _handleDone$0: [function() {
         this._close$0();
       }, "call$0", "get$_handleDone", 0, 0, 2],
@@ -13730,7 +13789,7 @@ self._domRemove = function(element) {
       return t2.charCodeAt(0) == 0 ? t2 : t2;
     },
     NoSuchMethodError_toString_closure: {
-      "^": "Closure:21;_box_0,sb",
+      "^": "Closure:22;_box_0,sb",
       call$2: function(key, value) {
         var t1, t2, t3;
         t1 = this.sb;
@@ -14303,7 +14362,7 @@ self._domRemove = function(element) {
       return W.HttpRequest_request(url, null, null, null, null, null, null, null);
     }, function(url, method, sendData) {
       return W.HttpRequest_request(url, method, null, null, null, null, sendData, null);
-    }, "call$8$method$mimeType$onProgress$requestHeaders$responseType$sendData$withCredentials", "call$1", "call$3$method$sendData", "html_HttpRequest_request$closure", 2, 15, 27, 0, 0, 0, 0, 0, 0, 0],
+    }, "call$8$method$mimeType$onProgress$requestHeaders$responseType$sendData$withCredentials", "call$1", "call$3$method$sendData", "html_HttpRequest_request$closure", 2, 15, 28, 0, 0, 0, 0, 0, 0, 0],
     _JenkinsSmiHash_combine: function(hash, value) {
       hash = 536870911 & hash + value;
       hash = 536870911 & hash + ((524287 & hash) << 10 >>> 0);
@@ -14505,7 +14564,7 @@ self._domRemove = function(element) {
       "%": "XMLHttpRequest"
     },
     HttpRequest_getString_closure: {
-      "^": "Closure:22;",
+      "^": "Closure:23;",
       call$1: [function(xhr) {
         return J.get$responseText$x(xhr);
       }, null, null, 2, 0, null, 28, "call"]
@@ -15788,7 +15847,7 @@ self._domRemove = function(element) {
       E.registerPackage(new V.FlutterDevPackage(new L.Disposables(null, []), P.LinkedHashMap__makeEmpty(), "flutter"));
     }, "call$0", "entry__main$closure", 0, 0, 0],
     main_closure: {
-      "^": "Closure:23;",
+      "^": "Closure:24;",
       call$1: [function(r) {
         var tag, t1;
         tag = r.get$level().name.toLowerCase() + " \u2022 " + r.get$loggerName() + ":";
@@ -15804,11 +15863,14 @@ self._domRemove = function(element) {
     "^": "",
     FlutterDevPackage: {
       "^": "AtomPackage;disposables,_registeredMethods,id",
-      activate$1: function(state) {
+      activate$1: function(pluginState) {
         var t1, t2;
         $.$get$_logger().info$1("activate");
         $.Dependencies__global = new Q.Dependencies(P.LinkedHashMap__makeEmpty());
         Q.Dependencies_instance()._instances.$indexSet(0, C.Type_AtomPackage_0N5, this);
+        t1 = $.$get$state();
+        t1.toString;
+        t1._pluginState = pluginState == null ? P.LinkedHashMap__makeEmpty() : pluginState;
         P.Future_Future$delayed(C.Duration_0, new V.FlutterDevPackage_activate_closure(this), null);
         t1 = [];
         t2 = new T.GettingStarted(new L.Disposables(null, t1));
@@ -15816,7 +15878,10 @@ self._domRemove = function(element) {
         t1 = this.disposables._disposables;
         t1.push(t2);
         t1.push(G.UsageManager$());
-      }
+      },
+      serialize$0: [function() {
+        return $.$get$state().saveState$0();
+      }, "call$0", "get$serialize", 0, 0, 0]
     },
     FlutterDevPackage_activate_closure: {
       "^": "Closure:0;$this",
@@ -15833,7 +15898,7 @@ self._domRemove = function(element) {
       }, "call$0", "get$dispose", 0, 0, 2],
       _gettingStarted$1: [function(_) {
         $.$get$shell().invoke$2("openExternal", "http://flutter.io/getting-started/");
-      }, "call$1", "get$_gettingStarted", 2, 0, 24],
+      }, "call$1", "get$_gettingStarted", 2, 0, 25],
       $isDisposable: 1
     }
   }], ["html_common", "dart:html_common",, P, {
@@ -15943,7 +16008,7 @@ self._domRemove = function(element) {
       },
       error$1: [function(_, errorCallback) {
         return this.invoke$2("catch", errorCallback);
-      }, "call$1", "get$error", 2, 0, 25, 35]
+      }, "call$1", "get$error", 2, 0, 26, 35]
     }
   }], ["logging", "package:logging/logging.dart",, N, {
     "^": "",
@@ -16276,7 +16341,7 @@ self._domRemove = function(element) {
       if (J.$eq$(category, "core"))
         return;
       $.$get$_ga().sendEvent$2(category, command);
-    }, "call$1", "usage__trackCommand$closure", 2, 0, 28, 36],
+    }, "call$1", "usage__trackCommand$closure", 2, 0, 29, 36],
     _handleLogRecord: [function(log) {
       var t1, t2, message, t3, desc;
       if (log.get$level().value >= 900) {
@@ -16293,7 +16358,7 @@ self._domRemove = function(element) {
           desc += "," + F.sanitizeStacktrace(log.get$stackTrace(), true);
         $.$get$_ga().sendException$2$fatal(desc, t1 >= 1000);
       }
-    }, "call$1", "usage___handleLogRecord$closure", 2, 0, 29, 37],
+    }, "call$1", "usage___handleLogRecord$closure", 2, 0, 30, 37],
     UsageManager: {
       "^": "Object;_subs,_editorObserve",
       _init$0: function() {
@@ -17038,6 +17103,8 @@ self._domRemove = function(element) {
     var t1 = new E.Atom(null, null, null, null, null, null, J.$index$asx($.$get$context(), "atom"));
     t1.Atom$0();
     return t1;
+  }, "state", "$get$state", "state", function() {
+    return new K.State(P.LinkedHashMap__makeEmpty(), P.LinkedHashMap__makeEmpty(), P.LinkedHashMap__makeEmpty());
   }, "_AsyncRun__scheduleImmediateClosure", "$get$_AsyncRun__scheduleImmediateClosure", "_scheduleImmediateClosure", function() {
     return P._AsyncRun__initializeScheduleImmediate();
   }, "_toStringVisiting", "$get$_toStringVisiting", "_toStringVisiting", function() {
@@ -17068,7 +17135,7 @@ self._domRemove = function(element) {
   Isolate = Isolate.$finishIsolateConstructor(Isolate);
   $ = new Isolate();
   init.metadata = [null, "e", "_", "error", "stackTrace", "o", "str", "result", "invocation", "arg", "object", "data", "x", "value", "element", "code", "s", "arg1", "arg2", "arg3", "arg4", "each", "state", "map", "info", "closure", "sender", "key", "xhr", "callback", "captureThis", "self", "arguments", "numberOfArguments", "r", "errorCallback", "command", "log", "version", "isolate"];
-  init.types = [{func: 1}, {func: 1, args: [,]}, {func: 1, v: true}, {func: 1, args: [,,]}, {func: 1, args: [P.String]}, {func: 1, v: true, args: [{func: 1, v: true}]}, {func: 1, args: [P.Map]}, {func: 1, args: [P.bool]}, {func: 1, v: true, args: [,], opt: [P.StackTrace]}, {func: 1, ret: P.String, args: [P.$int]}, {func: 1, ret: P.Object, args: [,]}, {func: 1, args: [P.String,,]}, {func: 1, args: [, P.String]}, {func: 1, opt: [,]}, {func: 1, args: [P.JsObject]}, {func: 1, args: [X.ProcessResult]}, {func: 1, args: [{func: 1, v: true}]}, {func: 1, v: true, args: [P.Object], opt: [P.StackTrace]}, {func: 1, args: [,], opt: [,]}, {func: 1, args: [, P.StackTrace]}, {func: 1, v: true, args: [, P.StackTrace]}, {func: 1, args: [P.Symbol,,]}, {func: 1, args: [W.HttpRequest]}, {func: 1, args: [N.LogRecord]}, {func: 1, v: true, args: [E.AtomEvent]}, {func: 1, v: true, args: [{func: 1, v: true, args: [,]}]}, {func: 1, ret: P.Future, args: [P.String]}, {func: 1, ret: [P.Future, W.HttpRequest], args: [P.String], named: {method: P.String, mimeType: P.String, onProgress: {func: 1, v: true, args: [W.ProgressEvent]}, requestHeaders: [P.Map, P.String, P.String], responseType: P.String, sendData: null, withCredentials: P.bool}}, {func: 1, v: true, args: [P.String]}, {func: 1, v: true, args: [N.LogRecord]}];
+  init.types = [{func: 1}, {func: 1, args: [,]}, {func: 1, v: true}, {func: 1, args: [,,]}, {func: 1, args: [P.String]}, {func: 1, v: true, args: [{func: 1, v: true}]}, {func: 1, args: [P.Map]}, {func: 1, args: [P.bool]}, {func: 1, v: true, args: [,], opt: [P.StackTrace]}, {func: 1, ret: P.String, args: [P.$int]}, {func: 1, ret: P.Object, args: [,]}, {func: 1, args: [P.String,,]}, {func: 1, args: [, P.String]}, {func: 1, opt: [,]}, {func: 1, args: [P.JsObject]}, {func: 1, args: [P.String, K.StateStorable]}, {func: 1, args: [X.ProcessResult]}, {func: 1, args: [{func: 1, v: true}]}, {func: 1, v: true, args: [P.Object], opt: [P.StackTrace]}, {func: 1, args: [,], opt: [,]}, {func: 1, args: [, P.StackTrace]}, {func: 1, v: true, args: [, P.StackTrace]}, {func: 1, args: [P.Symbol,,]}, {func: 1, args: [W.HttpRequest]}, {func: 1, args: [N.LogRecord]}, {func: 1, v: true, args: [E.AtomEvent]}, {func: 1, v: true, args: [{func: 1, v: true, args: [,]}]}, {func: 1, ret: P.Future, args: [P.String]}, {func: 1, ret: [P.Future, W.HttpRequest], args: [P.String], named: {method: P.String, mimeType: P.String, onProgress: {func: 1, v: true, args: [W.ProgressEvent]}, requestHeaders: [P.Map, P.String, P.String], responseType: P.String, sendData: null, withCredentials: P.bool}}, {func: 1, v: true, args: [P.String]}, {func: 1, v: true, args: [N.LogRecord]}];
   function convertToFastObject(properties) {
     function MyClass() {
     }

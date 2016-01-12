@@ -11,6 +11,7 @@ import 'package:atom/utils/package_deps.dart' as package_deps;
 import 'package:logging/logging.dart';
 
 import 'menus/getting_started.dart';
+import 'state.dart';
 import 'usage.dart';
 
 final Logger _logger = new Logger('flutter');
@@ -20,11 +21,13 @@ class FlutterDevPackage extends AtomPackage {
 
   FlutterDevPackage() : super('flutter');
 
-  void activate([dynamic state]) {
+  void activate([dynamic pluginState]) {
     _logger.info('activate');
 
     Dependencies.setGlobalInstance(new Dependencies());
     deps[AtomPackage] = this;
+
+    state.loadFrom(pluginState);
 
     new Future.delayed(Duration.ZERO, () {
       package_deps.install('Flutter', this, justNotify: true);
@@ -58,6 +61,8 @@ class FlutterDevPackage extends AtomPackage {
       },
     };
   }
+
+  dynamic serialize() => state.saveState();
 
   void deactivate() {
     _logger.info('deactivate');

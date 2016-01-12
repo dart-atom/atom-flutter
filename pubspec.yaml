@@ -12,7 +12,7 @@ dependencies:
     git: https://github.com/dart-atom/atom.dart.git
     # path: ../../atom/atom.dart
   logging: ^0.11.0
-  usage: ^1.0.0
+  usage: ^1.1.0
 
 dev_dependencies:
   #dev_compiler: 0.1.14
