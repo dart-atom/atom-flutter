@@ -1,6 +1,6 @@
 # Changelog
 
-## unreleased
+## 0.1.2
 - Added a `Send Feedback…` menu item
 
 ## 0.1.1
