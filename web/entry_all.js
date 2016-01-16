@@ -7,11 +7,16 @@ global.dart_library = require('./ddc/dev_compiler/runtime/dart_library.js');
 require('./ddc/atom/atom.js');
 require('./ddc/atom/node/node.js');
 require('./ddc/atom/node/process.js');
+require('./ddc/atom/node/shell.js');
 require('./ddc/atom/src/js.js');
 require('./ddc/atom/src/utils.js');
+require('./ddc/atom/utils/dependencies.js');
 require('./ddc/atom/utils/disposable.js');
 require('./ddc/atom/utils/package_deps.js');
-require('./ddc/atom_flutter_dev/flutter_dev.js');
+require('./ddc/atom_flutter/flutter.js');
+require('./ddc/atom_flutter/menus/getting_started.js');
+require('./ddc/atom_flutter/state.js');
+require('./ddc/atom_flutter/usage.js');
 require('./ddc/dev_compiler/runtime/dart/_classes.js');
 require('./ddc/dev_compiler/runtime/dart/_errors.js');
 require('./ddc/dev_compiler/runtime/dart/_foreign_helper.js');
@@ -43,6 +48,9 @@ require('./ddc/dev_compiler/runtime/dart/mirrors.js');
 require('./ddc/dev_compiler/runtime/dart/typed_data.js');
 require('./ddc/entry.js');
 require('./ddc/logging/logging.js');
+require('./ddc/usage/src/usage_impl.js');
+require('./ddc/usage/src/uuid.js');
+require('./ddc/usage/usage.js');
 
 dart_library.start('entry');
 
