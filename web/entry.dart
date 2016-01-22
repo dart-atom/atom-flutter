@@ -10,7 +10,7 @@ main() {
   // Logger.root.level = Level.WARNING;
   Logger.root.level = Level.INFO;
   Logger.root.onRecord.listen((LogRecord r) {
-    String tag = '[${r.loggerName} ${r.level.name.toLowerCase()}: ';
+    String tag = '${r.loggerName} ${r.level.name.toLowerCase()}: ';
     print('${tag} ${r.message}');
 
     if (r.error != null) print('${tag}   ${r.error}');

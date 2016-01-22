@@ -11,7 +11,7 @@ dart_library.library('entry', null, /* Imports */[
   function main() {
     logging.Logger.root.level = logging.Level.INFO;
     logging.Logger.root.onRecord.listen(dart.fn(r => {
-      let tag = `[${r.loggerName} ${r.level.name[dartx.toLowerCase]()}: `;
+      let tag = `${r.loggerName} ${r.level.name[dartx.toLowerCase]()}: `;
       core.print(`${tag} ${r.message}`);
       if (r.error != null) core.print(`${tag}   ${r.error}`);
       if (r.stackTrace != null) core.print(`${tag}   ${r.stackTrace}`);

@@ -18,6 +18,7 @@ require('./ddc/atom_flutter/flutter.js');
 require('./ddc/atom_flutter/menus/getting_started.js');
 require('./ddc/atom_flutter/state.js');
 require('./ddc/atom_flutter/usage.js');
+require('./ddc/dev_compiler/runtime/dart/_debugger.js');
 require('./ddc/dev_compiler/runtime/dart/_foreign_helper.js');
 require('./ddc/dev_compiler/runtime/dart/_interceptors.js');
 require('./ddc/dev_compiler/runtime/dart/_internal.js');
