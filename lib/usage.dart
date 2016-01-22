@@ -3,10 +3,11 @@
 // BSD-style license that can be found in the LICENSE file.
 
 import 'dart:async';
-import 'dart:html' show HttpRequest;
+import 'dart:html' show document, HttpRequest, window;
 
 import 'package:atom/atom.dart';
 import 'package:atom/utils/disposable.dart';
+import 'package:atom/utils/utils.dart';
 import 'package:logging/logging.dart';
 import 'package:usage/src/usage_impl.dart';
 import 'package:usage/usage.dart';
@@ -86,16 +87,12 @@ class _AnalyticsAtom extends AnalyticsImpl {
     applicationName: applicationName,
     applicationVersion: applicationVersion
   ) {
-    // TODO: Add this back when supported by DDC.
-    // https://github.com/dart-lang/dev_compiler/issues/412.
-    // int screenWidth = window.screen.width;
-    // int screenHeight = window.screen.height;
-    // setSessionValue('sr', '${screenWidth}x$screenHeight');
-    // setSessionValue('sd', '${window.screen.pixelDepth}-bits');
+    int screenWidth = window.screen.width;
+    int screenHeight = window.screen.height;
+    setSessionValue('sr', '${screenWidth}x$screenHeight');
+    setSessionValue('sd', '${window.screen.pixelDepth}-bits');
 
-    // TODO: Add this back when supported by DDC.
-    // https://github.com/dart-lang/dev_compiler/issues/412.
-    // setSessionValue('ul', window.navigator.language);
+    setSessionValue('ul', window.navigator.language);
   }
 }
 
@@ -111,11 +108,9 @@ class _AtomUsagePersistentProperties extends PersistentProperties {
 
 class _AtomUsagePostHandler extends PostHandler {
   Future sendPost(String url, Map<String, dynamic> parameters) {
-    // TODO: Add this back when supported by DDC.
-    // https://github.com/dart-lang/dev_compiler/issues/412.
-    // int viewportWidth = document.documentElement.clientWidth;
-    // int viewportHeight = document.documentElement.clientHeight;
-    // parameters['vp'] = '${viewportWidth}x$viewportHeight';
+    int viewportWidth = document.documentElement.clientWidth;
+    int viewportHeight = document.documentElement.clientHeight;
+    parameters['vp'] = '${viewportWidth}x$viewportHeight';
 
     String data = _postEncode(parameters);
     return HttpRequest.request(url, method: 'POST', sendData: data).catchError((e) {
@@ -132,8 +127,6 @@ String _postEncode(Map<String, dynamic> map) {
   // &foo=bar
   return map.keys.map((key) {
     String value = '${map[key]}';
-    return "${key}=${_Uri_encodeComponent(value)}";
+    return "${key}=${uriEncodeComponent(value)}";
   }).join('&');
 }
-
-String _Uri_encodeComponent(String str) => str.replaceAll(' ', '%20');

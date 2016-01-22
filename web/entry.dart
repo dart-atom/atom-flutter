@@ -10,13 +10,13 @@ main() {
   // Logger.root.level = Level.WARNING;
   Logger.root.level = Level.INFO;
   Logger.root.onRecord.listen((LogRecord r) {
-    String tag = '[${r.level.name.toLowerCase()} - ${r.loggerName}] ';
+    String tag = '[${r.loggerName} ${r.level.name.toLowerCase()}: ';
     print('${tag} ${r.message}');
 
     if (r.error != null) print('${tag}   ${r.error}');
     if (r.stackTrace != null) print('${tag}   ${r.stackTrace}');
   });
 
-  registerPackage(new FlutterDevPackage());
-  // registerPackageDDC(new FlutterDevPackage());
+  // registerPackage(new FlutterDevPackage());
+  registerPackageDDC(new FlutterDevPackage());
 }

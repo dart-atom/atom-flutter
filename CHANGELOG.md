@@ -1,5 +1,8 @@
 # Changelog
 
+## unreleased
+- Now compiling the flutter plugin with DDC
+
 ## 0.1.2
 - Added a `Send Feedback…` menu item
 
