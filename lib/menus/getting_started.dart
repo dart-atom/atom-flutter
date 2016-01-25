@@ -8,6 +8,7 @@ import 'package:atom/atom.dart';
 import 'package:atom/node/process.dart';
 import 'package:atom/node/shell.dart';
 import 'package:atom/utils/disposable.dart';
+import 'package:atom/utils/utils.dart';
 
 import '../state.dart';
 
@@ -36,7 +37,7 @@ class GettingStarted implements Disposable {
   void _handleSendFeedback(AtomEvent _) {
     getSystemDescription().then((String description) {
       shell.openExternal('https://github.com/flutter/atom-flutter/issues/new?'
-          'body=${Uri.encodeComponent(description)}');
+          'body=${uriEncodeComponent(description)}');
     });
   }
 }
