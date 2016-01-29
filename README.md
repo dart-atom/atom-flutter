@@ -10,7 +10,7 @@ A [Flutter][] development environment for Atom.
 
 Please file feature requests and bugs at the [issue tracker][tracker].
 
-[tracker]: https://github.com/flutter/atom-flutter/issues
+[tracker]: https://github.com/flutter/flutter/issues
 
 ## See also
 
