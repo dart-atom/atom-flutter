@@ -47,10 +47,10 @@ dart_library.library('atom_flutter/menus/getting_started', null, /* Imports */[
     return dart.as(state.atomPackage.getPackageVersion().then(dart.fn(pluginVer => {
       let hasFlutterSdk = atom.atom.config.getValue('flutter.flutterRoot') != null;
       let description = `\n\nAtom ${atomVer}, flutter plugin ${pluginVer}`;
-      if (!dart.notNull(hasFlutterSdk)) {
-        description = dart.notNull(description) + ' (no flutter sdk configured)';
+      if (!hasFlutterSdk) {
+        description = description + ' (no flutter sdk configured)';
       }
-      description = dart.notNull(description) + `, running on ${os}.`;
+      description = description + `, running on ${os}.`;
       return description;
     }, dart.dynamic, [core.String])), async.Future$(core.String));
   }

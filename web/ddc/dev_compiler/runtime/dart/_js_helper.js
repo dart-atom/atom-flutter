@@ -352,7 +352,7 @@ dart_library.library('dart/_js_helper', null, /* Imports */[
     if (typeof other == 'string') {
       return !dart.equals(dart.dsend(receiver, 'indexOf', other, startIndex), -1);
     } else if (dart.is(other, JSSyntaxRegExp)) {
-      return dart.dsend(other, 'hasMatch', dart.dsend(receiver, 'substring', startIndex));
+      return other.hasMatch(dart.as(dart.dsend(receiver, 'substring', startIndex), core.String));
     } else {
       let substr = dart.dsend(receiver, 'substring', startIndex);
       return dart.dload(dart.dsend(other, 'allMatches', substr), 'isNotEmpty');
@@ -376,14 +376,14 @@ dart_library.library('dart/_js_helper', null, /* Imports */[
   function stringReplaceAllUnchecked(receiver, from, to) {
     checkString(to);
     if (typeof from == 'string') {
-      if (dart.equals(from, "")) {
+      if (from == "") {
         if (dart.equals(receiver, "")) {
           return to;
         } else {
           let result = new core.StringBuffer();
           let length = dart.as(dart.dload(receiver, 'length'), core.int);
           result.write(to);
-          for (let i = 0; dart.notNull(i) < dart.notNull(length); i = dart.notNull(i) + 1) {
+          for (let i = 0; i < dart.notNull(length); i++) {
             result.write(dart.dindex(receiver, i));
             result.write(to);
           }
@@ -396,7 +396,7 @@ dart_library.library('dart/_js_helper', null, /* Imports */[
         return stringReplaceJS(receiver, replacer, to);
       }
     } else if (dart.is(from, JSSyntaxRegExp)) {
-      let re = regExpGetGlobalNative(dart.as(from, JSSyntaxRegExp));
+      let re = regExpGetGlobalNative(from);
       return stringReplaceJS(receiver, re, to);
     } else {
       checkNull(from);
@@ -437,19 +437,19 @@ dart_library.library('dart/_js_helper', null, /* Imports */[
     let length = dart.as(dart.dload(receiver, 'length'), core.int);
     let i = 0;
     buffer.write(dart.dcall(onNonMatch, ""));
-    while (dart.notNull(i) < dart.notNull(length)) {
+    while (i < dart.notNull(length)) {
       buffer.write(dart.dcall(onMatch, new StringMatch(i, dart.as(receiver, core.String), "")));
       let code = dart.as(dart.dsend(receiver, 'codeUnitAt', i), core.int);
-      if ((dart.notNull(code) & ~1023) == 55296 && dart.notNull(length) > dart.notNull(i) + 1) {
-        code = dart.as(dart.dsend(receiver, 'codeUnitAt', dart.notNull(i) + 1), core.int);
+      if ((dart.notNull(code) & ~1023) == 55296 && dart.notNull(length) > i + 1) {
+        code = dart.as(dart.dsend(receiver, 'codeUnitAt', i + 1), core.int);
         if ((dart.notNull(code) & ~1023) == 56320) {
-          buffer.write(dart.dcall(onNonMatch, dart.dsend(receiver, 'substring', i, dart.notNull(i) + 2)));
-          i = dart.notNull(i) + 2;
+          buffer.write(dart.dcall(onNonMatch, dart.dsend(receiver, 'substring', i, i + 2)));
+          i = i + 2;
           continue;
         }
       }
       buffer.write(dart.dcall(onNonMatch, dart.dindex(receiver, i)));
-      i = dart.notNull(i) + 1;
+      i++;
     }
     buffer.write(dart.dcall(onMatch, new StringMatch(i, dart.as(receiver, core.String), "")));
     buffer.write(dart.dcall(onNonMatch, ""));
@@ -464,7 +464,7 @@ dart_library.library('dart/_js_helper', null, /* Imports */[
     let length = dart.as(dart.dload(receiver, 'length'), core.int);
     let buffer = new core.StringBuffer();
     let startIndex = 0;
-    while (dart.notNull(startIndex) < dart.notNull(length)) {
+    while (startIndex < dart.notNull(length)) {
       let position = dart.as(dart.dsend(receiver, 'indexOf', pattern, startIndex), core.int);
       if (position == -1) {
         break;
@@ -482,9 +482,9 @@ dart_library.library('dart/_js_helper', null, /* Imports */[
     if (typeof from == 'string') {
       let index = dart.dsend(receiver, 'indexOf', from, startIndex);
       if (dart.notNull(dart.as(dart.dsend(index, '<', 0), core.bool))) return receiver;
-      return `${dart.dsend(receiver, 'substring', 0, index)}${to}` + `${dart.dsend(receiver, 'substring', dart.dsend(index, '+', dart.dload(from, 'length')))}`;
+      return `${dart.dsend(receiver, 'substring', 0, index)}${to}` + `${dart.dsend(receiver, 'substring', dart.dsend(index, '+', from[dartx.length]))}`;
     } else if (dart.is(from, JSSyntaxRegExp)) {
-      return startIndex == 0 ? stringReplaceJS(receiver, regExpGetNative(dart.as(from, JSSyntaxRegExp)), to) : stringReplaceFirstRE(receiver, from, to, startIndex);
+      return startIndex == 0 ? stringReplaceJS(receiver, regExpGetNative(from), to) : stringReplaceFirstRE(receiver, from, to, startIndex);
     } else {
       checkNull(from);
       dart.throw("String.replace(Pattern) UNIMPLEMENTED");
@@ -574,7 +574,7 @@ dart_library.library('dart/_js_helper', null, /* Imports */[
               maxCharCode = 97 + dart.notNull(radix) - 10 - 1;
             }
             let digitsPart = dart.as(dart.dindex(match, digitsIndex), core.String);
-            for (let i = 0; dart.notNull(i) < dart.notNull(digitsPart[dartx.length]); i = dart.notNull(i) + 1) {
+            for (let i = 0; i < dart.notNull(digitsPart[dartx.length]); i++) {
               let characterCode = dart.notNull(digitsPart[dartx.codeUnitAt](0)) | 32;
               if (dart.notNull(digitsPart[dartx.codeUnitAt](i)) > dart.notNull(maxCharCode)) {
                 return handleError(source);
@@ -641,12 +641,12 @@ dart_library.library('dart/_js_helper', null, /* Imports */[
       let result = "";
       let kMaxApply = 500;
       let end = array[dartx.length];
-      for (let i = 0; dart.notNull(i) < dart.notNull(end); i = dart.notNull(i) + dart.notNull(kMaxApply)) {
+      for (let i = 0; i < dart.notNull(end); i = i + kMaxApply) {
         let subarray = null;
-        if (dart.notNull(end) <= dart.notNull(kMaxApply)) {
+        if (dart.notNull(end) <= kMaxApply) {
           subarray = array;
         } else {
-          subarray = array.slice(i, dart.notNull(i) + dart.notNull(kMaxApply) < dart.notNull(end) ? dart.notNull(i) + dart.notNull(kMaxApply) : end);
+          subarray = array.slice(i, i + kMaxApply < dart.notNull(end) ? i + kMaxApply : end);
         }
         result = result + String.fromCharCode.apply(null, subarray);
       }
@@ -725,7 +725,7 @@ dart_library.library('dart/_js_helper', null, /* Imports */[
       } else {
         value = new Date(years, jsMonth, day, hours, minutes, seconds, milliseconds).valueOf();
       }
-      if (dart.notNull(dart.as(dart.dload(value, 'isNaN'), core.bool)) || dart.notNull(dart.as(dart.dsend(value, '<', -dart.notNull(MAX_MILLISECONDS_SINCE_EPOCH)), core.bool)) || dart.notNull(dart.as(dart.dsend(value, '>', MAX_MILLISECONDS_SINCE_EPOCH), core.bool))) {
+      if (dart.notNull(dart.as(dart.dload(value, 'isNaN'), core.bool)) || dart.notNull(dart.as(dart.dsend(value, '<', -MAX_MILLISECONDS_SINCE_EPOCH), core.bool)) || dart.notNull(dart.as(dart.dsend(value, '>', MAX_MILLISECONDS_SINCE_EPOCH), core.bool))) {
         return null;
       }
       if (dart.notNull(dart.as(dart.dsend(years, '<=', 0), core.bool)) || dart.notNull(dart.as(dart.dsend(years, '<', 100), core.bool))) return Primitives.patchUpY2K(value, years, isUtc);
@@ -769,7 +769,7 @@ dart_library.library('dart/_js_helper', null, /* Imports */[
     }
     static getWeekday(receiver) {
       let weekday = dart.notNull(dart.as(dart.dload(receiver, 'isUtc'), core.bool)) ? Primitives.lazyAsJsDate(receiver).getUTCDay() + 0 : Primitives.lazyAsJsDate(receiver).getDay() + 0;
-      return (dart.notNull(weekday) + 6) % 7 + 1;
+      return (weekday + 6) % 7 + 1;
     }
     static valueFromDateString(str) {
       if (!(typeof str == 'string')) dart.throw(new core.ArgumentError(str));
@@ -969,17 +969,9 @@ dart_library.library('dart/_js_helper', null, /* Imports */[
   function fillLiteralMap(keyValuePairs, result) {
     let index = 0;
     let length = getLength(keyValuePairs);
-    while (dart.notNull(index) < dart.notNull(length)) {
-      let key = getIndex(keyValuePairs, (() => {
-        let x = index;
-        index = dart.notNull(x) + 1;
-        return x;
-      })());
-      let value = getIndex(keyValuePairs, (() => {
-        let x = index;
-        index = dart.notNull(x) + 1;
-        return x;
-      })());
+    while (index < dart.notNull(length)) {
+      let key = getIndex(keyValuePairs, index++);
+      let value = getIndex(keyValuePairs, index++);
       result.set(key, value);
     }
     return result;
@@ -1082,7 +1074,7 @@ dart_library.library('dart/_js_helper', null, /* Imports */[
   function random64() {
     let int32a = Math.random() * 0x100000000 >>> 0;
     let int32b = Math.random() * 0x100000000 >>> 0;
-    return dart.notNull(int32a) + dart.notNull(int32b) * 4294967296;
+    return int32a + int32b * 4294967296;
   }
   dart.fn(random64, core.int, []);
   function jsonEncodeNative(string) {

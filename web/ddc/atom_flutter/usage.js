@@ -79,10 +79,10 @@ dart_library.library('atom_flutter/usage', null, /* Imports */[
       }
       let desc = `${log.loggerName}:${message}`;
       if (log.error != null) {
-        desc = dart.notNull(desc) + `,${dart.runtimeType(log.error)}`;
+        desc = desc + `,${dart.runtimeType(log.error)}`;
       }
       if (log.stackTrace != null) {
-        desc = dart.notNull(desc) + `,${usage.sanitizeStacktrace(log.stackTrace)}`;
+        desc = desc + `,${usage.sanitizeStacktrace(log.stackTrace)}`;
       }
       exports._ga.sendException(desc, {fatal: fatal});
     }

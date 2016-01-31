@@ -14,7 +14,7 @@ dart_library.library('logging/logging', null, /* Imports */[
       this.value = value;
     }
     ['=='](other) {
-      return dart.is(other, Level) && dart.equals(this.value, dart.dload(other, 'value'));
+      return dart.is(other, Level) && this.value == other.value;
     }
     ['<'](other) {
       return dart.notNull(this.value) < dart.notNull(other.value);
@@ -50,9 +50,42 @@ dart_library.library('logging/logging', null, /* Imports */[
     })
   });
   dart.defineExtensionMembers(Level, ['compareTo']);
-  Level.OFF = dart.const(new Level('OFF', 2000));
+  dart.defineLazyProperties(Level, {
+    get ALL() {
+      return dart.const(new Level('ALL', 0));
+    },
+    get OFF() {
+      return dart.const(new Level('OFF', 2000));
+    },
+    get FINEST() {
+      return dart.const(new Level('FINEST', 300));
+    },
+    get FINER() {
+      return dart.const(new Level('FINER', 400));
+    },
+    get FINE() {
+      return dart.const(new Level('FINE', 500));
+    },
+    get CONFIG() {
+      return dart.const(new Level('CONFIG', 700));
+    },
+    get INFO() {
+      return dart.const(new Level('INFO', 800));
+    },
+    get WARNING() {
+      return dart.const(new Level('WARNING', 900));
+    },
+    get SEVERE() {
+      return dart.const(new Level('SEVERE', 1000));
+    },
+    get SHOUT() {
+      return dart.const(new Level('SHOUT', 1200));
+    },
+    get LEVELS() {
+      return dart.const(dart.list([Level.ALL, Level.FINEST, Level.FINER, Level.FINE, Level.CONFIG, Level.INFO, Level.WARNING, Level.SEVERE, Level.SHOUT, Level.OFF], Level));
+    }
+  });
   exports.recordStackTraceAtLevel = Level.OFF;
-  Level.INFO = dart.const(new Level('INFO', 800));
   exports._rootLevel = Level.INFO;
   const _children = Symbol('_children');
   const _level = Symbol('_level');
@@ -246,15 +279,6 @@ dart_library.library('logging/logging', null, /* Imports */[
     }
   });
   const LoggerHandler = dart.typedef('LoggerHandler', () => dart.functionType(dart.void, [dart.dynamic]));
-  Level.ALL = dart.const(new Level('ALL', 0));
-  Level.FINEST = dart.const(new Level('FINEST', 300));
-  Level.FINER = dart.const(new Level('FINER', 400));
-  Level.FINE = dart.const(new Level('FINE', 500));
-  Level.CONFIG = dart.const(new Level('CONFIG', 700));
-  Level.WARNING = dart.const(new Level('WARNING', 900));
-  Level.SEVERE = dart.const(new Level('SEVERE', 1000));
-  Level.SHOUT = dart.const(new Level('SHOUT', 1200));
-  Level.LEVELS = dart.const(dart.list([Level.ALL, Level.FINEST, Level.FINER, Level.FINE, Level.CONFIG, Level.INFO, Level.WARNING, Level.SEVERE, Level.SHOUT, Level.OFF], Level));
   class LogRecord extends core.Object {
     LogRecord(level, message, loggerName, error, stackTrace, zone) {
       if (error === void 0) error = null;

@@ -20,7 +20,7 @@ dart_library.library('atom/src/js', null, /* Imports */[
     if (obj == null) return null;
     if (dart.is(obj, js.JsObject)) return obj;
     if (dart.is(obj, core.List) || dart.is(obj, core.Map)) return js.JsObject.jsify(obj);
-    if (dart.is(obj, ProxyHolder)) return dart.dload(obj, 'obj');
+    if (dart.is(obj, ProxyHolder)) return obj.obj;
     return obj;
   }
   dart.fn(jsify);
@@ -72,7 +72,7 @@ dart_library.library('atom/src/js', null, /* Imports */[
       return dart.hashCode(this.obj);
     }
     ['=='](other) {
-      return dart.is(other, ProxyHolder) && dart.equals(this.obj, dart.dload(other, 'obj'));
+      return dart.is(other, ProxyHolder) && dart.equals(this.obj, other.obj);
     }
   }
   dart.setSignature(ProxyHolder, {

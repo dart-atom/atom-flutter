@@ -29,7 +29,6 @@ dart_library.library('dart/_js_mirrors', null, /* Imports */[
   }
   dart.fn(reflectType, mirrors.TypeMirror, [core.Type]);
   const _dart = dart;
-  const _metadata = _dart.metadata;
   function _dload(obj, name) {
     return _dart.dload(obj, name);
   }
@@ -96,12 +95,12 @@ dart_library.library('dart/_js_mirrors', null, /* Imports */[
       [_toJsMap]: [dart.dynamic, [core.Map$(core.Symbol, dart.dynamic)]]
     })
   });
-  const _metadata$ = Symbol('_metadata');
+  const _metadata = Symbol('_metadata');
   const _declarations = Symbol('_declarations');
   const _cls = Symbol('_cls');
   class JsClassMirror extends core.Object {
     get metadata() {
-      return this[_metadata$];
+      return this[_metadata];
     }
     get declarations() {
       return this[_declarations];
@@ -109,10 +108,10 @@ dart_library.library('dart/_js_mirrors', null, /* Imports */[
     _(cls) {
       this[_cls] = cls;
       this.simpleName = core.Symbol.new(cls.name);
-      this[_metadata$] = null;
+      this[_metadata] = null;
       this[_declarations] = null;
       let fn = this[_cls][dart.metadata];
-      this[_metadata$] = fn == null ? dart.list([], mirrors.InstanceMirror) : core.List$(mirrors.InstanceMirror).from(dart.as(dart.dsend(dart.dcall(fn), 'map', dart.fn(i => new JsInstanceMirror._(i), JsInstanceMirror, [dart.dynamic])), core.Iterable));
+      this[_metadata] = fn == null ? dart.list([], mirrors.InstanceMirror) : core.List$(mirrors.InstanceMirror).from(dart.as(dart.dsend(dart.dcall(fn), 'map', dart.fn(i => new JsInstanceMirror._(i), JsInstanceMirror, [dart.dynamic])), core.Iterable));
       this[_declarations] = core.Map$(core.Symbol, mirrors.MethodMirror).new();
       this[_declarations].set(this.simpleName, new JsMethodMirror._(this, this[_cls]));
     }
@@ -351,17 +350,17 @@ dart_library.library('dart/_js_mirrors', null, /* Imports */[
       let args = dart.as(dart.dload(ftype, 'args'), core.List);
       let opts = dart.as(dart.dload(ftype, 'optionals'), core.List);
       let params = core.List$(mirrors.ParameterMirror).new(dart.notNull(args[dartx.length]) + dart.notNull(opts[dartx.length]));
-      for (let i = 0; dart.notNull(i) < dart.notNull(args[dartx.length]); i = dart.notNull(i) + 1) {
+      for (let i = 0; i < dart.notNull(args[dartx.length]); ++i) {
         let type = args[dartx.get](i);
         let metadata = dart.dindex(dart.dload(ftype, 'metadata'), i);
         let param = new JsParameterMirror._('', dart.as(type, core.Type), dart.as(metadata, core.List));
         params[dartx.set](i, param);
       }
-      for (let i = 0; dart.notNull(i) < dart.notNull(opts[dartx.length]); i = dart.notNull(i) + 1) {
+      for (let i = 0; i < dart.notNull(opts[dartx.length]); ++i) {
         let type = opts[dartx.get](i);
-        let metadata = dart.dindex(dart.dload(ftype, 'metadata'), dart.notNull(args[dartx.length]) + dart.notNull(i));
+        let metadata = dart.dindex(dart.dload(ftype, 'metadata'), dart.notNull(args[dartx.length]) + i);
         let param = new JsParameterMirror._('', dart.as(type, core.Type), dart.as(metadata, core.List));
-        params[dartx.set](dart.notNull(i) + dart.notNull(args[dartx.length]), param);
+        params[dartx.set](i + dart.notNull(args[dartx.length]), param);
       }
       return params;
     }
