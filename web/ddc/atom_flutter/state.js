@@ -41,7 +41,7 @@ dart_library.library('atom_flutter/state', null, /* Imports */[
       try {
         this[_storables].set(key, storable);
         let data = this.get(key);
-        storable.initFromStored(typeof data == 'string' ? convert.JSON.decode(dart.as(data, core.String)) : null);
+        storable.initFromStored(typeof data == 'string' ? convert.JSON.decode(data) : null);
       } catch (e) {
         core.print(`Exception restoring state: ${e}`);
       }

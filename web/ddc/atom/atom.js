@@ -14,15 +14,17 @@ dart_library.library('atom/atom', null, /* Imports */[
 ], function(exports$, dart, logging, core, js, js$, disposable, html, convert, async, utils, node) {
   'use strict';
   let dartx = dart.dartx;
-  exports$._package = null;
   dart.defineLazyProperties(exports$, {
     get _logger() {
       return logging.Logger.new('atom');
-    },
+    }
+  });
+  dart.defineLazyProperties(exports$, {
     get atom() {
       return new Atom();
     }
   });
+  exports$._package = null;
   const _registeredMethods = Symbol('_registeredMethods');
   function registerPackage(package$) {
     if (exports$._package != null) {
@@ -57,7 +59,7 @@ dart_library.library('atom/atom', null, /* Imports */[
       exports.set(methodName, dart.fn(arg => {
         let result = dart.dcall(f, arg);
         if (dart.is(result, disposable.Disposable)) {
-          let m = dart.map({dispose: dart.dload(result, 'dispose')});
+          let m = dart.map({dispose: dart.bind(result, 'dispose')});
           return js$.jsify(m);
         } else if (dart.is(result, core.List) || dart.is(result, core.Map)) {
           return js$.jsify(result);
@@ -186,8 +188,8 @@ dart_library.library('atom/atom', null, /* Imports */[
     pickFolder() {
       let completer = async.Completer$(core.String).new();
       this.invoke('pickFolder', dart.fn(result => {
-        if (dart.is(result, core.List) && dart.notNull(dart.as(dart.dload(result, 'isNotEmpty'), core.bool))) {
-          completer.complete(dart.dload(result, 'first'));
+        if (dart.is(result, core.List) && dart.notNull(result[dartx.isNotEmpty])) {
+          completer.complete(result[dartx.first]);
         } else {
           completer.complete(null);
         }
@@ -411,6 +413,10 @@ dart_library.library('atom/atom', null, /* Imports */[
     getTextEditors() {
       return core.List$(TextEditor).from(dart.as(dart.dsend(this.invoke('getTextEditors'), 'map', dart.fn(e => new TextEditor(dart.as(e, js.JsObject)), TextEditor, [dart.dynamic])), core.Iterable));
     }
+    getActiveTextEditor() {
+      let result = this.invoke('getActiveTextEditor');
+      return result == null ? null : new TextEditor(dart.as(result, js.JsObject));
+    }
     open(url, opts) {
       let options = opts && 'options' in opts ? opts.options : null;
       return this[_openSerializer].perform(dart.fn(() => {
@@ -427,6 +433,7 @@ dart_library.library('atom/atom', null, /* Imports */[
     constructors: () => ({Workspace: [Workspace, [js.JsObject]]}),
     methods: () => ({
       getTextEditors: [core.List$(TextEditor), []],
+      getActiveTextEditor: [TextEditor, []],
       open: [async.Future$(TextEditor), [core.String], {options: core.Map}]
     })
   });
@@ -575,7 +582,7 @@ dart_library.library('atom/atom', null, /* Imports */[
   class AtomEvent extends js$.ProxyHolder {
     static new(object) {
       if (dart.is(object, js.JsObject)) {
-        return new AtomEvent._fromJsObject(dart.as(object, js.JsObject));
+        return new AtomEvent._fromJsObject(object);
       } else {
         return new _AtomEventCustomEvent(object);
       }

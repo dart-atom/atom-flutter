@@ -12,13 +12,19 @@ dart_library.library('atom/node/process', null, /* Imports */[
   dart.defineLazyProperties(exports, {
     get process() {
       return new Process._();
-    },
+    }
+  });
+  dart.defineLazyProperties(exports, {
     get isWindows() {
       return exports.process.platform[dartx.startsWith]('win');
-    },
+    }
+  });
+  dart.defineLazyProperties(exports, {
     get isMac() {
       return exports.process.platform == 'darwin';
-    },
+    }
+  });
+  dart.defineLazyProperties(exports, {
     get isLinux() {
       return !dart.notNull(exports.isWindows) && !dart.notNull(exports.isMac);
     }

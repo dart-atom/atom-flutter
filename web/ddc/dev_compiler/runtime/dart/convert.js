@@ -62,6 +62,12 @@ dart_library.library('dart/convert', null, /* Imports */[
     statics: () => ({getByName: [Encoding, [core.String]]}),
     names: ['getByName']
   });
+  dart.defineLazyProperties(Encoding, {
+    get _nameToEncoding() {
+      return dart.map({"iso_8859-1:1987": LATIN1, "iso-ir-100": LATIN1, "iso_8859-1": LATIN1, "iso-8859-1": LATIN1, latin1: LATIN1, l1: LATIN1, ibm819: LATIN1, cp819: LATIN1, csisolatin1: LATIN1, "iso-ir-6": ASCII, "ansi_x3.4-1968": ASCII, "ansi_x3.4-1986": ASCII, "iso_646.irv:1991": ASCII, "iso646-us": ASCII, "us-ascii": ASCII, us: ASCII, ibm367: ASCII, cp367: ASCII, csascii: ASCII, ascii: ASCII, csutf8: UTF8, "utf-8": UTF8});
+    },
+    set _nameToEncoding(_) {}
+  });
   const _allowInvalid = Symbol('_allowInvalid');
   class AsciiCodec extends Encoding {
     AsciiCodec(opts) {
@@ -137,8 +143,8 @@ dart_library.library('dart/convert', null, /* Imports */[
       if (end == null) end = stringLength;
       let length = dart.notNull(end) - dart.notNull(start);
       let result = typed_data.Uint8List.new(length);
-      for (let i = 0; dart.notNull(i) < dart.notNull(length); i = dart.notNull(i) + 1) {
-        let codeUnit = string[dartx.codeUnitAt](dart.notNull(start) + dart.notNull(i));
+      for (let i = 0; i < length; i++) {
+        let codeUnit = string[dartx.codeUnitAt](dart.notNull(start) + i);
         if ((dart.notNull(codeUnit) & ~dart.notNull(this[_subsetMask])) != 0) {
           dart.throw(new core.ArgumentError("String contains invalid characters."));
         }
@@ -381,7 +387,7 @@ dart_library.library('dart/convert', null, /* Imports */[
       this[_sink].close();
     }
     add(source) {
-      for (let i = 0; dart.notNull(i) < dart.notNull(source[dartx.length]); i = dart.notNull(i) + 1) {
+      for (let i = 0; i < dart.notNull(source[dartx.length]); i++) {
         if ((dart.notNull(source[dartx.get](i)) & ~dart.notNull(_ASCII_MASK)) != 0) {
           dart.throw(new core.FormatException("Source contains non-ASCII bytes."));
         }
@@ -436,7 +442,7 @@ dart_library.library('dart/convert', null, /* Imports */[
     }
     add(chunk) {
       let freeCount = dart.notNull(this[_buffer][dartx.length]) - dart.notNull(this[_bufferIndex]);
-      if (dart.notNull(chunk[dartx.length]) > dart.notNull(freeCount)) {
+      if (dart.notNull(chunk[dartx.length]) > freeCount) {
         let oldLength = this[_buffer][dartx.length];
         let newLength = dart.notNull(_ByteCallbackSink._roundToPowerOf2(dart.notNull(chunk[dartx.length]) + dart.notNull(oldLength))) * 2;
         let grown = typed_data.Uint8List.new(newLength);
@@ -629,12 +635,6 @@ dart_library.library('dart/convert', null, /* Imports */[
     return _FusedConverter;
   });
   let _FusedConverter = _FusedConverter$();
-  dart.defineLazyProperties(Encoding, {
-    get _nameToEncoding() {
-      return dart.map({"iso_8859-1:1987": LATIN1, "iso-ir-100": LATIN1, "iso_8859-1": LATIN1, "iso-8859-1": LATIN1, latin1: LATIN1, l1: LATIN1, ibm819: LATIN1, cp819: LATIN1, csisolatin1: LATIN1, "iso-ir-6": ASCII, "ansi_x3.4-1968": ASCII, "ansi_x3.4-1986": ASCII, "iso_646.irv:1991": ASCII, "iso646-us": ASCII, "us-ascii": ASCII, us: ASCII, ibm367: ASCII, cp367: ASCII, csascii: ASCII, ascii: ASCII, csutf8: UTF8, "utf-8": UTF8});
-    },
-    set _nameToEncoding(_) {}
-  });
   const _name = Symbol('_name');
   class HtmlEscapeMode extends core.Object {
     _(name, escapeLtGt, escapeQuot, escapeApos, escapeSlash) {
@@ -652,7 +652,17 @@ dart_library.library('dart/convert', null, /* Imports */[
   dart.setSignature(HtmlEscapeMode, {
     constructors: () => ({_: [HtmlEscapeMode, [core.String, core.bool, core.bool, core.bool, core.bool]]})
   });
-  HtmlEscapeMode.UNKNOWN = dart.const(new HtmlEscapeMode._('unknown', true, true, true, true));
+  dart.defineLazyProperties(HtmlEscapeMode, {
+    get UNKNOWN() {
+      return dart.const(new HtmlEscapeMode._('unknown', true, true, true, true));
+    },
+    get ATTRIBUTE() {
+      return dart.const(new HtmlEscapeMode._('attribute', false, true, false, false));
+    },
+    get ELEMENT() {
+      return dart.const(new HtmlEscapeMode._('element', true, false, false, true));
+    }
+  });
   const _convert = Symbol('_convert');
   class HtmlEscape extends Converter$(core.String, core.String) {
     HtmlEscape(mode) {
@@ -731,8 +741,6 @@ dart_library.library('dart/convert', null, /* Imports */[
     })
   });
   const HTML_ESCAPE = dart.const(new HtmlEscape());
-  HtmlEscapeMode.ATTRIBUTE = dart.const(new HtmlEscapeMode._('attribute', false, true, false, false));
-  HtmlEscapeMode.ELEMENT = dart.const(new HtmlEscapeMode._('element', true, false, false, true));
   const _escape = Symbol('_escape');
   class _HtmlEscapeSink extends StringConversionSinkBase {
     _HtmlEscapeSink(escape, sink) {
@@ -899,7 +907,7 @@ dart_library.library('dart/convert', null, /* Imports */[
       if (string == null) return null;
       if (dart.notNull(string[dartx.isEmpty])) return typed_data.Uint8List.new(0);
       checkAscii: {
-        for (let i = 0; dart.notNull(i) < dart.notNull(string[dartx.length]); i = dart.notNull(i) + 1) {
+        for (let i = 0; i < dart.notNull(string[dartx.length]); i++) {
           if (dart.notNull(string[dartx.codeUnitAt](i)) >= 128) break checkAscii;
         }
         return string[dartx.codeUnits];
@@ -919,13 +927,13 @@ dart_library.library('dart/convert', null, /* Imports */[
       _JsonUtf8Stringifier.stringify(object, this[_indent], dart.as(this[_toEncodable$], dart.functionType(dart.dynamic, [core.Object])), this[_bufferSize], addChunk);
       if (bytes[dartx.length] == 1) return bytes[dartx.get](0);
       let length = 0;
-      for (let i = 0; dart.notNull(i) < dart.notNull(bytes[dartx.length]); i = dart.notNull(i) + 1) {
+      for (let i = 0; i < dart.notNull(bytes[dartx.length]); i++) {
         length = dart.notNull(length) + dart.notNull(bytes[dartx.get](i)[dartx.length]);
       }
       let result = typed_data.Uint8List.new(length);
-      for (let i = 0, offset = 0; dart.notNull(i) < dart.notNull(bytes[dartx.length]); i = dart.notNull(i) + 1) {
+      for (let i = 0, offset = 0; i < dart.notNull(bytes[dartx.length]); i++) {
         let byteList = bytes[dartx.get](i);
-        let end = dart.notNull(offset) + dart.notNull(byteList[dartx.length]);
+        let end = offset + dart.notNull(byteList[dartx.length]);
         result.setRange(offset, end, byteList);
         offset = end;
       }
@@ -1080,12 +1088,12 @@ dart_library.library('dart/convert', null, /* Imports */[
     writeStringContent(s) {
       let offset = 0;
       let length = s[dartx.length];
-      for (let i = 0; dart.notNull(i) < dart.notNull(length); i = dart.notNull(i) + 1) {
+      for (let i = 0; i < dart.notNull(length); i++) {
         let charCode = s[dartx.codeUnitAt](i);
         if (dart.notNull(charCode) > dart.notNull(_JsonStringifier.BACKSLASH)) continue;
         if (dart.notNull(charCode) < 32) {
-          if (dart.notNull(i) > dart.notNull(offset)) this.writeStringSlice(s, offset, i);
-          offset = dart.notNull(i) + 1;
+          if (i > offset) this.writeStringSlice(s, offset, i);
+          offset = i + 1;
           this.writeCharCode(_JsonStringifier.BACKSLASH);
           switch (charCode) {
             case _JsonStringifier.BACKSPACE:
@@ -1124,20 +1132,20 @@ dart_library.library('dart/convert', null, /* Imports */[
             }
           }
         } else if (charCode == _JsonStringifier.QUOTE || charCode == _JsonStringifier.BACKSLASH) {
-          if (dart.notNull(i) > dart.notNull(offset)) this.writeStringSlice(s, offset, i);
-          offset = dart.notNull(i) + 1;
+          if (i > offset) this.writeStringSlice(s, offset, i);
+          offset = i + 1;
           this.writeCharCode(_JsonStringifier.BACKSLASH);
           this.writeCharCode(charCode);
         }
       }
       if (offset == 0) {
         this.writeString(s);
-      } else if (dart.notNull(offset) < dart.notNull(length)) {
+      } else if (offset < dart.notNull(length)) {
         this.writeStringSlice(s, offset, length);
       }
     }
     [_checkCycle](object) {
-      for (let i = 0; dart.notNull(i) < dart.notNull(this[_seen][dartx.length]); i = dart.notNull(i) + 1) {
+      for (let i = 0; i < dart.notNull(this[_seen][dartx.length]); i++) {
         if (dart.notNull(core.identical(object, this[_seen][dartx.get](i)))) {
           dart.throw(new JsonCyclicError(object));
         }
@@ -1165,8 +1173,8 @@ dart_library.library('dart/convert', null, /* Imports */[
     }
     writeJsonValue(object) {
       if (typeof object == 'number') {
-        if (!dart.notNull(dart.as(dart.dload(object, 'isFinite'), core.bool))) return false;
-        this.writeNumber(dart.as(object, core.num));
+        if (!dart.notNull(object[dartx.isFinite])) return false;
+        this.writeNumber(object);
         return true;
       } else if (dart.notNull(core.identical(object, true))) {
         this.writeString('true');
@@ -1179,12 +1187,12 @@ dart_library.library('dart/convert', null, /* Imports */[
         return true;
       } else if (typeof object == 'string') {
         this.writeString('"');
-        this.writeStringContent(dart.as(object, core.String));
+        this.writeStringContent(object);
         this.writeString('"');
         return true;
       } else if (dart.is(object, core.List)) {
         this[_checkCycle](object);
-        this.writeList(dart.as(object, core.List));
+        this.writeList(object);
         this[_removeSeen](object);
         return true;
       } else if (dart.is(object, core.Map)) {
@@ -1200,7 +1208,7 @@ dart_library.library('dart/convert', null, /* Imports */[
       this.writeString('[');
       if (dart.notNull(list[dartx.length]) > 0) {
         this.writeObject(list[dartx.get](0));
-        for (let i = 1; dart.notNull(i) < dart.notNull(list[dartx.length]); i = dart.notNull(i) + 1) {
+        for (let i = 1; i < dart.notNull(list[dartx.length]); i++) {
           this.writeString(',');
           this.writeObject(list[dartx.get](i));
         }
@@ -1261,7 +1269,7 @@ dart_library.library('dart/convert', null, /* Imports */[
         this[_indentLevel] = dart.notNull(this[_indentLevel]) + 1;
         this.writeIndentation(this[_indentLevel]);
         this.writeObject(list[dartx.get](0));
-        for (let i = 1; dart.notNull(i) < dart.notNull(list[dartx.length]); i = dart.notNull(i) + 1) {
+        for (let i = 1; i < dart.notNull(list[dartx.length]); i++) {
           this.writeString(',\n');
           this.writeIndentation(this[_indentLevel]);
           this.writeObject(list[dartx.get](i));
@@ -1280,7 +1288,7 @@ dart_library.library('dart/convert', null, /* Imports */[
         this[_indentLevel] = dart.notNull(this[_indentLevel]) + 1;
         let first = true;
         map.forEach(dart.fn(((key, value) => {
-          if (!dart.notNull(first)) {
+          if (!first) {
             this.writeString(",\n");
           }
           this.writeIndentation(this[_indentLevel]);
@@ -1356,7 +1364,7 @@ dart_library.library('dart/convert', null, /* Imports */[
       super._JsonStringStringifier(sink, toEncodable);
     }
     writeIndentation(count) {
-      for (let i = 0; dart.notNull(i) < dart.notNull(count); i = dart.notNull(i) + 1)
+      for (let i = 0; i < dart.notNull(count); i++)
         this.writeString(this[_indent]);
     }
   }
@@ -1393,7 +1401,7 @@ dart_library.library('dart/convert', null, /* Imports */[
       this.writeAsciiString(dart.toString(number));
     }
     writeAsciiString(string) {
-      for (let i = 0; dart.notNull(i) < dart.notNull(string[dartx.length]); i = dart.notNull(i) + 1) {
+      for (let i = 0; i < dart.notNull(string[dartx.length]); i++) {
         let char = string[dartx.codeUnitAt](i);
         dart.assert(dart.notNull(char) <= 127);
         this.writeByte(char);
@@ -1498,11 +1506,11 @@ dart_library.library('dart/convert', null, /* Imports */[
       while (dart.notNull(count) > 0) {
         count = dart.notNull(count) - 1;
         let end = dart.notNull(this.index) + dart.notNull(indentLength);
-        if (dart.notNull(end) <= dart.notNull(this.buffer.length)) {
+        if (end <= dart.notNull(this.buffer.length)) {
           this.buffer.setRange(this.index, end, indent);
           this.index = end;
         } else {
-          for (let i = 0; dart.notNull(i) < dart.notNull(indentLength); i = dart.notNull(i) + 1) {
+          for (let i = 0; i < dart.notNull(indentLength); i++) {
             this.writeByte(indent[dartx.get](i));
           }
         }
@@ -1698,9 +1706,9 @@ dart_library.library('dart/convert', null, /* Imports */[
             return chunk[dartx.substring](start, end);
           }
         }
-        if (dart.notNull(skip) > 0) {
+        if (skip > 0) {
           adder(chunk[dartx.substring](start, pos));
-          start = pos = dart.notNull(pos) + dart.notNull(skip);
+          start = pos = dart.notNull(pos) + skip;
         } else {
           pos = dart.notNull(pos) + 1;
         }
@@ -2045,7 +2053,7 @@ dart_library.library('dart/convert', null, /* Imports */[
       if (end == null) end = stringLength;
       let length = dart.notNull(end) - dart.notNull(start);
       if (length == 0) return typed_data.Uint8List.new(0);
-      let encoder = new _Utf8Encoder.withBufferSize(dart.notNull(length) * 3);
+      let encoder = new _Utf8Encoder.withBufferSize(length * 3);
       let endPosition = encoder[_fillBuffer](string, start, end);
       dart.assert(dart.notNull(endPosition) >= dart.notNull(end) - 1);
       if (endPosition != end) {
@@ -2495,7 +2503,7 @@ dart_library.library('dart/convert', null, /* Imports */[
         return e;
       }
       if (Object.getPrototypeOf(e) === Array.prototype) {
-        for (let i = 0; dart.notNull(i) < e.length; i = dart.notNull(i) + 1) {
+        for (let i = 0; i < e.length; i++) {
           let item = e[i];
           e[i] = dart.dcall(reviver, i, walk(item));
         }
@@ -2504,7 +2512,7 @@ dart_library.library('dart/convert', null, /* Imports */[
       let map = new _JsonMap(e);
       let processed = map[_processed];
       let keys = map[_computeKeys]();
-      for (let i = 0; dart.notNull(i) < dart.notNull(keys[dartx.length]); i = dart.notNull(i) + 1) {
+      for (let i = 0; i < dart.notNull(keys[dartx.length]); i++) {
         let key = keys[dartx.get](i);
         let revived = dart.dcall(reviver, key, walk(e[key]));
         processed[key] = revived;
@@ -2524,7 +2532,7 @@ dart_library.library('dart/convert', null, /* Imports */[
     if (Object.getPrototypeOf(object) !== Array.prototype) {
       return new _JsonMap(object);
     }
-    for (let i = 0; dart.notNull(i) < object.length; i = dart.notNull(i) + 1) {
+    for (let i = 0; i < object.length; i++) {
       let item = object[i];
       object[i] = _convertJsonToDartLazy(item);
     }
@@ -2593,7 +2601,7 @@ dart_library.library('dart/convert', null, /* Imports */[
     containsValue(value) {
       if (dart.notNull(this[_isUpgraded])) return this[_upgradedMap].containsValue(value);
       let keys = this[_computeKeys]();
-      for (let i = 0; dart.notNull(i) < dart.notNull(keys[dartx.length]); i = dart.notNull(i) + 1) {
+      for (let i = 0; i < dart.notNull(keys[dartx.length]); i++) {
         let key = keys[dartx.get](i);
         if (dart.equals(this.get(key), value)) return true;
       }
@@ -2628,7 +2636,7 @@ dart_library.library('dart/convert', null, /* Imports */[
     forEach(f) {
       if (dart.notNull(this[_isUpgraded])) return this[_upgradedMap].forEach(f);
       let keys = this[_computeKeys]();
-      for (let i = 0; dart.notNull(i) < dart.notNull(keys[dartx.length]); i = dart.notNull(i) + 1) {
+      for (let i = 0; i < dart.notNull(keys[dartx.length]); i++) {
         let key = keys[dartx.get](i);
         let value = _JsonMap._getProperty(this[_processed], key);
         if (dart.notNull(_JsonMap._isUnprocessed(value))) {
@@ -2663,7 +2671,7 @@ dart_library.library('dart/convert', null, /* Imports */[
       if (dart.notNull(this[_isUpgraded])) return this[_upgradedMap];
       let result = dart.map();
       let keys = this[_computeKeys]();
-      for (let i = 0; dart.notNull(i) < dart.notNull(keys[dartx.length]); i = dart.notNull(i) + 1) {
+      for (let i = 0; i < dart.notNull(keys[dartx.length]); i++) {
         let key = keys[dartx.get](i);
         result.set(key, this.get(key));
       }

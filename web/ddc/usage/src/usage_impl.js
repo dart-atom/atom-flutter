@@ -40,8 +40,8 @@ dart_library.library('usage/src/usage_impl', null, /* Imports */[
       let now = new core.DateTime.now().millisecondsSinceEpoch;
       if (dart.notNull(this[_lastReplenish]) + 1000 >= dart.notNull(now)) {
         let inc = ((dart.notNull(now) - dart.notNull(this[_lastReplenish])) / 1000)[dartx.truncate]();
-        this.drops = math.min(dart.notNull(this.drops) + dart.notNull(inc), this.startingCount);
-        this[_lastReplenish] = dart.notNull(this[_lastReplenish]) + 1000 * dart.notNull(inc);
+        this.drops = math.min(dart.notNull(this.drops) + inc, this.startingCount);
+        this[_lastReplenish] = dart.notNull(this[_lastReplenish]) + 1000 * inc;
       }
     }
   }
