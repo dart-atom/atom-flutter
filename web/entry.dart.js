@@ -15339,7 +15339,7 @@ self._domRemove = function(element) {
       "^": "Closure:25;",
       call$1: [function(r) {
         var tag, t1;
-        tag = r.get$loggerName() + " " + r.get$level().name.toLowerCase() + ": ";
+        tag = r.get$loggerName() + " - " + r.get$level().name.toLowerCase() + " -";
         t1 = J.getInterceptor$x(r);
         P.print(tag + " " + H.S(t1.get$message(r)));
         if (t1.get$error(r) != null)
