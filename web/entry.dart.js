@@ -15794,12 +15794,12 @@ self._domRemove = function(element) {
           if ($.$get$isMac() === true) {
             t1 = H.JSSyntaxRegExp_makeNative("([\"'| \\$!\\(\\)\\[\\]])", false, true, false);
             shell = $.$get$process().env$1("SHELL");
-            if (shell == null)
+            if (shell == null) {
               $.$get$_logger1().warning$1("Couldn't identify the user's shell");
-            else {
-              command = J.$add$ns(command, " " + H.setRuntimeTypeInfo(new H.MappedListIterable(args, new X.closure0(new H.JSSyntaxRegExp("([\"'| \\$!\\(\\)\\[\\]])", t1, null, null))), [null, null]).join$1(0, " "));
-              return new X.ProcessRunner(shell, ["-l", "-c", command], cwd, env, null, H.setRuntimeTypeInfo(new P._AsyncCompleter(H.setRuntimeTypeInfo(new P._Future(0, $.Zone__current, null), [null])), [null]), null, P.StreamController_StreamController(null, null, null, null, false, null), P.StreamController_StreamController(null, null, null, null, false, null));
+              shell = "/bin/bash";
             }
+            command = J.$add$ns(command, " " + H.setRuntimeTypeInfo(new H.MappedListIterable(args, new X.closure0(new H.JSSyntaxRegExp("([\"'| \\$!\\(\\)\\[\\]])", t1, null, null))), [null, null]).join$1(0, " "));
+            return new X.ProcessRunner(shell, ["-l", "-c", command], cwd, env, null, H.setRuntimeTypeInfo(new P._AsyncCompleter(H.setRuntimeTypeInfo(new P._Future(0, $.Zone__current, null), [null])), [null]), null, P.StreamController_StreamController(null, null, null, null, false, null), P.StreamController_StreamController(null, null, null, null, false, null));
           }
           return new X.ProcessRunner(command, args, cwd, env, null, H.setRuntimeTypeInfo(new P._AsyncCompleter(H.setRuntimeTypeInfo(new P._Future(0, $.Zone__current, null), [null])), [null]), null, P.StreamController_StreamController(null, null, null, null, false, null), P.StreamController_StreamController(null, null, null, null, false, null));
         }
