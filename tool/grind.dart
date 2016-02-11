@@ -5,6 +5,7 @@
 import 'dart:io';
 
 import 'package:atom/build/build.dart';
+import 'package:atom/build/publish.dart';
 import 'package:grinder/grinder.dart';
 
 main(List<String> args) => grind(args);
@@ -95,6 +96,10 @@ module.exports = {
   log('Generated ${entryJsFile.path}.');
   entryJsFile.writeAsStringSync(contents);
 }
+
+@Task()
+@Depends(build) //analyze, build, test, runAtomTests)
+publish() => publishAtomPlugin();
 
 @DefaultTask()
 @Depends(analyze, build)

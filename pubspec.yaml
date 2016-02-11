@@ -17,3 +17,4 @@ dependencies:
 dev_dependencies:
   # dev_compiler: 0.1.17
   grinder: ^0.8.0+1
+  pub_semver: ^1.2.1
