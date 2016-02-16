@@ -1,6 +1,6 @@
 # Changelog
 
-## unreleased
+## 0.1.3
 - Exposed the `flutter upgrade` command
 - Added a Flutter settings menu item
 - We now install our package dependencies the first time the plugin is run
