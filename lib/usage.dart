@@ -7,7 +7,6 @@ import 'dart:html' show document, HttpRequest, window;
 
 import 'package:atom/atom.dart';
 import 'package:atom/utils/disposable.dart';
-import 'package:atom/utils/utils.dart';
 import 'package:logging/logging.dart';
 import 'package:usage/src/usage_impl.dart';
 import 'package:usage/usage.dart';
@@ -120,13 +119,10 @@ class _AtomUsagePostHandler extends PostHandler {
   }
 }
 
-// TODO: An inlined version of `postEncode`, in order to work around a strong
-// mode issue in Uri.encodeComponent.
-// Remove when https://github.com/dart-lang/dev_compiler/issues/413 is fixed.
 String _postEncode(Map<String, dynamic> map) {
   // &foo=bar
   return map.keys.map((key) {
     String value = '${map[key]}';
-    return "${key}=${uriEncodeComponent(value)}";
+    return "${key}=${Uri.encodeComponent(value)}";
   }).join('&');
 }

@@ -1,12 +1,13 @@
 dart_library.library('atom/node/process', null, /* Imports */[
   'dart/_runtime',
+  'logging/logging',
   'atom/src/js',
   'atom/node/node',
   'dart/core',
   'dart/async',
   'atom/atom'
 ], /* Lazy imports */[
-], function(exports, dart, js, node, core, async, atom) {
+], function(exports, dart, logging, js, node, core, async, atom) {
   'use strict';
   let dartx = dart.dartx;
   dart.defineLazyProperties(exports, {
@@ -29,6 +30,11 @@ dart_library.library('atom/node/process', null, /* Imports */[
       return !dart.notNull(exports.isWindows) && !dart.notNull(exports.isMac);
     }
   });
+  dart.defineLazyProperties(exports, {
+    get _logger() {
+      return logging.Logger.new('process');
+    }
+  });
   class Process extends js.ProxyHolder {
     _() {
       super.ProxyHolder(node.require('process'));
@@ -40,7 +46,12 @@ dart_library.library('atom/node/process', null, /* Imports */[
       return dart.as(dart.dindex(this.obj.get('versions'), 'chrome'), core.String);
     }
     env(key) {
-      return dart.as(dart.dindex(this.obj.get('env'), key), core.String);
+      try {
+        return dart.as(dart.dindex(this.obj.get('env'), key), core.String);
+      } catch (err) {
+        return null;
+      }
+
     }
   }
   dart.defineNamedConstructor(Process, '_');
@@ -76,6 +87,28 @@ dart_library.library('atom/node/process', null, /* Imports */[
       this.env = env;
       this[_process] = null;
       this[_exit] = null;
+    }
+    static underShell(command, opts) {
+      let args = opts && 'args' in opts ? opts.args : null;
+      let cwd = opts && 'cwd' in opts ? opts.cwd : null;
+      let env = opts && 'env' in opts ? opts.env : null;
+      if (dart.notNull(exports.isMac)) {
+        let shellEscape = core.RegExp.new('(["\'| \\$!\\(\\)\\[\\]])');
+        let shell = exports.process.env('SHELL');
+        if (shell == null) {
+          exports._logger.warning("Couldn't identify the user's shell");
+          shell = '/bin/bash';
+        }
+        if (args != null) {
+          let escaped = args[dartx.map](dart.fn(arg => {
+            return `'${arg[dartx.replaceAllMapped](shellEscape, dart.fn(m => '\\' + dart.notNull(m.group(0)), core.String, [core.Match]))}'`;
+          }, dart.dynamic, [core.String]));
+          command = dart.notNull(command) + (' ' + dart.notNull(escaped[dartx.join](' ')));
+        }
+        args = dart.list(['-l', '-c', command], core.String);
+        return new ProcessRunner(shell, {args: args, cwd: cwd, env: env});
+      }
+      return new ProcessRunner(command, {args: args, cwd: cwd, env: env});
     }
     get started() {
       return this[_process] != null;
@@ -139,7 +172,10 @@ dart_library.library('atom/node/process', null, /* Imports */[
     }
   }
   dart.setSignature(ProcessRunner, {
-    constructors: () => ({ProcessRunner: [ProcessRunner, [core.String], {args: core.List$(core.String), cwd: core.String, env: core.Map$(core.String, core.String)}]}),
+    constructors: () => ({
+      ProcessRunner: [ProcessRunner, [core.String], {args: core.List$(core.String), cwd: core.String, env: core.Map$(core.String, core.String)}],
+      underShell: [ProcessRunner, [core.String], {args: core.List$(core.String), cwd: core.String, env: core.Map$(core.String, core.String)}]
+    }),
     methods: () => ({
       execSimple: [async.Future$(ProcessResult), []],
       execStreaming: [async.Future$(core.int), []],
