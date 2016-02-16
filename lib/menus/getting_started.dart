@@ -26,6 +26,11 @@ class GettingStarted implements Disposable {
       'flutter:send-feedback',
       _handleSendFeedback
     ));
+    disposables.add(atom.commands.add(
+      'atom-workspace',
+      'flutter:settings',
+      _flutterSettings
+    ));
   }
 
   void dispose() => disposables.dispose();
@@ -39,6 +44,10 @@ class GettingStarted implements Disposable {
       shell.openExternal('https://github.com/flutter/atom-flutter/issues/new?'
           'body=${uriEncodeComponent(description)}');
     });
+  }
+
+  void _flutterSettings(AtomEvent _) {
+    atom.workspace.open('atom://config/packages/flutter');
   }
 }
 
