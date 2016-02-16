@@ -30,7 +30,7 @@ class FlutterDevPackage extends AtomPackage {
     state.loadFrom(pluginState);
 
     new Future.delayed(Duration.ZERO, () {
-      package_deps.install('Flutter', this, justNotify: true);
+      package_deps.install('Flutter', this);
     });
 
     _init();
