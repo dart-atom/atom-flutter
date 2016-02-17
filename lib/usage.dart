@@ -121,8 +121,9 @@ class _AtomUsagePostHandler extends PostHandler {
 
 String _postEncode(Map<String, dynamic> map) {
   // &foo=bar
-  return map.keys.map((key) {
+  return map.keys.map((String key) {
     String value = '${map[key]}';
-    return "${key}=${Uri.encodeComponent(value)}";
+    String result = Uri.encodeComponent(value);
+    return "${key}=${result}";
   }).join('&');
 }
