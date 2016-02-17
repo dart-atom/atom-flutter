@@ -9,8 +9,8 @@ environment:
 
 dependencies:
   atom:
-    # git: https://github.com/dart-atom/atom.dart.git
-    path: ../../atom/atom.dart
+    git: https://github.com/dart-atom/atom.dart.git
+    # path: ../../atom/atom.dart
   logging: ^0.11.0
   usage: ^1.1.0
 
