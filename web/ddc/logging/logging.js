@@ -275,7 +275,7 @@ dart_library.library('logging/logging', null, /* Imports */[
       return Logger.new('');
     },
     get _loggers() {
-      return dart.map();
+      return dart.map({}, core.String, Logger);
     }
   });
   const LoggerHandler = dart.typedef('LoggerHandler', () => dart.functionType(dart.void, [dart.dynamic]));

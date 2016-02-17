@@ -14,11 +14,13 @@ dart_library.library('atom_flutter/menus/getting_started', null, /* Imports */[
   let dartx = dart.dartx;
   const _gettingStarted = Symbol('_gettingStarted');
   const _handleSendFeedback = Symbol('_handleSendFeedback');
+  const _flutterSettings = Symbol('_flutterSettings');
   class GettingStarted extends core.Object {
     GettingStarted() {
       this.disposables = new disposable.Disposables();
       this.disposables.add(atom.atom.commands.add('atom-workspace', 'flutter:getting-started', dart.bind(this, _gettingStarted)));
       this.disposables.add(atom.atom.commands.add('atom-workspace', 'flutter:send-feedback', dart.bind(this, _handleSendFeedback)));
+      this.disposables.add(atom.atom.commands.add('atom-workspace', 'flutter:settings', dart.bind(this, _flutterSettings)));
     }
     dispose() {
       return this.disposables.dispose();
@@ -31,6 +33,9 @@ dart_library.library('atom_flutter/menus/getting_started', null, /* Imports */[
         shell.shell.openExternal('https://github.com/flutter/atom-flutter/issues/new?' + `body=${utils.uriEncodeComponent(description)}`);
       }, dart.dynamic, [core.String]));
     }
+    [_flutterSettings](_) {
+      atom.atom.workspace.open('atom://config/packages/flutter');
+    }
   }
   GettingStarted[dart.implements] = () => [disposable.Disposable];
   dart.setSignature(GettingStarted, {
@@ -38,7 +43,8 @@ dart_library.library('atom_flutter/menus/getting_started', null, /* Imports */[
     methods: () => ({
       dispose: [dart.void, []],
       [_gettingStarted]: [dart.void, [atom.AtomEvent]],
-      [_handleSendFeedback]: [dart.void, [atom.AtomEvent]]
+      [_handleSendFeedback]: [dart.void, [atom.AtomEvent]],
+      [_flutterSettings]: [dart.void, [atom.AtomEvent]]
     })
   });
   function getSystemDescription() {

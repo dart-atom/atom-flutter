@@ -173,6 +173,9 @@ dart_library.library('dart/_runtime', null, /* Imports */[
     defineProperty(clazz, name, {value: ctor, configurable: true});
   }
   const _extensionType = Symbol("extensionType");
+  function getExtensionType(obj) {
+    return obj[_extensionType];
+  }
   const dartx = {};
   function getExtensionSymbol(name) {
     let sym = dartx[name];
@@ -182,16 +185,18 @@ dart_library.library('dart/_runtime', null, /* Imports */[
   function defineExtensionNames(names) {
     return names.forEach(getExtensionSymbol);
   }
+  function _installProperties(jsProto, extProto) {
+    if (extProto !== core.Object.prototype && extProto !== jsProto) {
+      _installProperties(jsProto, extProto.__proto__);
+    }
+    copyTheseProperties(jsProto, extProto, getOwnPropertySymbols(extProto));
+  }
   function registerExtension(jsType, dartExtType) {
     let extProto = dartExtType.prototype;
     let jsProto = jsType.prototype;
     assert_(jsProto[_extensionType] === void 0);
-    jsProto[_extensionType] = extProto;
-    let dartObjProto = core.Object.prototype;
-    while (extProto !== dartObjProto && extProto !== jsProto) {
-      copyTheseProperties(jsProto, extProto, getOwnPropertySymbols(extProto));
-      extProto = extProto.__proto__;
-    }
+    jsProto[_extensionType] = dartExtType;
+    _installProperties(jsProto, extProto);
     let originalSigFn = getOwnPropertyDescriptor(dartExtType, _methodSig).get;
     assert_(originalSigFn);
     defineMemoizedGetter(jsType, _methodSig, originalSigFn);
@@ -220,6 +225,7 @@ dart_library.library('dart/_runtime', null, /* Imports */[
   }
   function setType(obj, type) {
     obj.__proto__ = type.prototype;
+    obj.__proto__[_extensionType] = type;
     return obj;
   }
   function list(obj, elementType) {
@@ -265,7 +271,7 @@ dart_library.library('dart/_runtime', null, /* Imports */[
       return onValue();
     });
   }
-  const _AsyncStarStreamController = class _AsyncStarStreamController {
+  class _AsyncStarStreamController {
     constructor(generator, T, args) {
       this.isAdding = false;
       this.isWaiting = false;
@@ -274,9 +280,9 @@ dart_library.library('dart/_runtime', null, /* Imports */[
       this.canceler = null;
       this.iterator = generator(this, ...args)[Symbol.iterator]();
       this.controller = getGenericClass(async.StreamController)(T).new({
-        onListen: (() => this.scheduleGenerator()).bind(this),
-        onResume: (() => this.onResume()).bind(this),
-        onCancel: (() => this.onCancel()).bind(this)
+        onListen: () => this.scheduleGenerator(),
+        onResume: () => this.onResume(),
+        onCancel: () => this.onCancel()
       });
     }
     onResume() {
@@ -305,7 +311,7 @@ dart_library.library('dart/_runtime', null, /* Imports */[
         return;
       }
       this.isScheduled = true;
-      async.scheduleMicrotask((() => this.runBody()).bind(this));
+      async.scheduleMicrotask(() => this.runBody());
     }
     runBody(opt_awaitValue) {
       this.isScheduled = false;
@@ -330,8 +336,8 @@ dart_library.library('dart/_runtime', null, /* Imports */[
       if (!instanceOf(future, getGenericClass(async.Future))) {
         future = async.Future.value(future);
       }
-      return future.then((x => this.runBody(x)).bind(this), {
-        onError: ((e, s) => this.throwError(e, s)).bind(this)
+      return future.then(x => this.runBody(x), {
+        onError: (e, s) => this.throwError(e, s)
       });
     }
     add(event) {
@@ -344,11 +350,11 @@ dart_library.library('dart/_runtime', null, /* Imports */[
     addStream(stream) {
       if (!this.controller.hasListener) return true;
       this.isAdding = true;
-      this.controller.addStream(stream, {cancelOnError: false}).then((() => {
+      this.controller.addStream(stream, {cancelOnError: false}).then(() => {
         this.isAdding = false;
         this.scheduleGenerator();
-      }).bind(this), {
-        onError: ((e, s) => this.throwError(e, s)).bind(this)
+      }, {
+        onError: (e, s) => this.throwError(e, s)
       });
     }
     throwError(error, stackTrace) {
@@ -367,7 +373,7 @@ dart_library.library('dart/_runtime', null, /* Imports */[
       if (!this.controller.hasListener) return;
       this.controller.addError(error, stackTrace);
     }
-  };
+  }
   function asyncStar(gen, T, ...args) {
     return new _AsyncStarStreamController(gen, T, args).controller.stream;
   }
@@ -476,7 +482,7 @@ dart_library.library('dart/_runtime', null, /* Imports */[
   }
   function strongInstanceOf(obj, type, ignoreFromWhiteList) {
     let actual = realRuntimeType(obj);
-    if (isSubtype(actual, type) || actual == jsobject) return true;
+    if (isSubtype(actual, type) || actual == jsobject || actual == core.int && type == core.double) return true;
     if (ignoreFromWhiteList == void 0) return false;
     if (isGroundType(type)) return false;
     if (_ignoreTypeFailure(actual, type)) return true;
@@ -520,20 +526,26 @@ dart_library.library('dart/_runtime', null, /* Imports */[
     if (x == null) throwNullValueError();
     return x;
   }
-  function map(values) {
-    let map = collection.LinkedHashMap.new();
-    if (Array.isArray(values)) {
-      for (let i = 0, end = values.length - 1; i < end; i += 2) {
-        let key = values[i];
-        let value = values[i + 1];
-        map.set(key, value);
+  function map(values, K, V) {
+    if (K === void 0) K = null;
+    if (V === void 0) V = null;
+    return (() => {
+      if (K == null) K = dynamicR;
+      if (V == null) V = dynamicR;
+      let map = getGenericClass(collection.LinkedHashMap)(K, V).new();
+      if (Array.isArray(values)) {
+        for (let i = 0, end = values.length - 1; i < end; i += 2) {
+          let key = values[i];
+          let value = values[i + 1];
+          map.set(key, value);
+        }
+      } else if (typeof values === 'object') {
+        for (let key of getOwnPropertyNames(values)) {
+          map.set(key, values[key]);
+        }
       }
-    } else if (typeof values === 'object') {
-      for (let key of getOwnPropertyNames(values)) {
-        map.set(key, values[key]);
-      }
-    }
-    return map;
+      return map;
+    })();
   }
   function assert_(condition) {
     if (!condition) throwAssertionError();
@@ -625,7 +637,7 @@ dart_library.library('dart/_runtime', null, /* Imports */[
     }
     return obj.noSuchMethod(invocation);
   }
-  const JsIterator = class JsIterator {
+  class JsIterator {
     constructor(dartIterator) {
       this.dartIterator = dartIterator;
     }
@@ -634,7 +646,7 @@ dart_library.library('dart/_runtime', null, /* Imports */[
       let done = !i.moveNext();
       return {done: done, value: done ? void 0 : i.current};
     }
-  };
+  }
   function fn(closure, ...args) {
     if (args.length == 1) {
       defineLazyProperty(closure, _runtimeType, {get: args[0]});
@@ -679,7 +691,9 @@ dart_library.library('dart/_runtime', null, /* Imports */[
   function runtimeType(obj) {
     let result = checkPrimitiveType(obj);
     if (result !== null) return result;
-    return obj.runtimeType;
+    result = obj.runtimeType;
+    if (result) return result;
+    return _nonPrimitiveRuntimeType(obj);
   }
   function getFunctionType(obj) {
     let args = Array(obj.length).fill(dynamicR);
@@ -688,7 +702,12 @@ dart_library.library('dart/_runtime', null, /* Imports */[
   function realRuntimeType(obj) {
     let result = checkPrimitiveType(obj);
     if (result !== null) return result;
-    result = obj[_runtimeType];
+    return _nonPrimitiveRuntimeType(obj);
+  }
+  function _nonPrimitiveRuntimeType(obj) {
+    let result = obj[_runtimeType];
+    if (result) return result;
+    result = obj[_extensionType];
     if (result) return result;
     result = obj.constructor;
     if (result == Function) {
@@ -726,36 +745,37 @@ dart_library.library('dart/_runtime', null, /* Imports */[
   const _mixins = Symbol("mixins");
   const implements_ = Symbol("implements");
   const metadata = Symbol("metadata");
-  const TypeRep = class TypeRep extends LazyTagged(() => core.Type) {
+  const _TypeRepBase = LazyTagged(() => core.Type);
+  class TypeRep extends _TypeRepBase {
     get name() {
       return this.toString();
     }
-  };
-  const Dynamic = class Dynamic extends TypeRep {
+  }
+  class Dynamic extends TypeRep {
     toString() {
       return "dynamic";
     }
-  };
+  }
   const dynamicR = new Dynamic();
-  const Void = class Void extends TypeRep {
+  class Void extends TypeRep {
     toString() {
       return "void";
     }
-  };
+  }
   const voidR = new Void();
-  const Bottom = class Bottom extends TypeRep {
+  class Bottom extends TypeRep {
     toString() {
       return "bottom";
     }
-  };
+  }
   const bottom = new Bottom();
-  const JSObject = class JSObject extends TypeRep {
+  class JSObject extends TypeRep {
     toString() {
       return "NativeJavaScriptObject";
     }
-  };
+  }
   const jsobject = new JSObject();
-  const AbstractFunctionType = class AbstractFunctionType extends TypeRep {
+  class AbstractFunctionType extends TypeRep {
     constructor() {
       super();
       this._stringValue = null;
@@ -798,8 +818,8 @@ dart_library.library('dart/_runtime', null, /* Imports */[
       this._stringValue = buffer;
       return buffer;
     }
-  };
-  const FunctionType = class FunctionType extends AbstractFunctionType {
+  }
+  class FunctionType extends AbstractFunctionType {
     constructor(definite, returnType, args, optionals, named) {
       super();
       this.definite = definite;
@@ -843,8 +863,8 @@ dart_library.library('dart/_runtime', null, /* Imports */[
         this.named = r;
       }
     }
-  };
-  const Typedef = class Typedef extends AbstractFunctionType {
+  }
+  class Typedef extends AbstractFunctionType {
     constructor(name, closure) {
       super();
       this._name = name;
@@ -878,7 +898,7 @@ dart_library.library('dart/_runtime', null, /* Imports */[
     get metadata() {
       return this.functionType.metadata;
     }
-  };
+  }
   function _functionType(definite, returnType, args, extra) {
     let optionals;
     let named;
@@ -1192,6 +1212,7 @@ dart_library.library('dart/_runtime', null, /* Imports */[
   exports.hasMethod = hasMethod;
   exports.virtualField = virtualField;
   exports.defineNamedConstructor = defineNamedConstructor;
+  exports.getExtensionType = getExtensionType;
   exports.dartx = dartx;
   exports.getExtensionSymbol = getExtensionSymbol;
   exports.defineExtensionNames = defineExtensionNames;

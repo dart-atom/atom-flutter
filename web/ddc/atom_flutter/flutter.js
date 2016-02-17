@@ -32,7 +32,7 @@ dart_library.library('atom_flutter/flutter', null, /* Imports */[
       dependencies.deps.set(atom.AtomPackage, this);
       state.state.loadFrom(pluginState);
       async.Future.delayed(core.Duration.ZERO, dart.fn(() => {
-        package_deps.install('Flutter', this, {justNotify: true});
+        package_deps.install('Flutter', this);
       }));
       this[_init]();
     }
