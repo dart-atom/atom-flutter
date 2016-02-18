@@ -23,6 +23,8 @@ Some of the most used features include:
 * Debug in iOS simulator and Android device
 * Code completion
 
+Most features are listed in the Command Palette (Cmd-Shift-P / Control-Shift-P).
+
 ## Features and bugs
 
 Please file feature requests and bugs at the [issue tracker][tracker].
