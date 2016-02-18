@@ -8,10 +8,22 @@ A [Flutter][] development environment for Atom.
 
 ## Flutter!
 
-Flutter is a new project to help developers build high-performance, high-fidelity, mobile apps for iOS and Android from a single codebase.
+Flutter is a new project to help developers build high-performance, high-fidelity,
+mobile apps for iOS and Android from a single codebase.
 
 For more information about Flutter see [flutter.io](https://flutter.io) and our
 [getting started guide](https://flutter.io/getting-started/).
+
+## Features
+
+Some of the most used features include:
+
+* Cmd-R (mac) or Control-R (windows) to run your app in iOS simulator and Android device
+* Create a new Flutter app
+* Debug in iOS simulator and Android device
+* Code completion
+
+Most features are listed in the Command Palette (Cmd-Shift-P / Control-Shift-P).
 
 ## Features and bugs
 
