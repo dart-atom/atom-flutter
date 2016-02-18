@@ -1,5 +1,8 @@
 # Changelog
 
+## unreleased
+- Exposed the `flutter doctor` command
+
 ## 0.1.3
 - Exposed the `flutter upgrade` command
 - Added a Flutter settings menu item
