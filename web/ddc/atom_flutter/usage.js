@@ -90,11 +90,11 @@ dart_library.library('atom_flutter/usage', null, /* Imports */[
   class _AnalyticsAtom extends usage_impl.AnalyticsImpl {
     _AnalyticsAtom(trackingId, applicationName, applicationVersion) {
       super.AnalyticsImpl(trackingId, new _AtomUsagePersistentProperties(applicationName), new _AtomUsagePostHandler(), {applicationName: applicationName, applicationVersion: applicationVersion});
-      let screenWidth = html.window.screen.width;
-      let screenHeight = html.window.screen.height;
+      let screenWidth = html.window[dartx.screen][dartx.width];
+      let screenHeight = html.window[dartx.screen][dartx.height];
       this.setSessionValue('sr', `${screenWidth}x${screenHeight}`);
-      this.setSessionValue('sd', `${html.window.screen.pixelDepth}-bits`);
-      this.setSessionValue('ul', html.window.navigator.language);
+      this.setSessionValue('sd', `${html.window[dartx.screen][dartx.pixelDepth]}-bits`);
+      this.setSessionValue('ul', html.window[dartx.navigator][dartx.language]);
     }
   }
   dart.setSignature(_AnalyticsAtom, {
@@ -121,9 +121,9 @@ dart_library.library('atom_flutter/usage', null, /* Imports */[
   });
   class _AtomUsagePostHandler extends usage_impl.PostHandler {
     sendPost(url, parameters) {
-      let viewportWidth = html.document.documentElement.clientWidth;
-      let viewportHeight = html.document.documentElement.clientHeight;
-      parameters.set('vp', `${viewportWidth}x${viewportHeight}`);
+      let viewportWidth = html.document[dartx.documentElement][dartx.clientWidth];
+      let viewportHeight = html.document[dartx.documentElement][dartx.clientHeight];
+      parameters[dartx.set]('vp', `${viewportWidth}x${viewportHeight}`);
       let data = _postEncode(parameters);
       return html.HttpRequest.request(url, {method: 'POST', sendData: data}).catchError(dart.fn(e => {
       }));
@@ -133,8 +133,8 @@ dart_library.library('atom_flutter/usage', null, /* Imports */[
     methods: () => ({sendPost: [async.Future, [core.String, core.Map$(core.String, dart.dynamic)]]})
   });
   function _postEncode(map) {
-    return map.keys[dartx.map](dart.fn(key => {
-      let value = `${map.get(key)}`;
+    return map[dartx.keys][dartx.map](dart.fn(key => {
+      let value = `${map[dartx.get](key)}`;
       let result = core.Uri.encodeComponent(value);
       return `${key}=${result}`;
     }, dart.dynamic, [core.String]))[dartx.join]('&');

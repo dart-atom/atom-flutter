@@ -11,8 +11,8 @@ dart_library.library('usage/src/usage_impl', null, /* Imports */[
   let dartx = dart.dartx;
   exports._MAX_EXCEPTION_LENGTH = 100;
   function postEncode(map) {
-    return map.keys[dartx.map](dart.fn(key => {
-      let value = `${map.get(key)}`;
+    return map[dartx.keys][dartx.map](dart.fn(key => {
+      let value = `${map[dartx.get](key)}`;
       return `${key}=${core.Uri.encodeComponent(value)}`;
     }, dart.dynamic, [core.String]))[dartx.join]('&');
   }
@@ -95,8 +95,8 @@ dart_library.library('usage/src/usage_impl', null, /* Imports */[
       let value = opts && 'value' in opts ? opts.value : null;
       if (!dart.notNull(this.optIn)) return async.Future.value();
       let args = dart.map({ec: category, ea: action});
-      if (label != null) args.set('el', label);
-      if (value != null) args.set('ev', value);
+      if (label != null) args[dartx.set]('el', label);
+      if (value != null) args[dartx.set]('ev', value);
       return this[_sendPayload]('event', args);
     }
     sendSocial(network, action, target) {
@@ -109,8 +109,8 @@ dart_library.library('usage/src/usage_impl', null, /* Imports */[
       let label = opts && 'label' in opts ? opts.label : null;
       if (!dart.notNull(this.optIn)) return async.Future.value();
       let args = dart.map({utv: variableName, utt: time});
-      if (label != null) args.set('utl', label);
-      if (category != null) args.set('utc', category);
+      if (label != null) args[dartx.set]('utl', label);
+      if (category != null) args[dartx.set]('utc', category);
       return this[_sendPayload]('timing', args);
     }
     startTimer(variableName, opts) {
@@ -128,21 +128,21 @@ dart_library.library('usage/src/usage_impl', null, /* Imports */[
         description = description[dartx.substring](0, exports._MAX_EXCEPTION_LENGTH);
       }
       let args = dart.map({exd: description});
-      if (fatal != null && dart.notNull(fatal)) args.set('exf', '1');
+      if (fatal != null && dart.notNull(fatal)) args[dartx.set]('exf', '1');
       return this[_sendPayload]('exception', args);
     }
     setSessionValue(param, value) {
       if (value == null) {
-        this[_variableMap].remove(param);
+        this[_variableMap][dartx.remove](param);
       } else {
-        this[_variableMap].set(param, value);
+        this[_variableMap][dartx.set](param, value);
       }
     }
     waitForLastPing(opts) {
       let timeout = opts && 'timeout' in opts ? opts.timeout : null;
-      let f = async.Future.wait(this[_futures]).catchError(dart.fn(e => null, dart.bottom, [dart.dynamic]));
+      let f = async.Future.wait(this[_futures]).catchError(dart.fn(e => null));
       if (timeout != null) {
-        f = f.timeout(timeout, {onTimeout: dart.fn(() => null, dart.bottom, [])});
+        f = f.timeout(timeout, {onTimeout: dart.fn(() => null)});
       }
       return f;
     }
@@ -157,13 +157,13 @@ dart_library.library('usage/src/usage_impl', null, /* Imports */[
     [_sendPayload](hitType, args) {
       if (dart.notNull(this[_bucket].removeDrop())) {
         this[_initClientId]();
-        this[_variableMap].forEach(dart.fn((key, value) => {
-          args.set(key, value);
+        this[_variableMap][dartx.forEach](dart.fn((key, value) => {
+          args[dartx.set](key, value);
         }, dart.void, [core.String, dart.dynamic]));
-        args.set('v', '1');
-        args.set('tid', this.trackingId);
-        args.set('cid', this[_clientId]);
-        args.set('t', hitType);
+        args[dartx.set]('v', '1');
+        args[dartx.set]('tid', this.trackingId);
+        args[dartx.set]('cid', this[_clientId]);
+        args[dartx.set]('t', hitType);
         return this[_recordFuture](this.postHandler.sendPost(this[_url], args));
       } else {
         return async.Future.value();

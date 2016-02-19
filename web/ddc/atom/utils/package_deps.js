@@ -12,7 +12,7 @@ dart_library.library('atom/utils/package_deps', null, /* Imports */[
     let justNotify = opts && 'justNotify' in opts ? opts.justNotify : false;
     return package$.loadPackageJson().then(dart.fn(info => {
       let installedPackages = atom.atom.packages.getAvailablePackageNames();
-      let requiredPackages = dart.as(info.get('required-packages'), core.List$(core.String));
+      let requiredPackages = dart.as(info[dartx.get]('required-packages'), core.List$(core.String));
       if (requiredPackages == null || dart.notNull(requiredPackages[dartx.isEmpty])) {
         return null;
       }

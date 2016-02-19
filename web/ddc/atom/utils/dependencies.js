@@ -28,14 +28,14 @@ dart_library.library('atom/utils/dependencies', null, /* Imports */[
       return this[_calcParent](async.Zone.current);
     }
     getDependency(type) {
-      if (dart.notNull(this[_instances].containsKey(type))) {
-        return this[_instances].get(type);
+      if (dart.notNull(this[_instances][dartx.containsKey](type))) {
+        return this[_instances][dartx.get](type);
       }
       let parent = this[_calcParent](async.Zone.current);
       return parent != null ? parent.getDependency(type) : null;
     }
     setDependency(type, instance) {
-      this[_instances].set(type, instance);
+      this[_instances][dartx.set](type, instance);
     }
     get(type) {
       return this.getDependency(type);
@@ -47,7 +47,7 @@ dart_library.library('atom/utils/dependencies', null, /* Imports */[
       return instance;
     }
     get types() {
-      return this[_instances].keys;
+      return this[_instances][dartx.keys];
     }
     runInZone(func) {
       let zone = async.Zone.current.fork({zoneValues: dart.map({dependencies: this})});

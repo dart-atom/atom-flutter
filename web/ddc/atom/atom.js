@@ -55,7 +55,7 @@ dart_library.library('atom/atom', null, /* Imports */[
     }));
     exports.set('config', js$.jsify(exports$._package.config()));
     exports.set('serialize', dart.bind(exports$._package, 'serialize'));
-    package$[_registeredMethods].forEach(dart.fn((methodName, f) => {
+    package$[_registeredMethods][dartx.forEach](dart.fn((methodName, f) => {
       exports.set(methodName, dart.fn(arg => {
         let result = dart.dcall(f, arg);
         if (dart.is(result, disposable.Disposable)) {
@@ -115,7 +115,7 @@ dart_library.library('atom/atom', null, /* Imports */[
       }, dart.dynamic, [core.String])), async.Future$(core.Map)), async.Future$(core.Map$(core.String, dart.dynamic)));
     }
     getPackageVersion() {
-      return dart.as(this.loadPackageJson().then(dart.fn(map => map.get('version'), dart.dynamic, [core.Map])), async.Future$(core.String));
+      return dart.as(this.loadPackageJson().then(dart.fn(map => map[dartx.get]('version'), dart.dynamic, [core.Map])), async.Future$(core.String));
     }
   }
   dart.setSignature(AtomPackage, {
@@ -178,8 +178,8 @@ dart_library.library('atom/atom', null, /* Imports */[
       let detailedMessage = opts && 'detailedMessage' in opts ? opts.detailedMessage : null;
       let buttons = opts && 'buttons' in opts ? opts.buttons : null;
       let m = dart.map({message: message});
-      if (detailedMessage != null) m.set('detailedMessage', detailedMessage);
-      if (buttons != null) m.set('buttons', buttons);
+      if (detailedMessage != null) m[dartx.set]('detailedMessage', detailedMessage);
+      if (buttons != null) m[dartx.set]('buttons', buttons);
       return dart.as(this.invoke('confirm', m), core.int);
     }
     reload() {
@@ -323,12 +323,12 @@ dart_library.library('atom/atom', null, /* Imports */[
         return null;
       }
       let m = dart.map();
-      if (detail != null) m.set('detail', detail);
-      if (description != null) m.set('description', description);
-      if (dismissable != null) m.set('dismissable', dismissable);
-      if (icon != null) m.set('icon', icon);
+      if (detail != null) m[dartx.set]('detail', detail);
+      if (description != null) m[dartx.set]('description', description);
+      if (dismissable != null) m[dartx.set]('dismissable', dismissable);
+      if (icon != null) m[dartx.set]('icon', icon);
       if (buttons != null) {
-        m.set('buttons', js$.jsify(buttons[dartx.map](dart.fn(nb => nb.toProxy(), js.JsObject, [NotificationButton]))[dartx.toList]()));
+        m[dartx.set]('buttons', js$.jsify(buttons[dartx.map](dart.fn(nb => nb.toProxy(), js.JsObject, [NotificationButton]))[dartx.toList]()));
       }
       return m;
     }
@@ -540,19 +540,19 @@ dart_library.library('atom/atom', null, /* Imports */[
       let env = opts && 'env' in opts ? opts.env : null;
       let onWillThrowError = opts && 'onWillThrowError' in opts ? opts.onWillThrowError : null;
       let options = dart.map({command: command});
-      if (args != null) options.set('args', args);
-      if (stdout != null) options.set('stdout', stdout);
-      if (stderr != null) options.set('stderr', stderr);
-      if (exit != null) options.set('exit', exit);
-      if (onWillThrowError != null) options.set('onWillThrowError', dart.fn(e => {
+      if (args != null) options[dartx.set]('args', args);
+      if (stdout != null) options[dartx.set]('stdout', stdout);
+      if (stderr != null) options[dartx.set]('stderr', stderr);
+      if (exit != null) options[dartx.set]('exit', exit);
+      if (onWillThrowError != null) options[dartx.set]('onWillThrowError', dart.fn(e => {
         e.callMethod('handle');
         dart.dcall(onWillThrowError, e.get('error'));
       }, dart.dynamic, [js.JsObject]));
       if (cwd != null || env != null) {
         let nodeOptions = dart.map();
-        if (cwd != null) nodeOptions.set('cwd', cwd);
-        if (env != null) nodeOptions.set('env', js$.jsify(env));
-        options.set('options', nodeOptions);
+        if (cwd != null) nodeOptions[dartx.set]('cwd', cwd);
+        if (env != null) nodeOptions[dartx.set]('env', js$.jsify(env));
+        options[dartx.set]('options', nodeOptions);
       }
       let ctor = dart.as(node.require('atom').get('BufferedProcess'), js.JsFunction);
       return new BufferedProcess._(js.JsObject.new(ctor, [js.JsObject.jsify(options)]));
@@ -584,7 +584,7 @@ dart_library.library('atom/atom', null, /* Imports */[
       if (dart.is(object, js.JsObject)) {
         return new AtomEvent._fromJsObject(object);
       } else {
-        return new _AtomEventCustomEvent(object);
+        return new _AtomEventCustomEvent(dart.as(object, html.CustomEvent));
       }
     }
     _fromJsObject(object) {
@@ -636,10 +636,10 @@ dart_library.library('atom/atom', null, /* Imports */[
       return dart.dsend(this.event, 'abortKeyBinding');
     }
     get currentTarget() {
-      return dart.dload(this.event, 'currentTarget');
+      return this.event[dartx.currentTarget];
     }
     get defaultPrevented() {
-      return dart.as(dart.dload(this.event, 'defaultPrevented'), core.bool);
+      return this.event[dartx.defaultPrevented];
     }
     eventStream(eventName) {
       dart.throw('unimplemented');
@@ -657,21 +657,21 @@ dart_library.library('atom/atom', null, /* Imports */[
       dart.throw('unimplemented');
     }
     preventDefault() {
-      return dart.dsend(this.event, 'preventDefault');
+      return this.event[dartx.preventDefault]();
     }
     get propagationStopped() {
       return dart.as(dart.dload(this.event, 'propagationStopped'), core.bool);
     }
     stopImmediatePropagation() {
-      return dart.dsend(this.event, 'stopImmediatePropagation');
+      return this.event[dartx.stopImmediatePropagation]();
     }
     stopPropagation() {
-      return dart.dsend(this.event, 'stopPropagation');
+      return this.event[dartx.stopPropagation]();
     }
   }
   _AtomEventCustomEvent[dart.implements] = () => [AtomEvent];
   dart.setSignature(_AtomEventCustomEvent, {
-    constructors: () => ({_AtomEventCustomEvent: [_AtomEventCustomEvent, [dart.dynamic]]}),
+    constructors: () => ({_AtomEventCustomEvent: [_AtomEventCustomEvent, [html.CustomEvent]]}),
     methods: () => ({
       abortKeyBinding: [dart.void, []],
       eventStream: [async.Stream, [core.String]],

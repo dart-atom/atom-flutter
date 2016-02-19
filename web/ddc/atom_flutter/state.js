@@ -34,12 +34,12 @@ dart_library.library('atom_flutter/state', null, /* Imports */[
     }
     set(key, value) {
       dart.dsetindex(this[_pluginState], key, value);
-      if (this[_controllers].get(key) != null) this[_controllers].get(key).add(value);
+      if (this[_controllers][dartx.get](key) != null) this[_controllers][dartx.get](key).add(value);
       return value;
     }
     registerStorable(key, storable) {
       try {
-        this[_storables].set(key, storable);
+        this[_storables][dartx.set](key, storable);
         let data = this.get(key);
         storable.initFromStored(typeof data == 'string' ? convert.JSON.decode(data) : null);
       } catch (e) {
@@ -51,16 +51,16 @@ dart_library.library('atom_flutter/state', null, /* Imports */[
       this[_pluginState] = (inState != null ? inState : dart.map());
     }
     onValueChanged(key) {
-      if (this[_controllers].get(key) != null) {
-        return this[_controllers].get(key).stream;
+      if (this[_controllers][dartx.get](key) != null) {
+        return this[_controllers][dartx.get](key).stream;
       } else {
-        let controller = async.StreamController.broadcast({sync: true, onCancel: dart.fn(() => this[_controllers].remove(key), async.StreamController, [])});
-        this[_controllers].set(key, controller);
+        let controller = async.StreamController.broadcast({sync: true, onCancel: dart.fn(() => this[_controllers][dartx.remove](key), async.StreamController, [])});
+        this[_controllers][dartx.set](key, controller);
         return controller.stream;
       }
     }
     saveState() {
-      this[_storables].forEach(dart.fn((key, storable) => {
+      this[_storables][dartx.forEach](dart.fn((key, storable) => {
         dart.dsetindex(this[_pluginState], key, convert.JSON.encode(storable.toStorable()));
       }, dart.void, [core.String, StateStorable]));
       return this[_pluginState];

@@ -97,7 +97,7 @@ dart_library.library('logging/logging', null, /* Imports */[
       return this.parent == null || this.parent.name == '' ? this.name : `${this.parent.fullName}.${this.name}`;
     }
     static new(name) {
-      return Logger._loggers.putIfAbsent(name, dart.fn(() => Logger._named(name), Logger, []));
+      return Logger._loggers[dartx.putIfAbsent](name, dart.fn(() => Logger._named(name), Logger, []));
     }
     static detached(name) {
       return new Logger._internal(name, null, core.Map$(core.String, Logger).new());
@@ -125,7 +125,7 @@ dart_library.library('logging/logging', null, /* Imports */[
       this.children = new (collection.UnmodifiableMapView$(core.String, Logger))(children);
       this[_level] = null;
       this[_controller] = null;
-      if (this.parent != null) this.parent[_children].set(this.name, this);
+      if (this.parent != null) this.parent[_children][dartx.set](this.name, this);
     }
     get level() {
       if (dart.notNull(exports.hierarchicalLoggingEnabled)) {
