@@ -584,7 +584,7 @@ dart_library.library('atom/atom', null, /* Imports */[
       if (dart.is(object, js.JsObject)) {
         return new AtomEvent._fromJsObject(object);
       } else {
-        return new _AtomEventCustomEvent(dart.as(object, html.CustomEvent));
+        return new _AtomEventCustomEvent(object);
       }
     }
     _fromJsObject(object) {
@@ -636,10 +636,10 @@ dart_library.library('atom/atom', null, /* Imports */[
       return dart.dsend(this.event, 'abortKeyBinding');
     }
     get currentTarget() {
-      return this.event[dartx.currentTarget];
+      return dart.dload(this.event, 'currentTarget');
     }
     get defaultPrevented() {
-      return this.event[dartx.defaultPrevented];
+      return dart.as(dart.dload(this.event, 'defaultPrevented'), core.bool);
     }
     eventStream(eventName) {
       dart.throw('unimplemented');
@@ -657,21 +657,21 @@ dart_library.library('atom/atom', null, /* Imports */[
       dart.throw('unimplemented');
     }
     preventDefault() {
-      return this.event[dartx.preventDefault]();
+      return dart.dsend(this.event, 'preventDefault');
     }
     get propagationStopped() {
       return dart.as(dart.dload(this.event, 'propagationStopped'), core.bool);
     }
     stopImmediatePropagation() {
-      return this.event[dartx.stopImmediatePropagation]();
+      return dart.dsend(this.event, 'stopImmediatePropagation');
     }
     stopPropagation() {
-      return this.event[dartx.stopPropagation]();
+      return dart.dsend(this.event, 'stopPropagation');
     }
   }
   _AtomEventCustomEvent[dart.implements] = () => [AtomEvent];
   dart.setSignature(_AtomEventCustomEvent, {
-    constructors: () => ({_AtomEventCustomEvent: [_AtomEventCustomEvent, [html.CustomEvent]]}),
+    constructors: () => ({_AtomEventCustomEvent: [_AtomEventCustomEvent, [dart.dynamic]]}),
     methods: () => ({
       abortKeyBinding: [dart.void, []],
       eventStream: [async.Stream, [core.String]],

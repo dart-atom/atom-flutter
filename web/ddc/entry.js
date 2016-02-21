@@ -16,7 +16,7 @@ dart_library.library('entry', null, /* Imports */[
       if (r.error != null) core.print(`${tag}   ${r.error}`);
       if (r.stackTrace != null) core.print(`${tag}   ${r.stackTrace}`);
     }, dart.void, [logging.LogRecord]));
-    atom.registerPackageDDC(new flutter.FlutterDevPackage());
+    atom.registerPackage(new flutter.FlutterDevPackage());
   }
   dart.fn(main);
   // Exports:
