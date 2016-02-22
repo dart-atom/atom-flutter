@@ -1,6 +1,6 @@
 # Changelog
 
-## unreleased
+## 0.2.0
 - Exposed the `flutter doctor` command
 
 ## 0.1.3
