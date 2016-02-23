@@ -132,6 +132,7 @@ dart_library.library('atom/atom', null, /* Imports */[
   const _config = Symbol('_config');
   const _notifications = Symbol('_notifications');
   const _packages = Symbol('_packages');
+  const _project = Symbol('_project');
   const _views = Symbol('_views');
   const _workspace = Symbol('_workspace');
   class Atom extends js$.ProxyHolder {
@@ -140,6 +141,7 @@ dart_library.library('atom/atom', null, /* Imports */[
       this[_config] = null;
       this[_notifications] = null;
       this[_packages] = null;
+      this[_project] = null;
       this[_views] = null;
       this[_workspace] = null;
       super.ProxyHolder(dart.as(js.context.get('atom'), js.JsObject));
@@ -147,6 +149,7 @@ dart_library.library('atom/atom', null, /* Imports */[
       this[_config] = new Config(dart.as(this.obj.get('config'), js.JsObject));
       this[_notifications] = new NotificationManager(dart.as(this.obj.get('notifications'), js.JsObject));
       this[_packages] = new PackageManager(dart.as(this.obj.get('packages'), js.JsObject));
+      this[_project] = new Project(dart.as(this.obj.get('project'), js.JsObject));
       this[_views] = new ViewRegistry(dart.as(this.obj.get('views'), js.JsObject));
       this[_workspace] = new Workspace(dart.as(this.obj.get('workspace'), js.JsObject));
     }
@@ -161,6 +164,9 @@ dart_library.library('atom/atom', null, /* Imports */[
     }
     get packages() {
       return this[_packages];
+    }
+    get project() {
+      return this[_project];
     }
     get views() {
       return this[_views];
@@ -405,6 +411,7 @@ dart_library.library('atom/atom', null, /* Imports */[
     methods: () => ({getView: [dart.dynamic, [dart.dynamic]]})
   });
   const _openSerializer = Symbol('_openSerializer');
+  const _panelOptions = Symbol('_panelOptions');
   class Workspace extends js$.ProxyHolder {
     Workspace(object) {
       this[_openSerializer] = new (utils.FutureSerializer$(TextEditor))();
@@ -417,6 +424,12 @@ dart_library.library('atom/atom', null, /* Imports */[
       let result = this.invoke('getActiveTextEditor');
       return result == null ? null : new TextEditor(dart.as(result, js.JsObject));
     }
+    addModalPanel(opts) {
+      let item = opts && 'item' in opts ? opts.item : null;
+      let visible = opts && 'visible' in opts ? opts.visible : null;
+      let priority = opts && 'priority' in opts ? opts.priority : null;
+      return new Panel(dart.as(this.invoke('addModalPanel', this[_panelOptions](item, visible, priority)), js.JsObject));
+    }
     open(url, opts) {
       let options = opts && 'options' in opts ? opts.options : null;
       return this[_openSerializer].perform(dart.fn(() => {
@@ -428,13 +441,54 @@ dart_library.library('atom/atom', null, /* Imports */[
         }));
       }));
     }
+    [_panelOptions](item, visible, priority) {
+      let options = dart.map({item: item});
+      if (visible != null) options[dartx.set]('visible', visible);
+      if (priority != null) options[dartx.set]('priority', priority);
+      return options;
+    }
   }
   dart.setSignature(Workspace, {
     constructors: () => ({Workspace: [Workspace, [js.JsObject]]}),
     methods: () => ({
       getTextEditors: [core.List$(TextEditor), []],
       getActiveTextEditor: [TextEditor, []],
-      open: [async.Future$(TextEditor), [core.String], {options: core.Map}]
+      addModalPanel: [Panel, [], {item: dart.dynamic, visible: core.bool, priority: core.int}],
+      open: [async.Future$(TextEditor), [core.String], {options: core.Map}],
+      [_panelOptions]: [core.Map, [dart.dynamic, core.bool, core.int]]
+    })
+  });
+  class Project extends js$.ProxyHolder {
+    Project(object) {
+      super.ProxyHolder(object);
+    }
+    get onDidChangePaths() {
+      return dart.as(this.eventStream('onDidChangePaths'), async.Stream$(core.List$(core.String)));
+    }
+    getPaths() {
+      return core.List$(core.String).from(dart.as(this.invoke('getPaths'), core.Iterable));
+    }
+    addPath(path) {
+      return this.invoke('addPath', path);
+    }
+    removePath(path) {
+      return this.invoke('removePath', path);
+    }
+    relativizePath(fullPath) {
+      return core.List$(core.String).from(dart.as(this.invoke('relativizePath', fullPath), core.Iterable));
+    }
+    contains(pathToCheck) {
+      return dart.as(this.invoke('contains', pathToCheck), core.bool);
+    }
+  }
+  dart.setSignature(Project, {
+    constructors: () => ({Project: [Project, [js.JsObject]]}),
+    methods: () => ({
+      getPaths: [core.List$(core.String), []],
+      addPath: [dart.void, [core.String]],
+      removePath: [dart.void, [core.String]],
+      relativizePath: [core.List$(core.String), [core.String]],
+      contains: [core.bool, [core.String]]
     })
   });
   class PackageManager extends js$.ProxyHolder {
@@ -479,6 +533,38 @@ dart_library.library('atom/atom', null, /* Imports */[
       activatePackage: [async.Future, [core.String]]
     })
   });
+  class Panel extends js$.ProxyHolder {
+    Panel(object) {
+      super.ProxyHolder(object);
+    }
+    get onDidChangeVisible() {
+      return dart.as(this.eventStream('onDidChangeVisible'), async.Stream$(core.bool));
+    }
+    get onDidDestroy() {
+      return this.eventStream('onDidDestroy').map(dart.fn(obj => new Panel(dart.as(obj, js.JsObject)), Panel, [dart.dynamic]));
+    }
+    isVisible() {
+      return dart.as(this.invoke('isVisible'), core.bool);
+    }
+    show() {
+      return this.invoke('show');
+    }
+    hide() {
+      return this.invoke('hide');
+    }
+    destroy() {
+      return this.invoke('destroy');
+    }
+  }
+  dart.setSignature(Panel, {
+    constructors: () => ({Panel: [Panel, [js.JsObject]]}),
+    methods: () => ({
+      isVisible: [core.bool, []],
+      show: [dart.void, []],
+      hide: [dart.void, []],
+      destroy: [dart.void, []]
+    })
+  });
   class TextEditor extends js$.ProxyHolder {
     TextEditor(object) {
       super.ProxyHolder(_cvt(object));
@@ -503,6 +589,9 @@ dart_library.library('atom/atom', null, /* Imports */[
     getPath() {
       return dart.as(this.invoke('getPath'), core.String);
     }
+    getText() {
+      return dart.as(this.invoke('getText'), core.String);
+    }
     isModified() {
       return dart.as(this.invoke('isModified'), core.bool);
     }
@@ -511,6 +600,15 @@ dart_library.library('atom/atom', null, /* Imports */[
     }
     isNotEmpty() {
       return !dart.notNull(this.isEmpty());
+    }
+    moveToEndOfLine() {
+      return this.invoke('moveToEndOfLine');
+    }
+    selectAll() {
+      return dart.as(this.invoke('selectAll'), core.String);
+    }
+    selectToBeginningOfWord() {
+      return this.invoke('selectToBeginningOfWord');
     }
     save() {
       return this.invoke('save');
@@ -523,9 +621,13 @@ dart_library.library('atom/atom', null, /* Imports */[
       getTitle: [core.String, []],
       getLongTitle: [core.String, []],
       getPath: [core.String, []],
+      getText: [core.String, []],
       isModified: [core.bool, []],
       isEmpty: [core.bool, []],
       isNotEmpty: [core.bool, []],
+      moveToEndOfLine: [dart.void, []],
+      selectAll: [core.String, []],
+      selectToBeginningOfWord: [dart.void, []],
       save: [dart.void, []]
     })
   });
@@ -584,7 +686,7 @@ dart_library.library('atom/atom', null, /* Imports */[
       if (dart.is(object, js.JsObject)) {
         return new AtomEvent._fromJsObject(object);
       } else {
-        return new _AtomEventCustomEvent(object);
+        return new _AtomEventCustomEvent(dart.as(object, html.CustomEvent));
       }
     }
     _fromJsObject(object) {
@@ -636,10 +738,10 @@ dart_library.library('atom/atom', null, /* Imports */[
       return dart.dsend(this.event, 'abortKeyBinding');
     }
     get currentTarget() {
-      return dart.dload(this.event, 'currentTarget');
+      return this.event[dartx.currentTarget];
     }
     get defaultPrevented() {
-      return dart.as(dart.dload(this.event, 'defaultPrevented'), core.bool);
+      return this.event[dartx.defaultPrevented];
     }
     eventStream(eventName) {
       dart.throw('unimplemented');
@@ -657,21 +759,21 @@ dart_library.library('atom/atom', null, /* Imports */[
       dart.throw('unimplemented');
     }
     preventDefault() {
-      return dart.dsend(this.event, 'preventDefault');
+      return this.event[dartx.preventDefault]();
     }
     get propagationStopped() {
       return dart.as(dart.dload(this.event, 'propagationStopped'), core.bool);
     }
     stopImmediatePropagation() {
-      return dart.dsend(this.event, 'stopImmediatePropagation');
+      return this.event[dartx.stopImmediatePropagation]();
     }
     stopPropagation() {
-      return dart.dsend(this.event, 'stopPropagation');
+      return this.event[dartx.stopPropagation]();
     }
   }
   _AtomEventCustomEvent[dart.implements] = () => [AtomEvent];
   dart.setSignature(_AtomEventCustomEvent, {
-    constructors: () => ({_AtomEventCustomEvent: [_AtomEventCustomEvent, [dart.dynamic]]}),
+    constructors: () => ({_AtomEventCustomEvent: [_AtomEventCustomEvent, [html.CustomEvent]]}),
     methods: () => ({
       abortKeyBinding: [dart.void, []],
       eventStream: [async.Stream, [core.String]],
@@ -699,7 +801,9 @@ dart_library.library('atom/atom', null, /* Imports */[
   exports$.NotificationButton = NotificationButton;
   exports$.ViewRegistry = ViewRegistry;
   exports$.Workspace = Workspace;
+  exports$.Project = Project;
   exports$.PackageManager = PackageManager;
+  exports$.Panel = Panel;
   exports$.TextEditor = TextEditor;
   exports$.BufferedProcess = BufferedProcess;
   exports$.AtomEvent = AtomEvent;
