@@ -98,7 +98,6 @@ module.exports = {
 }
 
 @Task()
-@Depends(build) //analyze, build, test, runAtomTests)
 publish() => publishAtomPlugin();
 
 @DefaultTask()
