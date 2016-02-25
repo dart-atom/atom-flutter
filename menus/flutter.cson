@@ -10,6 +10,7 @@
           { label: 'Create new Flutter project…', command: 'flutter:create-project'}
           { label: 'Getting Started…', command: 'flutter:getting-started' }
           { type: 'separator' }
+          { label: 'Flutter Version…', command: 'flutter:version' }
           { label: 'Flutter Doctor…', command: 'flutter:doctor' }
           { label: 'Flutter Upgrade…', command: 'flutter:upgrade' }
           { type: 'separator' }

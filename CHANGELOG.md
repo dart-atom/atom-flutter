@@ -1,5 +1,8 @@
 # Changelog
 
+## unreleased
+- Added a `Packages > Flutter > Version` menu item
+
 ## 0.2.0
 - Exposed the `flutter doctor` command
 
