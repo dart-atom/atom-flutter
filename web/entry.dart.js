@@ -5957,6 +5957,19 @@ self._domRemove = function(element) {
       map$1: function(receiver, f) {
         return H.setRuntimeTypeInfo(new H.MappedListIterable(receiver, f), [null, null]);
       },
+      join$1: function(receiver, separator) {
+        var t1, list, i, t2;
+        t1 = receiver.length;
+        list = new Array(t1);
+        list.fixed$length = Array;
+        for (i = 0; i < receiver.length; ++i) {
+          t2 = H.S(receiver[i]);
+          if (i >= t1)
+            return H.ioore(list, i);
+          list[i] = t2;
+        }
+        return list.join(separator);
+      },
       elementAt$1: function(receiver, index) {
         if (index < 0 || index >= receiver.length)
           return H.ioore(receiver, index);
@@ -15952,6 +15965,12 @@ self._domRemove = function(element) {
       log$4: function(logLevel, message, error, stackTrace) {
         return this.log$5(logLevel, message, error, stackTrace, null);
       },
+      fine$3: function(message, error, stackTrace) {
+        return this.log$4(C.Level_FINE_500, message, error, stackTrace);
+      },
+      fine$1: function(message) {
+        return this.fine$3(message, null, null);
+      },
       info$3: function(message, error, stackTrace) {
         return this.log$4(C.Level_INFO_800, message, error, stackTrace);
       },
@@ -16062,11 +16081,16 @@ self._domRemove = function(element) {
         return H.subtypeCast(this.execStreaming$0().then$1(new X.ProcessRunner_execSimple_closure1(stdout, stderr)), "$isFuture", [X.ProcessResult], "$asFuture");
       },
       execStreaming$0: function() {
-        var e, exception, t1;
+        var e, t1, t2, t3, exception;
         if (this._process$_process != null)
           throw H.wrapException(new P.StateError("exec can only be called once"));
+        t1 = $.$get$_logger1();
+        t2 = this.command;
+        t3 = "exec: " + H.S(t2) + " ";
+        t3 += C.JSArray_methods.join$1(this.args, " ");
+        t1.fine$1(t3);
         try {
-          this._process$_process = E.BufferedProcess_create(this.command, this.args, this.cwd, this.env, new X.ProcessRunner_execStreaming_closure(this), new X.ProcessRunner_execStreaming_closure0(this), new X.ProcessRunner_execStreaming_closure1(this), new X.ProcessRunner_execStreaming_closure2(this));
+          this._process$_process = E.BufferedProcess_create(t2, this.args, this.cwd, this.env, new X.ProcessRunner_execStreaming_closure(this), new X.ProcessRunner_execStreaming_closure0(this), new X.ProcessRunner_execStreaming_closure1(this), new X.ProcessRunner_execStreaming_closure2(this));
         } catch (exception) {
           t1 = H.unwrapException(exception);
           e = t1;
@@ -16123,6 +16147,7 @@ self._domRemove = function(element) {
       "^": "Closure:1;$this",
       call$1: [function(code) {
         var t1 = this.$this;
+        $.$get$_logger1().fine$1("exit code: " + H.S(code) + " (" + H.S(t1.command) + ")");
         t1._exit = code;
         t1 = t1._exitCompleter;
         if (t1.future._state === 0)
@@ -16847,6 +16872,7 @@ self._domRemove = function(element) {
   C.JsonCodec_null_null = new P.JsonCodec(null, null);
   C.JsonDecoder_null = new P.JsonDecoder(null);
   C.JsonEncoder_null_null = new P.JsonEncoder(null, null);
+  C.Level_FINE_500 = new N.Level("FINE", 500);
   C.Level_INFO_800 = new N.Level("INFO", 800);
   C.Level_OFF_2000 = new N.Level("OFF", 2000);
   C.Level_SEVERE_1000 = new N.Level("SEVERE", 1000);
@@ -17022,7 +17048,9 @@ self._domRemove = function(element) {
   }, "process", "isMac", "$get$isMac", function() {
     var t1 = $.$get$process();
     return J.$eq$(t1.get$platform(t1), "darwin");
-  }, "isMac", "shell", "$get$shell", function() {
+  }, "isMac", "_logger1", "$get$_logger1", function() {
+    return N.Logger_Logger("process");
+  }, "_logger1", "shell", "$get$shell", function() {
     return new F.Shell(Y.require("shell"));
   }, "shell", "_pathRegex", "$get$_pathRegex", function() {
     return P.RegExp_RegExp("file:/\\S+/(\\S+\\.dart)", true, false);
