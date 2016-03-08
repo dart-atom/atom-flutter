@@ -8,3 +8,4 @@ packages
 .packages
 pubspec.lock
 web/entry.dart.js.deps
+node_modules/
