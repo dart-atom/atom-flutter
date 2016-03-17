@@ -144,7 +144,7 @@ dart_library.library('dart/_internal', null, /* Imports */[
               dart.throw(new core.ConcurrentModificationError(this));
             }
           }
-          return dart.toString(buffer);
+          return buffer.toString();
         } else {
           let buffer = new core.StringBuffer();
           for (let i = 0; i < dart.notNull(length); i++) {
@@ -153,7 +153,7 @@ dart_library.library('dart/_internal', null, /* Imports */[
               dart.throw(new core.ConcurrentModificationError(this));
             }
           }
-          return dart.toString(buffer);
+          return buffer.toString();
         }
       }
       where(test) {
@@ -598,7 +598,7 @@ dart_library.library('dart/_internal', null, /* Imports */[
         super.IterableBase();
       }
       get iterator() {
-        return new (ExpandIterator$(S, T))(this[_iterable][dartx.iterator], dart.as(this[_f], __CastType0));
+        return new (ExpandIterator$(S, T))(this[_iterable][dartx.iterator], dart.as(this[_f], dart.functionType(core.Iterable$(T), [S])));
       }
     }
     dart.setSignature(ExpandIterable, {
@@ -1229,7 +1229,7 @@ dart_library.library('dart/_internal', null, /* Imports */[
         if (separator === void 0) separator = null;
         let buffer = new core.StringBuffer();
         buffer.writeAll(iterable, separator);
-        return dart.toString(buffer);
+        return buffer.toString();
       }
       static joinList(list, separator) {
         if (separator === void 0) separator = null;
@@ -1247,7 +1247,7 @@ dart_library.library('dart/_internal', null, /* Imports */[
             buffer.write(list[dartx.get](i));
           }
         }
-        return dart.toString(buffer);
+        return buffer.toString();
       }
       where(iterable, f) {
         dart.as(iterable, core.Iterable$(T));
@@ -1268,7 +1268,7 @@ dart_library.library('dart/_internal', null, /* Imports */[
       }
       takeWhile(iterable, test) {
         dart.as(test, dart.functionType(core.bool, [dart.dynamic]));
-        return new (TakeWhileIterable$(T))(dart.as(iterable, core.Iterable$(T)), dart.as(test, __CastType2));
+        return new (TakeWhileIterable$(T))(dart.as(iterable, core.Iterable$(T)), dart.as(test, dart.functionType(core.bool, [T])));
       }
       skipList(list, n) {
         return new (SubListIterable$(T))(dart.as(list, core.Iterable$(T)), n, null);
@@ -1497,16 +1497,6 @@ dart_library.library('dart/_internal', null, /* Imports */[
     }),
     names: ['noElement', 'tooMany', 'tooFew']
   });
-  const __CastType0$ = dart.generic(function(S, T) {
-    const __CastType0 = dart.typedef('__CastType0', () => dart.functionType(core.Iterable$(T), [S]));
-    return __CastType0;
-  });
-  let __CastType0 = __CastType0$();
-  const __CastType2$ = dart.generic(function(T) {
-    const __CastType2 = dart.typedef('__CastType2', () => dart.functionType(core.bool, [T]));
-    return __CastType2;
-  });
-  let __CastType2 = __CastType2$();
   const FixedLengthListMixin$ = dart.generic(function(E) {
     dart.defineExtensionNames([
       'length',
@@ -1929,12 +1919,12 @@ dart_library.library('dart/_internal', null, /* Imports */[
       }
     }
     static areEqual(a, b) {
-      if (dart.notNull(core.identical(a, b))) return true;
+      if (core.identical(a, b)) return true;
       if (!dart.is(b, core.List)) return false;
       let length = a[dartx.length];
       if (!dart.equals(length, dart.dload(b, 'length'))) return false;
       for (let i = 0; i < dart.notNull(length); i++) {
-        if (!dart.notNull(core.identical(a[dartx.get](i), dart.dindex(b, i)))) return false;
+        if (!core.identical(a[dartx.get](i), dart.dindex(b, i))) return false;
       }
       return true;
     }
@@ -2292,7 +2282,11 @@ dart_library.library('dart/_internal', null, /* Imports */[
       return core.RegExp.new(`^(?:${Symbol.operatorRE}\$|${Symbol.identifierRE}(?:=?\$|[.](?!\$)))+?\$`);
     }
   });
-  const POWERS_OF_TEN = dart.const([1.0, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, 10000000.0, 100000000.0, 1000000000.0, 10000000000.0, 100000000000.0, 1000000000000.0, 10000000000000.0, 100000000000000.0, 1000000000000000.0, 10000000000000000.0, 100000000000000000.0, 1000000000000000000.0, 10000000000000000000.0, 100000000000000000000.0, 1e+21, 1e+22]);
+  dart.defineLazyProperties(exports, {
+    get POWERS_OF_TEN() {
+      return dart.const(dart.list([1.0, 10.0, 100.0, 1000.0, 10000.0, 100000.0, 1000000.0, 10000000.0, 100000000.0, 1000000000.0, 10000000000.0, 100000000000.0, 1000000000000.0, 10000000000000.0, 100000000000000.0, 1000000000000000.0, 10000000000000000.0, 100000000000000000.0, 1000000000000000000.0, 10000000000000000000.0, 100000000000000000000.0, 1e+21, 1e+22], core.double));
+    }
+  });
   // Exports:
   exports.EfficientLength = EfficientLength;
   exports.ListIterable$ = ListIterable$;
@@ -2365,5 +2359,4 @@ dart_library.library('dart/_internal', null, /* Imports */[
   exports.printToConsole = printToConsole;
   exports.Sort = Sort;
   exports.Symbol = Symbol;
-  exports.POWERS_OF_TEN = POWERS_OF_TEN;
 });

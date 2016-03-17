@@ -17,6 +17,6 @@ main() {
     if (r.stackTrace != null) print('${tag}   ${r.stackTrace}');
   });
 
-  registerPackage(new FlutterDevPackage());
-  // registerPackageDDC(new FlutterDevPackage());
+  // registerPackage(new FlutterDevPackage());
+  registerPackageDDC(new FlutterDevPackage());
 }

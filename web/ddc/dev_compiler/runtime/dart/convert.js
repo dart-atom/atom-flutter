@@ -9,6 +9,7 @@ dart_library.library('dart/convert', null, /* Imports */[
 ], function(exports, dart, core, async, typed_data, _internal, collection) {
   'use strict';
   let dartx = dart.dartx;
+  const _allowInvalid = Symbol('_allowInvalid');
   const Codec$ = dart.generic(function(S, T) {
     class Codec extends core.Object {
       Codec() {
@@ -68,7 +69,6 @@ dart_library.library('dart/convert', null, /* Imports */[
     },
     set _nameToEncoding(_) {}
   });
-  const _allowInvalid = Symbol('_allowInvalid');
   class AsciiCodec extends Encoding {
     AsciiCodec(opts) {
       let allowInvalid = opts && 'allowInvalid' in opts ? opts.allowInvalid : false;
@@ -100,6 +100,7 @@ dart_library.library('dart/convert', null, /* Imports */[
   });
   const ASCII = dart.const(new AsciiCodec());
   const _ASCII_MASK = 127;
+  const _subsetMask = Symbol('_subsetMask');
   const Converter$ = dart.generic(function(S, T) {
     class Converter extends core.Object {
       Converter() {
@@ -129,7 +130,6 @@ dart_library.library('dart/convert', null, /* Imports */[
     return Converter;
   });
   let Converter = Converter$();
-  const _subsetMask = Symbol('_subsetMask');
   class _UnicodeSubsetEncoder extends Converter$(core.String, core.List$(core.int)) {
     _UnicodeSubsetEncoder(subsetMask) {
       this[_subsetMask] = subsetMask;
@@ -178,6 +178,7 @@ dart_library.library('dart/convert', null, /* Imports */[
   dart.setSignature(AsciiEncoder, {
     constructors: () => ({AsciiEncoder: [AsciiEncoder, []]})
   });
+  const _sink = Symbol('_sink');
   class StringConversionSinkMixin extends core.Object {
     add(str) {
       return this.addSlice(str, 0, str[dartx.length], false);
@@ -198,7 +199,6 @@ dart_library.library('dart/convert', null, /* Imports */[
     })
   });
   class StringConversionSinkBase extends StringConversionSinkMixin {}
-  const _sink = Symbol('_sink');
   class _UnicodeSubsetEncoderSink extends StringConversionSinkBase {
     _UnicodeSubsetEncoderSink(subsetMask, sink) {
       this[_subsetMask] = subsetMask;
@@ -260,7 +260,7 @@ dart_library.library('dart/convert', null, /* Imports */[
         if ((dart.notNull(value) & ~dart.notNull(this[_subsetMask])) != 0) value = 65533;
         buffer.writeCharCode(value);
       }
-      return dart.toString(buffer);
+      return buffer.toString();
     }
     bind(stream) {
       return super.bind(stream);
@@ -297,6 +297,7 @@ dart_library.library('dart/convert', null, /* Imports */[
     constructors: () => ({AsciiDecoder: [AsciiDecoder, [], {allowInvalid: core.bool}]}),
     methods: () => ({startChunkedConversion: [ByteConversionSink, [core.Sink$(core.String)]]})
   });
+  const _utf8Sink = Symbol('_utf8Sink');
   const ChunkedConversionSink$ = dart.generic(function(T) {
     class ChunkedConversionSink extends core.Object {
       ChunkedConversionSink() {
@@ -345,7 +346,6 @@ dart_library.library('dart/convert', null, /* Imports */[
   dart.setSignature(ByteConversionSinkBase, {
     methods: () => ({addSlice: [dart.void, [core.List$(core.int), core.int, core.int, core.bool]]})
   });
-  const _utf8Sink = Symbol('_utf8Sink');
   class _ErrorHandlingAsciiDecoderSink extends ByteConversionSinkBase {
     _ErrorHandlingAsciiDecoderSink(utf8Sink) {
       this[_utf8Sink] = utf8Sink;
@@ -819,7 +819,7 @@ dart_library.library('dart/convert', null, /* Imports */[
       let toEncodable = opts && 'toEncodable' in opts ? opts.toEncodable : null;
       if (toEncodable == null) toEncodable = this[_toEncodable$];
       if (toEncodable == null) return this.encoder.convert(value);
-      return new JsonEncoder(dart.as(toEncodable, __CastType0)).convert(value);
+      return new JsonEncoder(dart.as(toEncodable, dart.functionType(core.Object, [core.Object]))).convert(value);
     }
     get encoder() {
       if (this[_toEncodable$] == null) return dart.const(new JsonEncoder());
@@ -858,7 +858,7 @@ dart_library.library('dart/convert', null, /* Imports */[
       super.Converter();
     }
     convert(object) {
-      return _JsonStringStringifier.stringify(object, dart.as(this[_toEncodable$], __CastType2), this.indent);
+      return _JsonStringStringifier.stringify(object, dart.as(this[_toEncodable$], dart.functionType(dart.dynamic, [dart.dynamic])), this.indent);
     }
     startChunkedConversion(sink) {
       if (!dart.is(sink, StringConversionSink)) {
@@ -873,7 +873,7 @@ dart_library.library('dart/convert', null, /* Imports */[
     }
     fuse(other) {
       if (dart.is(other, Utf8Encoder)) {
-        return new JsonUtf8Encoder(this.indent, dart.as(this[_toEncodable$], __CastType4));
+        return new JsonUtf8Encoder(this.indent, dart.as(this[_toEncodable$], dart.functionType(dart.dynamic, [core.Object])));
       }
       return super.fuse(other);
     }
@@ -1146,7 +1146,7 @@ dart_library.library('dart/convert', null, /* Imports */[
     }
     [_checkCycle](object) {
       for (let i = 0; i < dart.notNull(this[_seen][dartx.length]); i++) {
-        if (dart.notNull(core.identical(object, this[_seen][dartx.get](i)))) {
+        if (core.identical(object, this[_seen][dartx.get](i))) {
           dart.throw(new JsonCyclicError(object));
         }
       }
@@ -1176,10 +1176,10 @@ dart_library.library('dart/convert', null, /* Imports */[
         if (!dart.notNull(object[dartx.isFinite])) return false;
         this.writeNumber(object);
         return true;
-      } else if (dart.notNull(core.identical(object, true))) {
+      } else if (core.identical(object, true)) {
         this.writeString('true');
         return true;
-      } else if (dart.notNull(core.identical(object, false))) {
+      } else if (core.identical(object, false)) {
         this.writeString('false');
         return true;
       } else if (object == null) {
@@ -1320,7 +1320,7 @@ dart_library.library('dart/convert', null, /* Imports */[
     static stringify(object, toEncodable, indent) {
       let output = new core.StringBuffer();
       _JsonStringStringifier.printOn(object, output, toEncodable, indent);
-      return dart.toString(output);
+      return output.toString();
     }
     static printOn(object, output, toEncodable, indent) {
       let stringifier = null;
@@ -1521,9 +1521,6 @@ dart_library.library('dart/convert', null, /* Imports */[
     constructors: () => ({_JsonUtf8StringifierPretty: [_JsonUtf8StringifierPretty, [dart.dynamic, core.List$(core.int), dart.dynamic, dart.dynamic]]}),
     methods: () => ({writeIndentation: [dart.void, [core.int]]})
   });
-  const __CastType0 = dart.typedef('__CastType0', () => dart.functionType(core.Object, [core.Object]));
-  const __CastType2 = dart.typedef('__CastType2', () => dart.functionType(dart.dynamic, [dart.dynamic]));
-  const __CastType4 = dart.typedef('__CastType4', () => dart.functionType(dart.dynamic, [core.Object]));
   class Latin1Codec extends Encoding {
     Latin1Codec(opts) {
       let allowInvalid = opts && 'allowInvalid' in opts ? opts.allowInvalid : false;
@@ -2284,7 +2281,7 @@ dart_library.library('dart/convert', null, /* Imports */[
       let decoder = new _Utf8Decoder(buffer, this[_allowMalformed]);
       decoder.convert(codeUnits, start, end);
       decoder.close();
-      return dart.toString(buffer);
+      return buffer.toString();
     }
     startChunkedConversion(sink) {
       let stringSink = null;
@@ -2585,7 +2582,7 @@ dart_library.library('dart/convert', null, /* Imports */[
         let processed = this[_processed];
         _JsonMap._setProperty(processed, dart.as(key, core.String), value);
         let original = this[_original];
-        if (!dart.notNull(core.identical(original, processed))) {
+        if (!core.identical(original, processed)) {
           _JsonMap._setProperty(original, dart.as(key, core.String), null);
         }
       } else {
@@ -2644,7 +2641,7 @@ dart_library.library('dart/convert', null, /* Imports */[
           _JsonMap._setProperty(this[_processed], key, value);
         }
         dart.dcall(f, key, value);
-        if (!dart.notNull(core.identical(keys, this[_data]))) {
+        if (!core.identical(keys, this[_data])) {
           dart.throw(new core.ConcurrentModificationError(this));
         }
       }

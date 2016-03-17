@@ -1,15 +1,15 @@
 dart_library.library('atom_flutter/menus/getting_started', null, /* Imports */[
   'dart/_runtime',
-  'dart/core',
   'atom/utils/disposable',
   'atom/atom',
   'atom/node/shell',
   'atom/utils/utils',
+  'dart/core',
   'atom/node/process',
   'atom_flutter/state',
   'dart/async'
 ], /* Lazy imports */[
-], function(exports, dart, core, disposable, atom, shell, utils, process, state, async) {
+], function(exports, dart, disposable, atom, shell, utils, core, process, state, async) {
   'use strict';
   let dartx = dart.dartx;
   const _gettingStarted = Symbol('_gettingStarted');
@@ -50,7 +50,7 @@ dart_library.library('atom_flutter/menus/getting_started', null, /* Imports */[
   function getSystemDescription() {
     let atomVer = atom.atom.getVersion();
     let os = dart.notNull(process.isMac) ? 'macos' : process.process.platform;
-    return dart.as(state.atomPackage.getPackageVersion().then(dart.fn(pluginVer => {
+    return state.atomPackage.getPackageVersion().then(dart.fn(pluginVer => {
       let hasFlutterSdk = atom.atom.config.getValue('flutter.flutterRoot') != null;
       let description = `\n\nAtom ${atomVer}, flutter plugin ${pluginVer}`;
       if (!hasFlutterSdk) {
@@ -58,7 +58,7 @@ dart_library.library('atom_flutter/menus/getting_started', null, /* Imports */[
       }
       description = description + `, running on ${os}.`;
       return description;
-    }, dart.dynamic, [core.String])), async.Future$(core.String));
+    }, core.String, [core.String]));
   }
   dart.fn(getSystemDescription, async.Future$(core.String), []);
   // Exports:

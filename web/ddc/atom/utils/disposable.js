@@ -2,9 +2,10 @@ dart_library.library('atom/utils/disposable', null, /* Imports */[
   'dart/_runtime',
   'logging/logging',
   'dart/core',
+  'dart/js',
   'dart/async'
 ], /* Lazy imports */[
-], function(exports, dart, logging, core, async) {
+], function(exports, dart, logging, core, js, async) {
   'use strict';
   let dartx = dart.dartx;
   dart.defineLazyProperties(exports, {
@@ -55,6 +56,27 @@ dart_library.library('atom/utils/disposable', null, /* Imports */[
       remove: [core.bool, [Disposable]],
       dispose: [dart.void, []]
     })
+  });
+  const _callback = Symbol('_callback');
+  class EventListener extends core.Object {
+    EventListener(obj, eventName, fn) {
+      this.obj = obj;
+      this.eventName = eventName;
+      this[_callback] = null;
+      this[_callback] = js.JsFunction.withThis(dart.fn((_this, e) => fn(js.JsObject.fromBrowserObject(e)), dart.void, [dart.dynamic, dart.dynamic]));
+      this.obj.callMethod('addEventListener', [this.eventName, this[_callback]]);
+    }
+    dispose() {
+      if (this[_callback] != null) {
+        this.obj.callMethod('removeEventListener', [this.eventName, this[_callback]]);
+      }
+      this[_callback] = null;
+    }
+  }
+  EventListener[dart.implements] = () => [Disposable];
+  dart.setSignature(EventListener, {
+    constructors: () => ({EventListener: [EventListener, [js.JsObject, core.String, dart.functionType(dart.void, [js.JsObject])]]}),
+    methods: () => ({dispose: [dart.void, []]})
   });
   const _subscriptions = Symbol('_subscriptions');
   class StreamSubscriptions extends core.Object {
@@ -115,6 +137,7 @@ dart_library.library('atom/utils/disposable', null, /* Imports */[
   // Exports:
   exports.Disposable = Disposable;
   exports.Disposables = Disposables;
+  exports.EventListener = EventListener;
   exports.StreamSubscriptions = StreamSubscriptions;
   exports.DisposeableSubscription = DisposeableSubscription;
 });

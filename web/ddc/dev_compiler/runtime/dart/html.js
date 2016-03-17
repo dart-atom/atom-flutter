@@ -1,8 +1,8 @@
 dart_library.library('dart/html', null, /* Imports */[
   'dart/_runtime',
   'dart/math',
-  'dart/_interceptors',
   'dart/core',
+  'dart/_interceptors',
   'dart/_metadata',
   'dart/_js_helper',
   'dart/async',
@@ -16,7 +16,7 @@ dart_library.library('dart/html', null, /* Imports */[
   'dart/svg',
   'dart/web_sql',
   'dart/indexed_db'
-], function(exports, dart, math, _interceptors, core, _metadata, _js_helper, async, isolate, typed_data, _foreign_helper, collection, html_common, web_gl, svg, web_sql, indexed_db) {
+], function(exports, dart, math, core, _interceptors, _metadata, _js_helper, async, isolate, typed_data, _foreign_helper, collection, html_common, web_gl, svg, web_sql, indexed_db) {
   'use strict';
   let dartx = dart.dartx;
   dart.export(exports, math, ['Rectangle', 'Point'], []);
@@ -28,6 +28,47 @@ dart_library.library('dart/html', null, /* Imports */[
       return dart.as(document, HtmlDocument);
     }
   });
+  const _xtag = Symbol('_xtag');
+  const _attributes = Symbol('_attributes');
+  const _clientHeight = Symbol('_clientHeight');
+  const _clientLeft = Symbol('_clientLeft');
+  const _clientTop = Symbol('_clientTop');
+  const _clientWidth = Symbol('_clientWidth');
+  const _innerHtml = Symbol('_innerHtml');
+  const _offsetHeight = Symbol('_offsetHeight');
+  const _offsetLeft = Symbol('_offsetLeft');
+  const _offsetTop = Symbol('_offsetTop');
+  const _offsetWidth = Symbol('_offsetWidth');
+  const _scrollHeight = Symbol('_scrollHeight');
+  const _scrollLeft = Symbol('_scrollLeft');
+  const _scrollTop = Symbol('_scrollTop');
+  const _scrollWidth = Symbol('_scrollWidth');
+  const _childElementCount = Symbol('_childElementCount');
+  const _children = Symbol('_children');
+  const _firstElementChild = Symbol('_firstElementChild');
+  const _lastElementChild = Symbol('_lastElementChild');
+  const _querySelectorAll = Symbol('_querySelectorAll');
+  const _getComputedStyle = Symbol('_getComputedStyle');
+  const _animate = Symbol('_animate');
+  const _localName = Symbol('_localName');
+  const _namespaceUri = Symbol('_namespaceUri');
+  const _scrollIntoView = Symbol('_scrollIntoView');
+  const _scrollIntoViewIfNeeded = Symbol('_scrollIntoViewIfNeeded');
+  const _insertAdjacentText = Symbol('_insertAdjacentText');
+  const _insertAdjacentNode = Symbol('_insertAdjacentNode');
+  const _insertAdjacentHtml = Symbol('_insertAdjacentHtml');
+  const _insertAdjacentElement = Symbol('_insertAdjacentElement');
+  const _canBeUsedToCreateContextualFragment = Symbol('_canBeUsedToCreateContextualFragment');
+  const _cannotBeUsedToCreateContextualFragment = Symbol('_cannotBeUsedToCreateContextualFragment');
+  const _getElementsByTagName = Symbol('_getElementsByTagName');
+  const _hasAttribute = Symbol('_hasAttribute');
+  const _hasAttributeNS = Symbol('_hasAttributeNS');
+  const _removeAttribute = Symbol('_removeAttribute');
+  const _removeAttributeNS = Symbol('_removeAttributeNS');
+  const _removeChild = Symbol('_removeChild');
+  const _replaceChild = Symbol('_replaceChild');
+  const _this = Symbol('_this');
+  const _clearChildren = Symbol('_clearChildren');
   const _addEventListener = Symbol('_addEventListener');
   const _removeEventListener = Symbol('_removeEventListener');
   dart.defineExtensionNames([
@@ -84,12 +125,6 @@ dart_library.library('dart/html', null, /* Imports */[
   });
   EventTarget[dart.metadata] = () => [dart.const(new _metadata.DomName('EventTarget')), dart.const(new _js_helper.Native("EventTarget"))];
   dart.registerExtension(dart.global.EventTarget, EventTarget);
-  const _localName = Symbol('_localName');
-  const _namespaceUri = Symbol('_namespaceUri');
-  const _removeChild = Symbol('_removeChild');
-  const _replaceChild = Symbol('_replaceChild');
-  const _this = Symbol('_this');
-  const _clearChildren = Symbol('_clearChildren');
   dart.defineExtensionNames([
     'nodes',
     'nodes',
@@ -164,7 +199,7 @@ dart_library.library('dart/html', null, /* Imports */[
     [dartx.insertAllBefore](newNodes, refChild) {
       if (dart.is(newNodes, _ChildNodeListLazy)) {
         let otherList = newNodes;
-        if (dart.notNull(core.identical(otherList[_this], this))) {
+        if (core.identical(otherList[_this], this)) {
           dart.throw(new core.ArgumentError(newNodes));
         }
         for (let i = 0, len = otherList.length; i < dart.notNull(len); ++i) {
@@ -292,41 +327,6 @@ dart_library.library('dart/html', null, /* Imports */[
   Node.PROCESSING_INSTRUCTION_NODE = 7;
   Node.TEXT_NODE = 3;
   dart.registerExtension(dart.global.Node, Node);
-  const _xtag = Symbol('_xtag');
-  const _attributes = Symbol('_attributes');
-  const _clientHeight = Symbol('_clientHeight');
-  const _clientLeft = Symbol('_clientLeft');
-  const _clientTop = Symbol('_clientTop');
-  const _clientWidth = Symbol('_clientWidth');
-  const _innerHtml = Symbol('_innerHtml');
-  const _offsetHeight = Symbol('_offsetHeight');
-  const _offsetLeft = Symbol('_offsetLeft');
-  const _offsetTop = Symbol('_offsetTop');
-  const _offsetWidth = Symbol('_offsetWidth');
-  const _scrollHeight = Symbol('_scrollHeight');
-  const _scrollLeft = Symbol('_scrollLeft');
-  const _scrollTop = Symbol('_scrollTop');
-  const _scrollWidth = Symbol('_scrollWidth');
-  const _childElementCount = Symbol('_childElementCount');
-  const _children = Symbol('_children');
-  const _firstElementChild = Symbol('_firstElementChild');
-  const _lastElementChild = Symbol('_lastElementChild');
-  const _querySelectorAll = Symbol('_querySelectorAll');
-  const _getComputedStyle = Symbol('_getComputedStyle');
-  const _animate = Symbol('_animate');
-  const _scrollIntoView = Symbol('_scrollIntoView');
-  const _scrollIntoViewIfNeeded = Symbol('_scrollIntoViewIfNeeded');
-  const _insertAdjacentText = Symbol('_insertAdjacentText');
-  const _insertAdjacentNode = Symbol('_insertAdjacentNode');
-  const _insertAdjacentHtml = Symbol('_insertAdjacentHtml');
-  const _insertAdjacentElement = Symbol('_insertAdjacentElement');
-  const _canBeUsedToCreateContextualFragment = Symbol('_canBeUsedToCreateContextualFragment');
-  const _cannotBeUsedToCreateContextualFragment = Symbol('_cannotBeUsedToCreateContextualFragment');
-  const _getElementsByTagName = Symbol('_getElementsByTagName');
-  const _hasAttribute = Symbol('_hasAttribute');
-  const _hasAttributeNS = Symbol('_hasAttributeNS');
-  const _removeAttribute = Symbol('_removeAttribute');
-  const _removeAttributeNS = Symbol('_removeAttributeNS');
   dart.defineExtensionNames([
     'attributes',
     'attributes',
@@ -691,10 +691,10 @@ dart_library.library('dart/html', null, /* Imports */[
       return exports.window[_getComputedStyle](this, pseudoElement);
     }
     get [dartx.client]() {
-      return new math.Rectangle(this[dartx.clientLeft], this[dartx.clientTop], this[dartx.clientWidth], this[dartx.clientHeight]);
+      return new (math.Rectangle$(core.num))(this[dartx.clientLeft], this[dartx.clientTop], this[dartx.clientWidth], this[dartx.clientHeight]);
     }
     get [dartx.offset]() {
-      return new math.Rectangle(this[dartx.offsetLeft], this[dartx.offsetTop], this[dartx.offsetWidth], this[dartx.offsetHeight]);
+      return new (math.Rectangle$(core.num))(this[dartx.offsetLeft], this[dartx.offsetTop], this[dartx.offsetWidth], this[dartx.offsetHeight]);
     }
     [dartx.appendText](text) {
       this[dartx.append](Text.new(text));
@@ -896,14 +896,14 @@ dart_library.library('dart/html', null, /* Imports */[
     }
     static _offsetToHelper(current, parent) {
       let sameAsParent = core.identical(current, parent);
-      let foundAsParent = dart.notNull(sameAsParent) || parent[dartx.tagName] == 'HTML';
-      if (current == null || dart.notNull(sameAsParent)) {
-        if (foundAsParent) return new math.Point(0, 0);
+      let foundAsParent = sameAsParent || parent[dartx.tagName] == 'HTML';
+      if (current == null || sameAsParent) {
+        if (foundAsParent) return new (math.Point$(core.num))(0, 0);
         dart.throw(new core.ArgumentError("Specified element is not a transitive offset " + "parent of this element."));
       }
       let parentOffset = current[dartx.offsetParent];
       let p = Element._offsetToHelper(parentOffset, parent);
-      return new math.Point(dart.dsend(p.x, '+', current[dartx.offsetLeft]), dart.dsend(p.y, '+', current[dartx.offsetTop]));
+      return new (math.Point$(core.num))(dart.notNull(p.x) + dart.notNull(current[dartx.offsetLeft]), dart.notNull(p.y) + dart.notNull(current[dartx.offsetTop]));
     }
     [dartx.createFragment](html, opts) {
       let validator = opts && 'validator' in opts ? opts.validator : null;
@@ -928,7 +928,7 @@ dart_library.library('dart/html', null, /* Imports */[
         Element._parseDocument = exports.document[dartx.implementation][dartx.createHtmlDocument]('');
         Element._parseRange = Element._parseDocument[dartx.createRange]();
         let base = Element._parseDocument[dartx.createElement]('base');
-        dart.dput(base, dartx.href, exports.document[dartx.baseUri]);
+        dart.dput(base, 'href', exports.document[dartx.baseUri]);
         Element._parseDocument[dartx.head][dartx.append](base);
       }
       let contextElement = null;
@@ -1570,7 +1570,7 @@ dart_library.library('dart/html', null, /* Imports */[
       [dartx.matches]: [core.bool, [core.String]],
       [dartx.matchesWithAncestors]: [core.bool, [core.String]],
       [dartx.createShadowRoot]: [ShadowRoot, []],
-      [dartx.offsetTo]: [math.Point, [Element]],
+      [dartx.offsetTo]: [math.Point$(core.num), [Element]],
       [dartx.createFragment]: [DocumentFragment, [core.String], {validator: NodeValidator, treeSanitizer: NodeTreeSanitizer}],
       [dartx.setInnerHtml]: [dart.void, [core.String], {validator: NodeValidator, treeSanitizer: NodeTreeSanitizer}],
       [dartx.click]: [dart.void, []],
@@ -1579,8 +1579,8 @@ dart_library.library('dart/html', null, /* Imports */[
       [dartx.getAnimationPlayers]: [core.List$(AnimationPlayer), []],
       [dartx.getAttribute]: [core.String, [core.String]],
       [dartx.getAttributeNS]: [core.String, [core.String, core.String]],
-      [dartx.getBoundingClientRect]: [math.Rectangle, []],
-      [dartx.getClientRects]: [core.List$(math.Rectangle), []],
+      [dartx.getBoundingClientRect]: [math.Rectangle$(core.num), []],
+      [dartx.getClientRects]: [core.List$(math.Rectangle$(core.num)), []],
       [dartx.getDestinationInsertionPoints]: [core.List$(Node), []],
       [dartx.getElementsByClassName]: [core.List$(Node), [core.String]],
       [_getElementsByTagName]: [core.List$(Node), [core.String]],
@@ -1601,7 +1601,7 @@ dart_library.library('dart/html', null, /* Imports */[
       isTagSupported: [core.bool, [core.String]],
       _determineMouseWheelEventType: [core.String, [EventTarget]],
       _determineTransitionEventType: [core.String, [EventTarget]],
-      _offsetToHelper: [math.Point, [Element, Element]],
+      _offsetToHelper: [math.Point$(core.num), [Element, Element]],
       _hasCorruptedAttributes: [core.bool, [Element]],
       _hasCorruptedAttributesAdditionalCheck: [core.bool, [Element]],
       _safeTagName: [core.String, [dart.dynamic]]
@@ -1613,7 +1613,7 @@ dart_library.library('dart/html', null, /* Imports */[
   Element._parseRange = null;
   Element._defaultValidator = null;
   Element._defaultSanitizer = null;
-  Element._tagsForWhichCreateContextualFragmentIsNotSupported = dart.const(['HEAD', 'AREA', 'BASE', 'BASEFONT', 'BR', 'COL', 'COLGROUP', 'EMBED', 'FRAME', 'FRAMESET', 'HR', 'IMAGE', 'IMG', 'INPUT', 'ISINDEX', 'LINK', 'META', 'PARAM', 'SOURCE', 'STYLE', 'TITLE', 'WBR']);
+  Element._tagsForWhichCreateContextualFragmentIsNotSupported = dart.const(dart.list(['HEAD', 'AREA', 'BASE', 'BASEFONT', 'BR', 'COL', 'COLGROUP', 'EMBED', 'FRAME', 'FRAMESET', 'HR', 'IMAGE', 'IMG', 'INPUT', 'ISINDEX', 'LINK', 'META', 'PARAM', 'SOURCE', 'STYLE', 'TITLE', 'WBR'], core.String));
   dart.defineLazyProperties(Element, {
     get mouseWheelEvent() {
       return dart.const(new (_CustomEventStreamProvider$(WheelEvent))(Element._determineMouseWheelEventType));
@@ -1909,7 +1909,7 @@ dart_library.library('dart/html', null, /* Imports */[
     static new(opts) {
       let href = opts && 'href' in opts ? opts.href : null;
       let e = exports.document[dartx.createElement]("a");
-      if (href != null) dart.dput(e, dartx.href, href);
+      if (href != null) dart.dput(e, 'href', href);
       return dart.as(e, AnchorElement);
     }
     created() {
@@ -3599,6 +3599,7 @@ dart_library.library('dart/html', null, /* Imports */[
   });
   ButtonElement[dart.metadata] = () => [dart.const(new _metadata.DocsEditable()), dart.const(new _metadata.DomName('HTMLButtonElement')), dart.const(new _js_helper.Native("HTMLButtonElement"))];
   dart.registerExtension(dart.global.HTMLButtonElement, ButtonElement);
+  const _createTextNode = Symbol('_createTextNode');
   dart.defineExtensionNames([
     'appendData',
     'deleteData',
@@ -3658,7 +3659,6 @@ dart_library.library('dart/html', null, /* Imports */[
   });
   CharacterData[dart.metadata] = () => [dart.const(new _metadata.DocsEditable()), dart.const(new _metadata.DomName('CharacterData')), dart.const(new _js_helper.Native("CharacterData"))];
   dart.registerExtension(dart.global.CharacterData, CharacterData);
-  const _createTextNode = Symbol('_createTextNode');
   dart.defineExtensionNames([
     'getDestinationInsertionPoints',
     'splitText',
@@ -3789,8 +3789,8 @@ dart_library.library('dart/html', null, /* Imports */[
       let width = opts && 'width' in opts ? opts.width : null;
       let height = opts && 'height' in opts ? opts.height : null;
       let e = exports.document[dartx.createElement]("canvas");
-      if (width != null) dart.dput(e, dartx.width, width);
-      if (height != null) dart.dput(e, dartx.height, height);
+      if (width != null) dart.dput(e, 'width', width);
+      if (height != null) dart.dput(e, 'height', height);
       return dart.as(e, CanvasElement);
     }
     created() {
@@ -4315,9 +4315,9 @@ dart_library.library('dart/html', null, /* Imports */[
     [dartx.drawImageToRect](source, destRect, opts) {
       let sourceRect = opts && 'sourceRect' in opts ? opts.sourceRect : null;
       if (sourceRect == null) {
-        this[dartx.drawImageScaled](source, dart.as(destRect[dartx.left], core.num), dart.as(destRect[dartx.top], core.num), dart.as(destRect[dartx.width], core.num), dart.as(destRect[dartx.height], core.num));
+        this[dartx.drawImageScaled](source, destRect[dartx.left], destRect[dartx.top], destRect[dartx.width], destRect[dartx.height]);
       } else {
-        this[dartx.drawImageScaledFromSource](source, dart.as(sourceRect[dartx.left], core.num), dart.as(sourceRect[dartx.top], core.num), dart.as(sourceRect[dartx.width], core.num), dart.as(sourceRect[dartx.height], core.num), dart.as(destRect[dartx.left], core.num), dart.as(destRect[dartx.top], core.num), dart.as(destRect[dartx.width], core.num), dart.as(destRect[dartx.height], core.num));
+        this[dartx.drawImageScaledFromSource](source, sourceRect[dartx.left], sourceRect[dartx.top], sourceRect[dartx.width], sourceRect[dartx.height], destRect[dartx.left], destRect[dartx.top], destRect[dartx.width], destRect[dartx.height]);
       }
     }
     [dartx.drawImage](source, destX, destY) {
@@ -4424,7 +4424,7 @@ dart_library.library('dart/html', null, /* Imports */[
       [dartx.setStrokeColorRgb]: [dart.void, [core.int, core.int, core.int], [core.num]],
       [dartx.setStrokeColorHsl]: [dart.void, [core.int, core.num, core.num], [core.num]],
       [dartx.arc]: [dart.void, [core.num, core.num, core.num, core.num, core.num], [core.bool]],
-      [dartx.drawImageToRect]: [dart.void, [CanvasImageSource, math.Rectangle], {sourceRect: math.Rectangle}],
+      [dartx.drawImageToRect]: [dart.void, [CanvasImageSource, math.Rectangle$(core.num)], {sourceRect: math.Rectangle$(core.num)}],
       [dartx.drawImage]: [dart.void, [CanvasImageSource, core.num, core.num]],
       [dartx.drawImageScaled]: [dart.void, [CanvasImageSource, core.num, core.num, core.num, core.num]],
       [dartx.drawImageScaledFromSource]: [dart.void, [CanvasImageSource, core.num, core.num, core.num, core.num, core.num, core.num, core.num, core.num]],
@@ -4553,6 +4553,7 @@ dart_library.library('dart/html', null, /* Imports */[
   });
   Comment[dart.metadata] = () => [dart.const(new _metadata.DocsEditable()), dart.const(new _metadata.DomName('Comment')), dart.const(new _js_helper.Native("Comment"))];
   dart.registerExtension(dart.global.Comment, Comment);
+  const _initCompositionEvent = Symbol('_initCompositionEvent');
   const _initUIEvent = Symbol('_initUIEvent');
   const _charCode = Symbol('_charCode');
   const _keyCode = Symbol('_keyCode');
@@ -4618,10 +4619,10 @@ dart_library.library('dart/html', null, /* Imports */[
       return this.initUIEvent(type, canBubble, cancelable, view, detail);
     }
     get [dartx.layer]() {
-      return new math.Point(this[_layerX], this[_layerY]);
+      return new (math.Point$(core.num))(this[_layerX], this[_layerY]);
     }
     get [dartx.page]() {
-      return new math.Point(this[_pageX], this[_pageY]);
+      return new (math.Point$(core.num))(this[_pageX], this[_pageY]);
     }
   }
   dart.setSignature(UIEvent, {
@@ -4633,7 +4634,6 @@ dart_library.library('dart/html', null, /* Imports */[
   });
   UIEvent[dart.metadata] = () => [dart.const(new _metadata.DomName('UIEvent')), dart.const(new _js_helper.Native("UIEvent"))];
   dart.registerExtension(dart.global.UIEvent, UIEvent);
-  const _initCompositionEvent = Symbol('_initCompositionEvent');
   dart.defineExtensionNames([
     'getSegments',
     'activeSegmentEnd',
@@ -5302,6 +5302,102 @@ dart_library.library('dart/html', null, /* Imports */[
   });
   CssPageRule[dart.metadata] = () => [dart.const(new _metadata.DocsEditable()), dart.const(new _metadata.DomName('CSSPageRule')), dart.const(new _js_helper.Native("CSSPageRule"))];
   dart.registerExtension(dart.global.CSSPageRule, CssPageRule);
+  const _getPropertyValueHelper = Symbol('_getPropertyValueHelper');
+  const _supportsProperty = Symbol('_supportsProperty');
+  const _getPropertyValue = Symbol('_getPropertyValue');
+  const _setPropertyHelper = Symbol('_setPropertyHelper');
+  const _browserPropertyName = Symbol('_browserPropertyName');
+  const __setter__ = Symbol('__setter__');
+  const _background = Symbol('_background');
+  const _backgroundAttachment = Symbol('_backgroundAttachment');
+  const _backgroundColor = Symbol('_backgroundColor');
+  const _backgroundImage = Symbol('_backgroundImage');
+  const _backgroundPosition = Symbol('_backgroundPosition');
+  const _backgroundRepeat = Symbol('_backgroundRepeat');
+  const _border = Symbol('_border');
+  const _borderBottom = Symbol('_borderBottom');
+  const _borderBottomColor = Symbol('_borderBottomColor');
+  const _borderBottomStyle = Symbol('_borderBottomStyle');
+  const _borderBottomWidth = Symbol('_borderBottomWidth');
+  const _borderCollapse = Symbol('_borderCollapse');
+  const _borderColor = Symbol('_borderColor');
+  const _borderLeft = Symbol('_borderLeft');
+  const _borderLeftColor = Symbol('_borderLeftColor');
+  const _borderLeftStyle = Symbol('_borderLeftStyle');
+  const _borderLeftWidth = Symbol('_borderLeftWidth');
+  const _borderRight = Symbol('_borderRight');
+  const _borderRightColor = Symbol('_borderRightColor');
+  const _borderRightStyle = Symbol('_borderRightStyle');
+  const _borderRightWidth = Symbol('_borderRightWidth');
+  const _borderSpacing = Symbol('_borderSpacing');
+  const _borderStyle = Symbol('_borderStyle');
+  const _borderTop = Symbol('_borderTop');
+  const _borderTopColor = Symbol('_borderTopColor');
+  const _borderTopStyle = Symbol('_borderTopStyle');
+  const _borderTopWidth = Symbol('_borderTopWidth');
+  const _borderWidth = Symbol('_borderWidth');
+  const _bottom = Symbol('_bottom');
+  const _captionSide = Symbol('_captionSide');
+  const _clear = Symbol('_clear');
+  const _clip = Symbol('_clip');
+  const _color = Symbol('_color');
+  const _content = Symbol('_content');
+  const _cursor = Symbol('_cursor');
+  const _direction = Symbol('_direction');
+  const _display = Symbol('_display');
+  const _emptyCells = Symbol('_emptyCells');
+  const _font = Symbol('_font');
+  const _fontFamily = Symbol('_fontFamily');
+  const _fontSize = Symbol('_fontSize');
+  const _fontStyle = Symbol('_fontStyle');
+  const _fontVariant = Symbol('_fontVariant');
+  const _fontWeight = Symbol('_fontWeight');
+  const _height = Symbol('_height');
+  const _left = Symbol('_left');
+  const _letterSpacing = Symbol('_letterSpacing');
+  const _lineHeight = Symbol('_lineHeight');
+  const _listStyle = Symbol('_listStyle');
+  const _listStyleImage = Symbol('_listStyleImage');
+  const _listStylePosition = Symbol('_listStylePosition');
+  const _listStyleType = Symbol('_listStyleType');
+  const _margin = Symbol('_margin');
+  const _marginBottom = Symbol('_marginBottom');
+  const _marginLeft = Symbol('_marginLeft');
+  const _marginRight = Symbol('_marginRight');
+  const _marginTop = Symbol('_marginTop');
+  const _maxHeight = Symbol('_maxHeight');
+  const _maxWidth = Symbol('_maxWidth');
+  const _minHeight = Symbol('_minHeight');
+  const _minWidth = Symbol('_minWidth');
+  const _outline = Symbol('_outline');
+  const _outlineColor = Symbol('_outlineColor');
+  const _outlineStyle = Symbol('_outlineStyle');
+  const _outlineWidth = Symbol('_outlineWidth');
+  const _overflow = Symbol('_overflow');
+  const _padding = Symbol('_padding');
+  const _paddingBottom = Symbol('_paddingBottom');
+  const _paddingLeft = Symbol('_paddingLeft');
+  const _paddingRight = Symbol('_paddingRight');
+  const _paddingTop = Symbol('_paddingTop');
+  const _pageBreakAfter = Symbol('_pageBreakAfter');
+  const _pageBreakBefore = Symbol('_pageBreakBefore');
+  const _pageBreakInside = Symbol('_pageBreakInside');
+  const _position = Symbol('_position');
+  const _quotes = Symbol('_quotes');
+  const _right = Symbol('_right');
+  const _tableLayout = Symbol('_tableLayout');
+  const _textAlign = Symbol('_textAlign');
+  const _textDecoration = Symbol('_textDecoration');
+  const _textIndent = Symbol('_textIndent');
+  const _textTransform = Symbol('_textTransform');
+  const _top = Symbol('_top');
+  const _unicodeBidi = Symbol('_unicodeBidi');
+  const _verticalAlign = Symbol('_verticalAlign');
+  const _visibility = Symbol('_visibility');
+  const _whiteSpace = Symbol('_whiteSpace');
+  const _width = Symbol('_width');
+  const _wordSpacing = Symbol('_wordSpacing');
+  const _zIndex = Symbol('_zIndex');
   dart.defineExtensionNames([
     'alignContent',
     'alignContent',
@@ -8042,102 +8138,6 @@ dart_library.library('dart/html', null, /* Imports */[
       this[dartx.setProperty]('zoom', value, '');
     }
   }
-  const _getPropertyValueHelper = Symbol('_getPropertyValueHelper');
-  const _supportsProperty = Symbol('_supportsProperty');
-  const _getPropertyValue = Symbol('_getPropertyValue');
-  const _setPropertyHelper = Symbol('_setPropertyHelper');
-  const _browserPropertyName = Symbol('_browserPropertyName');
-  const __setter__ = Symbol('__setter__');
-  const _background = Symbol('_background');
-  const _backgroundAttachment = Symbol('_backgroundAttachment');
-  const _backgroundColor = Symbol('_backgroundColor');
-  const _backgroundImage = Symbol('_backgroundImage');
-  const _backgroundPosition = Symbol('_backgroundPosition');
-  const _backgroundRepeat = Symbol('_backgroundRepeat');
-  const _border = Symbol('_border');
-  const _borderBottom = Symbol('_borderBottom');
-  const _borderBottomColor = Symbol('_borderBottomColor');
-  const _borderBottomStyle = Symbol('_borderBottomStyle');
-  const _borderBottomWidth = Symbol('_borderBottomWidth');
-  const _borderCollapse = Symbol('_borderCollapse');
-  const _borderColor = Symbol('_borderColor');
-  const _borderLeft = Symbol('_borderLeft');
-  const _borderLeftColor = Symbol('_borderLeftColor');
-  const _borderLeftStyle = Symbol('_borderLeftStyle');
-  const _borderLeftWidth = Symbol('_borderLeftWidth');
-  const _borderRight = Symbol('_borderRight');
-  const _borderRightColor = Symbol('_borderRightColor');
-  const _borderRightStyle = Symbol('_borderRightStyle');
-  const _borderRightWidth = Symbol('_borderRightWidth');
-  const _borderSpacing = Symbol('_borderSpacing');
-  const _borderStyle = Symbol('_borderStyle');
-  const _borderTop = Symbol('_borderTop');
-  const _borderTopColor = Symbol('_borderTopColor');
-  const _borderTopStyle = Symbol('_borderTopStyle');
-  const _borderTopWidth = Symbol('_borderTopWidth');
-  const _borderWidth = Symbol('_borderWidth');
-  const _bottom = Symbol('_bottom');
-  const _captionSide = Symbol('_captionSide');
-  const _clear = Symbol('_clear');
-  const _clip = Symbol('_clip');
-  const _color = Symbol('_color');
-  const _content = Symbol('_content');
-  const _cursor = Symbol('_cursor');
-  const _direction = Symbol('_direction');
-  const _display = Symbol('_display');
-  const _emptyCells = Symbol('_emptyCells');
-  const _font = Symbol('_font');
-  const _fontFamily = Symbol('_fontFamily');
-  const _fontSize = Symbol('_fontSize');
-  const _fontStyle = Symbol('_fontStyle');
-  const _fontVariant = Symbol('_fontVariant');
-  const _fontWeight = Symbol('_fontWeight');
-  const _height = Symbol('_height');
-  const _left = Symbol('_left');
-  const _letterSpacing = Symbol('_letterSpacing');
-  const _lineHeight = Symbol('_lineHeight');
-  const _listStyle = Symbol('_listStyle');
-  const _listStyleImage = Symbol('_listStyleImage');
-  const _listStylePosition = Symbol('_listStylePosition');
-  const _listStyleType = Symbol('_listStyleType');
-  const _margin = Symbol('_margin');
-  const _marginBottom = Symbol('_marginBottom');
-  const _marginLeft = Symbol('_marginLeft');
-  const _marginRight = Symbol('_marginRight');
-  const _marginTop = Symbol('_marginTop');
-  const _maxHeight = Symbol('_maxHeight');
-  const _maxWidth = Symbol('_maxWidth');
-  const _minHeight = Symbol('_minHeight');
-  const _minWidth = Symbol('_minWidth');
-  const _outline = Symbol('_outline');
-  const _outlineColor = Symbol('_outlineColor');
-  const _outlineStyle = Symbol('_outlineStyle');
-  const _outlineWidth = Symbol('_outlineWidth');
-  const _overflow = Symbol('_overflow');
-  const _padding = Symbol('_padding');
-  const _paddingBottom = Symbol('_paddingBottom');
-  const _paddingLeft = Symbol('_paddingLeft');
-  const _paddingRight = Symbol('_paddingRight');
-  const _paddingTop = Symbol('_paddingTop');
-  const _pageBreakAfter = Symbol('_pageBreakAfter');
-  const _pageBreakBefore = Symbol('_pageBreakBefore');
-  const _pageBreakInside = Symbol('_pageBreakInside');
-  const _position = Symbol('_position');
-  const _quotes = Symbol('_quotes');
-  const _right = Symbol('_right');
-  const _tableLayout = Symbol('_tableLayout');
-  const _textAlign = Symbol('_textAlign');
-  const _textDecoration = Symbol('_textDecoration');
-  const _textIndent = Symbol('_textIndent');
-  const _textTransform = Symbol('_textTransform');
-  const _top = Symbol('_top');
-  const _unicodeBidi = Symbol('_unicodeBidi');
-  const _verticalAlign = Symbol('_verticalAlign');
-  const _visibility = Symbol('_visibility');
-  const _whiteSpace = Symbol('_whiteSpace');
-  const _width = Symbol('_width');
-  const _wordSpacing = Symbol('_wordSpacing');
-  const _zIndex = Symbol('_zIndex');
   dart.defineExtensionNames([
     'getPropertyValue',
     'supportsProperty',
@@ -9546,7 +9546,7 @@ dart_library.library('dart/html', null, /* Imports */[
     _CssStyleDeclarationSet(elementIterable) {
       this[_elementIterable] = elementIterable;
       this[_elementCssStyleDeclarationSetIterable] = null;
-      this[_elementCssStyleDeclarationSetIterable] = dart.as(core.List.from(this[_elementIterable])[dartx.map](dart.fn(e => dart.dload(e, 'style'))), core.Iterable$(CssStyleDeclaration));
+      this[_elementCssStyleDeclarationSetIterable] = core.List.from(this[_elementIterable])[dartx.map](dart.fn(e => dart.as(dart.dload(e, 'style'), CssStyleDeclaration), CssStyleDeclaration, [dart.dynamic]));
     }
     getPropertyValue(propertyName) {
       return this[_elementCssStyleDeclarationSetIterable][dartx.first][dartx.getPropertyValue](propertyName);
@@ -10366,6 +10366,8 @@ dart_library.library('dart/html', null, /* Imports */[
   DataTransferItemList[dart.metadata] = () => [dart.const(new _metadata.DocsEditable()), dart.const(new _metadata.DomName('DataTransferItemList')), dart.const(new _metadata.Experimental()), dart.const(new _js_helper.Native("DataTransferItemList"))];
   dart.registerExtension(dart.global.DataTransferItemList, DataTransferItemList);
   const DatabaseCallback = dart.typedef('DatabaseCallback', () => dart.functionType(dart.void, [web_sql.SqlDatabase]));
+  const _postMessage_1 = Symbol('_postMessage_1');
+  const _postMessage_2 = Symbol('_postMessage_2');
   const _webkitRequestFileSystem = Symbol('_webkitRequestFileSystem');
   const _webkitResolveLocalFileSystemUrl = Symbol('_webkitResolveLocalFileSystemUrl');
   const _clearInterval = Symbol('_clearInterval');
@@ -10502,8 +10504,6 @@ dart_library.library('dart/html', null, /* Imports */[
     }
   });
   dart.registerExtension(dart.global.WorkerGlobalScope, WorkerGlobalScope);
-  const _postMessage_1 = Symbol('_postMessage_1');
-  const _postMessage_2 = Symbol('_postMessage_2');
   dart.defineExtensionNames([
     'postMessage',
     'onMessage'
@@ -10828,6 +10828,19 @@ dart_library.library('dart/html', null, /* Imports */[
   });
   DialogElement[dart.metadata] = () => [dart.const(new _metadata.DocsEditable()), dart.const(new _metadata.DomName('HTMLDialogElement')), dart.const(new _metadata.Unstable()), dart.const(new _js_helper.Native("HTMLDialogElement"))];
   dart.registerExtension(dart.global.HTMLDialogElement, DialogElement);
+  const _getDirectory = Symbol('_getDirectory');
+  const _getFile = Symbol('_getFile');
+  const __getDirectory_1 = Symbol('__getDirectory_1');
+  const __getDirectory_2 = Symbol('__getDirectory_2');
+  const __getDirectory_3 = Symbol('__getDirectory_3');
+  const __getDirectory_4 = Symbol('__getDirectory_4');
+  const __getDirectory = Symbol('__getDirectory');
+  const __getFile_1 = Symbol('__getFile_1');
+  const __getFile_2 = Symbol('__getFile_2');
+  const __getFile_3 = Symbol('__getFile_3');
+  const __getFile_4 = Symbol('__getFile_4');
+  const __getFile = Symbol('__getFile');
+  const _removeRecursively = Symbol('_removeRecursively');
   const _copyTo = Symbol('_copyTo');
   const _getMetadata = Symbol('_getMetadata');
   const _getParent = Symbol('_getParent');
@@ -10949,19 +10962,6 @@ dart_library.library('dart/html', null, /* Imports */[
   });
   Entry[dart.metadata] = () => [dart.const(new _metadata.DocsEditable()), dart.const(new _metadata.DomName('Entry')), dart.const(new _metadata.Experimental()), dart.const(new _js_helper.Native("Entry"))];
   dart.registerExtension(dart.global.Entry, Entry);
-  const _getDirectory = Symbol('_getDirectory');
-  const _getFile = Symbol('_getFile');
-  const __getDirectory_1 = Symbol('__getDirectory_1');
-  const __getDirectory_2 = Symbol('__getDirectory_2');
-  const __getDirectory_3 = Symbol('__getDirectory_3');
-  const __getDirectory_4 = Symbol('__getDirectory_4');
-  const __getDirectory = Symbol('__getDirectory');
-  const __getFile_1 = Symbol('__getFile_1');
-  const __getFile_2 = Symbol('__getFile_2');
-  const __getFile_3 = Symbol('__getFile_3');
-  const __getFile_4 = Symbol('__getFile_4');
-  const __getFile = Symbol('__getFile');
-  const _removeRecursively = Symbol('_removeRecursively');
   dart.defineExtensionNames([
     'createDirectory',
     'getDirectory',
@@ -12680,20 +12680,20 @@ dart_library.library('dart/html', null, /* Imports */[
       return `Rectangle (${this[dartx.left]}, ${this[dartx.top]}) ${this[dartx.width]} x ${this[dartx.height]}`;
     }
     ['=='](other) {
-      if (!dart.is(other, math.Rectangle)) return false;
+      if (!dart.is(other, math.Rectangle$(core.num))) return false;
       return dart.equals(this[dartx.left], dart.dload(other, 'left')) && dart.equals(this[dartx.top], dart.dload(other, 'top')) && dart.equals(this[dartx.width], dart.dload(other, 'width')) && dart.equals(this[dartx.height], dart.dload(other, 'height'));
     }
     get hashCode() {
       return _JenkinsSmiHash.hash4(dart.hashCode(this[dartx.left]), dart.hashCode(this[dartx.top]), dart.hashCode(this[dartx.width]), dart.hashCode(this[dartx.height]));
     }
     [dartx.intersection](other) {
-      let x0 = math.max(this[dartx.left], dart.as(other[dartx.left], core.num));
-      let x1 = math.min(dart.notNull(this[dartx.left]) + dart.notNull(this[dartx.width]), dart.as(dart.dsend(other[dartx.left], '+', other[dartx.width]), core.num));
+      let x0 = math.max(this[dartx.left], other[dartx.left]);
+      let x1 = math.min(dart.notNull(this[dartx.left]) + dart.notNull(this[dartx.width]), dart.notNull(other[dartx.left]) + dart.notNull(other[dartx.width]));
       if (dart.notNull(x0) <= dart.notNull(x1)) {
-        let y0 = math.max(this[dartx.top], dart.as(other[dartx.top], core.num));
-        let y1 = math.min(dart.notNull(this[dartx.top]) + dart.notNull(this[dartx.height]), dart.as(dart.dsend(other[dartx.top], '+', other[dartx.height]), core.num));
+        let y0 = math.max(this[dartx.top], other[dartx.top]);
+        let y1 = math.min(dart.notNull(this[dartx.top]) + dart.notNull(this[dartx.height]), dart.notNull(other[dartx.top]) + dart.notNull(other[dartx.height]));
         if (dart.notNull(y0) <= dart.notNull(y1)) {
-          return new math.Rectangle(x0, y0, dart.notNull(x1) - dart.notNull(x0), dart.notNull(y1) - dart.notNull(y0));
+          return new (math.Rectangle$(core.num))(x0, y0, dart.notNull(x1) - dart.notNull(x0), dart.notNull(y1) - dart.notNull(y0));
         }
       }
       return null;
@@ -12702,11 +12702,11 @@ dart_library.library('dart/html', null, /* Imports */[
       return dart.notNull(this[dartx.left]) <= dart.notNull(other[dartx.left]) + dart.notNull(other[dartx.width]) && dart.notNull(other[dartx.left]) <= dart.notNull(this[dartx.left]) + dart.notNull(this[dartx.width]) && dart.notNull(this[dartx.top]) <= dart.notNull(other[dartx.top]) + dart.notNull(other[dartx.height]) && dart.notNull(other[dartx.top]) <= dart.notNull(this[dartx.top]) + dart.notNull(this[dartx.height]);
     }
     [dartx.boundingBox](other) {
-      let right = math.max(dart.notNull(this[dartx.left]) + dart.notNull(this[dartx.width]), dart.as(dart.dsend(other[dartx.left], '+', other[dartx.width]), core.num));
-      let bottom = math.max(dart.notNull(this[dartx.top]) + dart.notNull(this[dartx.height]), dart.as(dart.dsend(other[dartx.top], '+', other[dartx.height]), core.num));
-      let left = math.min(this[dartx.left], dart.as(other[dartx.left], core.num));
-      let top = math.min(this[dartx.top], dart.as(other[dartx.top], core.num));
-      return new math.Rectangle(left, top, dart.notNull(right) - dart.notNull(left), dart.notNull(bottom) - dart.notNull(top));
+      let right = math.max(dart.notNull(this[dartx.left]) + dart.notNull(this[dartx.width]), dart.notNull(other[dartx.left]) + dart.notNull(other[dartx.width]));
+      let bottom = math.max(dart.notNull(this[dartx.top]) + dart.notNull(this[dartx.height]), dart.notNull(other[dartx.top]) + dart.notNull(other[dartx.height]));
+      let left = math.min(this[dartx.left], other[dartx.left]);
+      let top = math.min(this[dartx.top], other[dartx.top]);
+      return new (math.Rectangle$(core.num))(left, top, dart.notNull(right) - dart.notNull(left), dart.notNull(bottom) - dart.notNull(top));
     }
     [dartx.containsRectangle](another) {
       return dart.notNull(this[dartx.left]) <= dart.notNull(another[dartx.left]) && dart.notNull(this[dartx.left]) + dart.notNull(this[dartx.width]) >= dart.notNull(another[dartx.left]) + dart.notNull(another[dartx.width]) && dart.notNull(this[dartx.top]) <= dart.notNull(another[dartx.top]) && dart.notNull(this[dartx.top]) + dart.notNull(this[dartx.height]) >= dart.notNull(another[dartx.top]) + dart.notNull(another[dartx.height]);
@@ -12715,16 +12715,16 @@ dart_library.library('dart/html', null, /* Imports */[
       return dart.notNull(another.x) >= dart.notNull(this[dartx.left]) && dart.notNull(another.x) <= dart.notNull(this[dartx.left]) + dart.notNull(this[dartx.width]) && dart.notNull(another.y) >= dart.notNull(this[dartx.top]) && dart.notNull(another.y) <= dart.notNull(this[dartx.top]) + dart.notNull(this[dartx.height]);
     }
     get [dartx.topLeft]() {
-      return new math.Point(this[dartx.left], this[dartx.top]);
+      return new (math.Point$(core.num))(this[dartx.left], this[dartx.top]);
     }
     get [dartx.topRight]() {
-      return new math.Point(dart.notNull(this[dartx.left]) + dart.notNull(this[dartx.width]), this[dartx.top]);
+      return new (math.Point$(core.num))(dart.notNull(this[dartx.left]) + dart.notNull(this[dartx.width]), this[dartx.top]);
     }
     get [dartx.bottomRight]() {
-      return new math.Point(dart.notNull(this[dartx.left]) + dart.notNull(this[dartx.width]), dart.notNull(this[dartx.top]) + dart.notNull(this[dartx.height]));
+      return new (math.Point$(core.num))(dart.notNull(this[dartx.left]) + dart.notNull(this[dartx.width]), dart.notNull(this[dartx.top]) + dart.notNull(this[dartx.height]));
     }
     get [dartx.bottomLeft]() {
-      return new math.Point(this[dartx.left], dart.notNull(this[dartx.top]) + dart.notNull(this[dartx.height]));
+      return new (math.Point$(core.num))(this[dartx.left], dart.notNull(this[dartx.top]) + dart.notNull(this[dartx.height]));
     }
     static _() {
       dart.throw(new core.UnsupportedError("Not supported"));
@@ -12760,16 +12760,16 @@ dart_library.library('dart/html', null, /* Imports */[
       return this.y;
     }
   }
-  DomRectReadOnly[dart.implements] = () => [math.Rectangle];
+  DomRectReadOnly[dart.implements] = () => [math.Rectangle$(core.num)];
   dart.setSignature(DomRectReadOnly, {
     constructors: () => ({
       _: [DomRectReadOnly, []],
       new: [DomRectReadOnly, [core.num, core.num, core.num, core.num]]
     }),
     methods: () => ({
-      [dartx.intersection]: [math.Rectangle, [math.Rectangle]],
+      [dartx.intersection]: [math.Rectangle$(core.num), [math.Rectangle$(core.num)]],
       [dartx.intersects]: [core.bool, [math.Rectangle$(core.num)]],
-      [dartx.boundingBox]: [math.Rectangle, [math.Rectangle]],
+      [dartx.boundingBox]: [math.Rectangle$(core.num), [math.Rectangle$(core.num)]],
       [dartx.containsRectangle]: [core.bool, [math.Rectangle$(core.num)]],
       [dartx.containsPoint]: [core.bool, [math.Point$(core.num)]]
     }),
@@ -13103,7 +13103,7 @@ dart_library.library('dart/html', null, /* Imports */[
       if (dart.notNull(retainMatching)) {
         removed = this[_element][dartx.children][dartx.where](dart.fn(e => !dart.notNull(dart.dcall(test, e)), core.bool, [Element]));
       } else {
-        removed = this[_element][dartx.children][dartx.where](dart.as(test, __CastType0));
+        removed = this[_element][dartx.children][dartx.where](dart.as(test, dart.functionType(core.bool, [Element])));
       }
       for (let e of dart.as(removed, core.Iterable))
         dart.dsend(e, 'remove');
@@ -13122,7 +13122,7 @@ dart_library.library('dart/html', null, /* Imports */[
     remove(object) {
       if (dart.is(object, Element)) {
         let element = object;
-        if (dart.notNull(core.identical(element[dartx.parentNode], this[_element]))) {
+        if (core.identical(element[dartx.parentNode], this[_element])) {
           this[_element][_removeChild](element);
           return true;
         }
@@ -13268,13 +13268,13 @@ dart_library.library('dart/html', null, /* Imports */[
       return dart.as(this[_nodeList][dartx.single], Element);
     }
     get classes() {
-      return exports._MultiElementCssClassSet.new(dart.as(this, core.Iterable$(Element)));
+      return exports._MultiElementCssClassSet.new(this);
     }
     get style() {
-      return new _CssStyleDeclarationSet(dart.as(this, core.Iterable$(Element)));
+      return new _CssStyleDeclarationSet(this);
     }
     set classes(value) {
-      this[_nodeList][dartx.forEach](dart.fn(e => dart.dput(e, dartx.classes, value), core.Iterable$(core.String), [Node]));
+      this[_nodeList][dartx.forEach](dart.fn(e => dart.dput(e, 'classes', value), core.Iterable$(core.String), [Node]));
     }
     get contentEdge() {
       return new _ContentCssListRect(this);
@@ -13499,7 +13499,7 @@ dart_library.library('dart/html', null, /* Imports */[
       return Element.fullscreenErrorEvent[_forElementList](this);
     }
   }
-  _FrozenElementList[dart.implements] = () => [ElementList, html_common.NodeListWrapper];
+  _FrozenElementList[dart.implements] = () => [ElementList$(Element), html_common.NodeListWrapper];
   dart.defineNamedConstructor(_FrozenElementList, '_wrap');
   dart.setSignature(_FrozenElementList, {
     constructors: () => ({_wrap: [_FrozenElementList, [core.List$(Node)]]}),
@@ -15969,6 +15969,7 @@ dart_library.library('dart/html', null, /* Imports */[
   });
   HtmlOptionsCollection[dart.metadata] = () => [dart.const(new _metadata.DocsEditable()), dart.const(new _metadata.DomName('HTMLOptionsCollection')), dart.const(new _js_helper.Native("HTMLOptionsCollection"))];
   dart.registerExtension(dart.global.HTMLOptionsCollection, HtmlOptionsCollection);
+  const _get_response = Symbol('_get_response');
   dart.defineExtensionNames([
     'onAbort',
     'onError',
@@ -16032,7 +16033,6 @@ dart_library.library('dart/html', null, /* Imports */[
     }
   });
   dart.registerExtension(dart.global.XMLHttpRequestEventTarget, HttpRequestEventTarget);
-  const _get_response = Symbol('_get_response');
   dart.defineExtensionNames([
     'responseHeaders',
     'open',
@@ -16147,9 +16147,7 @@ dart_library.library('dart/html', null, /* Imports */[
       let method = opts && 'method' in opts ? opts.method : null;
       let sendData = opts && 'sendData' in opts ? opts.sendData : null;
       if (dart.notNull(HttpRequest.supportsCrossOrigin)) {
-        return dart.as(HttpRequest.request(url, {method: method, sendData: sendData}).then(dart.fn(xhr => {
-          return xhr[dartx.responseText];
-        }, dart.dynamic, [HttpRequest])), async.Future$(core.String));
+        return HttpRequest.request(url, {method: method, sendData: sendData}).then(dart.fn(xhr => xhr[dartx.responseText], core.String, [HttpRequest]));
       }
       let completer = async.Completer$(core.String).new();
       if (method == null) {
@@ -16519,9 +16517,9 @@ dart_library.library('dart/html', null, /* Imports */[
       let width = opts && 'width' in opts ? opts.width : null;
       let height = opts && 'height' in opts ? opts.height : null;
       let e = exports.document[dartx.createElement]("img");
-      if (src != null) dart.dput(e, dartx.src, src);
-      if (width != null) dart.dput(e, dartx.width, width);
-      if (height != null) dart.dput(e, dartx.height, height);
+      if (src != null) dart.dput(e, 'src', src);
+      if (width != null) dart.dput(e, 'width', width);
+      if (height != null) dart.dput(e, 'height', height);
       return dart.as(e, ImageElement);
     }
     created() {
@@ -16708,7 +16706,7 @@ dart_library.library('dart/html', null, /* Imports */[
       let e = exports.document[dartx.createElement]("input");
       if (type != null) {
         try {
-          dart.dput(e, dartx.type, type);
+          dart.dput(e, 'type', type);
         } catch (_) {
         }
 
@@ -20153,27 +20151,27 @@ dart_library.library('dart/html', null, /* Imports */[
       return this.initMouseEvent(type, canBubble, cancelable, view, detail, screenX, screenY, clientX, clientY, ctrlKey, altKey, shiftKey, metaKey, button, relatedTarget);
     }
     get [dartx.client]() {
-      return new math.Point(this[_clientX], this[_clientY]);
+      return new (math.Point$(core.num))(this[_clientX], this[_clientY]);
     }
     get [dartx.movement]() {
-      return new math.Point(this[_webkitMovementX], this[_webkitMovementY]);
+      return new (math.Point$(core.num))(this[_webkitMovementX], this[_webkitMovementY]);
     }
     get [dartx.offset]() {
       if (!!this.offsetX) {
         let x = this.offsetX;
         let y = this.offsetY;
-        return new math.Point(x, y);
+        return new (math.Point$(core.num))(x, y);
       } else {
         if (!dart.is(this[dartx.target], Element)) {
           dart.throw(new core.UnsupportedError('offsetX is only supported on elements'));
         }
         let target = dart.as(this[dartx.target], Element);
         let point = this[dartx.client]['-'](target[dartx.getBoundingClientRect]()[dartx.topLeft]);
-        return new math.Point(dart.dsend(point.x, 'toInt'), dart.dsend(point.y, 'toInt'));
+        return new (math.Point$(core.num))(point.x[dartx.toInt](), point.y[dartx.toInt]());
       }
     }
     get [dartx.screen]() {
-      return new math.Point(this[_screenX], this[_screenY]);
+      return new (math.Point$(core.num))(this[_screenX], this[_screenY]);
     }
   }
   dart.setSignature(MouseEvent, {
@@ -20659,7 +20657,7 @@ dart_library.library('dart/html', null, /* Imports */[
     addAll(iterable) {
       if (dart.is(iterable, _ChildNodeListLazy)) {
         let otherList = iterable;
-        if (!dart.notNull(core.identical(otherList[_this], this[_this]))) {
+        if (!core.identical(otherList[_this], this[_this])) {
           for (let i = 0, len = otherList.length; i < dart.notNull(len); ++i) {
             this[_this][dartx.append](otherList[_this][dartx.firstChild]);
           }
@@ -20708,7 +20706,7 @@ dart_library.library('dart/html', null, /* Imports */[
     remove(object) {
       if (!dart.is(object, Node)) return false;
       let node = dart.as(object, Node);
-      if (!dart.notNull(core.identical(this[_this], node[dartx.parentNode]))) return false;
+      if (!core.identical(this[_this], node[dartx.parentNode])) return false;
       this[_this][_removeChild](node);
       return true;
     }
@@ -22505,7 +22503,7 @@ dart_library.library('dart/html', null, /* Imports */[
       return exports.document[dartx.createRange]();
     }
     static fromPoint(point) {
-      return exports.document[_caretRangeFromPoint](dart.as(point.x, core.int), dart.as(point.y, core.int));
+      return exports.document[_caretRangeFromPoint](dart.asInt(point.x), dart.asInt(point.y));
     }
     static _() {
       dart.throw(new core.UnsupportedError("Not supported"));
@@ -22604,7 +22602,7 @@ dart_library.library('dart/html', null, /* Imports */[
   dart.setSignature(Range, {
     constructors: () => ({
       new: [Range, []],
-      fromPoint: [Range, [math.Point]],
+      fromPoint: [Range, [math.Point$(core.num)]],
       _: [Range, []]
     }),
     methods: () => ({
@@ -22618,8 +22616,8 @@ dart_library.library('dart/html', null, /* Imports */[
       [dartx.detach]: [dart.void, []],
       [dartx.expand]: [dart.void, [core.String]],
       [dartx.extractContents]: [DocumentFragment, []],
-      [dartx.getBoundingClientRect]: [math.Rectangle, []],
-      [dartx.getClientRects]: [core.List$(math.Rectangle), []],
+      [dartx.getBoundingClientRect]: [math.Rectangle$(core.num), []],
+      [dartx.getClientRects]: [core.List$(math.Rectangle$(core.num)), []],
       [dartx.insertNode]: [dart.void, [Node]],
       [dartx.isPointInRange]: [core.bool, [Node, core.int]],
       [dartx.selectNode]: [dart.void, [Node]],
@@ -23028,7 +23026,7 @@ dart_library.library('dart/html', null, /* Imports */[
     }
     static get supported() {
       try {
-        RtcPeerConnection.new(dart.map({iceServers: [dart.map({url: "stun:localhost"})]}));
+        RtcPeerConnection.new(dart.map({iceServers: dart.list([dart.map({url: "stun:localhost"})], core.Map$(core.String, core.String))}));
         return true;
       } catch (_) {
         return false;
@@ -23428,7 +23426,7 @@ dart_library.library('dart/html', null, /* Imports */[
   ]);
   class Screen extends _interceptors.Interceptor {
     get [dartx.available]() {
-      return new math.Rectangle(this[_availLeft], this[_availTop], this[_availWidth], this[_availHeight]);
+      return new (math.Rectangle$(core.num))(this[_availLeft], this[_availTop], this[_availWidth], this[_availHeight]);
     }
     static _() {
       dart.throw(new core.UnsupportedError("Not supported"));
@@ -26833,13 +26831,13 @@ dart_library.library('dart/html', null, /* Imports */[
       return this.radiusY[dartx.round]();
     }
     get [dartx.client]() {
-      return new math.Point(this[__clientX], this[__clientY]);
+      return new (math.Point$(core.num))(this[__clientX], this[__clientY]);
     }
     get [dartx.page]() {
-      return new math.Point(this[__pageX], this[__pageY]);
+      return new (math.Point$(core.num))(this[__pageX], this[__pageY]);
     }
     get [dartx.screen]() {
-      return new math.Point(this[__screenX], this[__screenY]);
+      return new (math.Point$(core.num))(this[__screenX], this[__screenY]);
     }
     get [dartx.radiusX]() {
       return this[__radiusX];
@@ -29035,7 +29033,7 @@ dart_library.library('dart/html', null, /* Imports */[
       return Window.beforeUnloadEvent.forTarget(this);
     }
     [dartx.moveTo](p) {
-      this[_moveTo](dart.as(p.x, core.num), dart.as(p.y, core.num));
+      this[_moveTo](p.x, p.y);
     }
     get [dartx.pageXOffset]() {
       return this.pageXOffset[dartx.round]();
@@ -29110,7 +29108,7 @@ dart_library.library('dart/html', null, /* Imports */[
       [_clearTimeout]: [dart.void, [core.int]],
       [_setInterval]: [core.int, [core.Object, core.int]],
       [_setTimeout]: [core.int, [core.Object, core.int]],
-      [dartx.moveTo]: [dart.void, [math.Point]]
+      [dartx.moveTo]: [dart.void, [math.Point$(core.num)]]
     })
   });
   Window[dart.metadata] = () => [dart.const(new _metadata.DocsEditable()), dart.const(new _metadata.DomName('Window')), dart.const(new _js_helper.Native("Window,DOMWindow"))];
@@ -29173,6 +29171,7 @@ dart_library.library('dart/html', null, /* Imports */[
     }
   });
   dart.registerExtension(dart.global.Window, Window);
+  const _returnValue = Symbol('_returnValue');
   class _WrappedEvent extends core.Object {
     _WrappedEvent(wrapped) {
       this.wrapped = wrapped;
@@ -29271,7 +29270,6 @@ dart_library.library('dart/html', null, /* Imports */[
     _get_currentTarget,
     _get_target
   ]);
-  const _returnValue = Symbol('_returnValue');
   class _BeforeUnloadEvent extends _WrappedEvent {
     _BeforeUnloadEvent(base) {
       this[_returnValue] = null;
@@ -29317,7 +29315,7 @@ dart_library.library('dart/html', null, /* Imports */[
     }
     [_forElementList](e, opts) {
       let useCapture = opts && 'useCapture' in opts ? opts.useCapture : false;
-      return new (_ElementListEventStreamImpl$(BeforeUnloadEvent))(dart.as(e, core.Iterable$(Element)), this[_eventType], useCapture);
+      return new (_ElementListEventStreamImpl$(BeforeUnloadEvent))(e, this[_eventType], useCapture);
     }
   }
   _BeforeUnloadEventStreamProvider[dart.implements] = () => [EventStreamProvider$(BeforeUnloadEvent)];
@@ -29327,7 +29325,7 @@ dart_library.library('dart/html', null, /* Imports */[
       forTarget: [async.Stream$(BeforeUnloadEvent), [EventTarget], {useCapture: core.bool}],
       getEventType: [core.String, [EventTarget]],
       forElement: [ElementStream$(BeforeUnloadEvent), [Element], {useCapture: core.bool}],
-      [_forElementList]: [ElementStream$(BeforeUnloadEvent), [ElementList], {useCapture: core.bool}]
+      [_forElementList]: [ElementStream$(BeforeUnloadEvent), [ElementList$(Element)], {useCapture: core.bool}]
     })
   });
   class WindowBase64 extends _interceptors.Interceptor {
@@ -29850,20 +29848,20 @@ dart_library.library('dart/html', null, /* Imports */[
       return `Rectangle (${this[dartx.left]}, ${this[dartx.top]}) ${this[dartx.width]} x ${this[dartx.height]}`;
     }
     ['=='](other) {
-      if (!dart.is(other, math.Rectangle)) return false;
+      if (!dart.is(other, math.Rectangle$(core.num))) return false;
       return dart.equals(this[dartx.left], dart.dload(other, 'left')) && dart.equals(this[dartx.top], dart.dload(other, 'top')) && dart.equals(this[dartx.width], dart.dload(other, 'width')) && dart.equals(this[dartx.height], dart.dload(other, 'height'));
     }
     get hashCode() {
       return _JenkinsSmiHash.hash4(dart.hashCode(this[dartx.left]), dart.hashCode(this[dartx.top]), dart.hashCode(this[dartx.width]), dart.hashCode(this[dartx.height]));
     }
     [dartx.intersection](other) {
-      let x0 = math.max(this[dartx.left], dart.as(other[dartx.left], core.num));
-      let x1 = math.min(dart.notNull(this[dartx.left]) + dart.notNull(this[dartx.width]), dart.as(dart.dsend(other[dartx.left], '+', other[dartx.width]), core.num));
+      let x0 = math.max(this[dartx.left], other[dartx.left]);
+      let x1 = math.min(dart.notNull(this[dartx.left]) + dart.notNull(this[dartx.width]), dart.notNull(other[dartx.left]) + dart.notNull(other[dartx.width]));
       if (dart.notNull(x0) <= dart.notNull(x1)) {
-        let y0 = math.max(this[dartx.top], dart.as(other[dartx.top], core.num));
-        let y1 = math.min(dart.notNull(this[dartx.top]) + dart.notNull(this[dartx.height]), dart.as(dart.dsend(other[dartx.top], '+', other[dartx.height]), core.num));
+        let y0 = math.max(this[dartx.top], other[dartx.top]);
+        let y1 = math.min(dart.notNull(this[dartx.top]) + dart.notNull(this[dartx.height]), dart.notNull(other[dartx.top]) + dart.notNull(other[dartx.height]));
         if (dart.notNull(y0) <= dart.notNull(y1)) {
-          return new math.Rectangle(x0, y0, dart.notNull(x1) - dart.notNull(x0), dart.notNull(y1) - dart.notNull(y0));
+          return new (math.Rectangle$(core.num))(x0, y0, dart.notNull(x1) - dart.notNull(x0), dart.notNull(y1) - dart.notNull(y0));
         }
       }
       return null;
@@ -29872,11 +29870,11 @@ dart_library.library('dart/html', null, /* Imports */[
       return dart.notNull(this[dartx.left]) <= dart.notNull(other[dartx.left]) + dart.notNull(other[dartx.width]) && dart.notNull(other[dartx.left]) <= dart.notNull(this[dartx.left]) + dart.notNull(this[dartx.width]) && dart.notNull(this[dartx.top]) <= dart.notNull(other[dartx.top]) + dart.notNull(other[dartx.height]) && dart.notNull(other[dartx.top]) <= dart.notNull(this[dartx.top]) + dart.notNull(this[dartx.height]);
     }
     [dartx.boundingBox](other) {
-      let right = math.max(dart.notNull(this[dartx.left]) + dart.notNull(this[dartx.width]), dart.as(dart.dsend(other[dartx.left], '+', other[dartx.width]), core.num));
-      let bottom = math.max(dart.notNull(this[dartx.top]) + dart.notNull(this[dartx.height]), dart.as(dart.dsend(other[dartx.top], '+', other[dartx.height]), core.num));
-      let left = math.min(this[dartx.left], dart.as(other[dartx.left], core.num));
-      let top = math.min(this[dartx.top], dart.as(other[dartx.top], core.num));
-      return new math.Rectangle(left, top, dart.notNull(right) - dart.notNull(left), dart.notNull(bottom) - dart.notNull(top));
+      let right = math.max(dart.notNull(this[dartx.left]) + dart.notNull(this[dartx.width]), dart.notNull(other[dartx.left]) + dart.notNull(other[dartx.width]));
+      let bottom = math.max(dart.notNull(this[dartx.top]) + dart.notNull(this[dartx.height]), dart.notNull(other[dartx.top]) + dart.notNull(other[dartx.height]));
+      let left = math.min(this[dartx.left], other[dartx.left]);
+      let top = math.min(this[dartx.top], other[dartx.top]);
+      return new (math.Rectangle$(core.num))(left, top, dart.notNull(right) - dart.notNull(left), dart.notNull(bottom) - dart.notNull(top));
     }
     [dartx.containsRectangle](another) {
       return dart.notNull(this[dartx.left]) <= dart.notNull(another[dartx.left]) && dart.notNull(this[dartx.left]) + dart.notNull(this[dartx.width]) >= dart.notNull(another[dartx.left]) + dart.notNull(another[dartx.width]) && dart.notNull(this[dartx.top]) <= dart.notNull(another[dartx.top]) && dart.notNull(this[dartx.top]) + dart.notNull(this[dartx.height]) >= dart.notNull(another[dartx.top]) + dart.notNull(another[dartx.height]);
@@ -29885,16 +29883,16 @@ dart_library.library('dart/html', null, /* Imports */[
       return dart.notNull(another.x) >= dart.notNull(this[dartx.left]) && dart.notNull(another.x) <= dart.notNull(this[dartx.left]) + dart.notNull(this[dartx.width]) && dart.notNull(another.y) >= dart.notNull(this[dartx.top]) && dart.notNull(another.y) <= dart.notNull(this[dartx.top]) + dart.notNull(this[dartx.height]);
     }
     get [dartx.topLeft]() {
-      return new math.Point(this[dartx.left], this[dartx.top]);
+      return new (math.Point$(core.num))(this[dartx.left], this[dartx.top]);
     }
     get [dartx.topRight]() {
-      return new math.Point(dart.notNull(this[dartx.left]) + dart.notNull(this[dartx.width]), this[dartx.top]);
+      return new (math.Point$(core.num))(dart.notNull(this[dartx.left]) + dart.notNull(this[dartx.width]), this[dartx.top]);
     }
     get [dartx.bottomRight]() {
-      return new math.Point(dart.notNull(this[dartx.left]) + dart.notNull(this[dartx.width]), dart.notNull(this[dartx.top]) + dart.notNull(this[dartx.height]));
+      return new (math.Point$(core.num))(dart.notNull(this[dartx.left]) + dart.notNull(this[dartx.width]), dart.notNull(this[dartx.top]) + dart.notNull(this[dartx.height]));
     }
     get [dartx.bottomLeft]() {
-      return new math.Point(this[dartx.left], dart.notNull(this[dartx.top]) + dart.notNull(this[dartx.height]));
+      return new (math.Point$(core.num))(this[dartx.left], dart.notNull(this[dartx.top]) + dart.notNull(this[dartx.height]));
     }
     static _() {
       dart.throw(new core.UnsupportedError("Not supported"));
@@ -29918,13 +29916,13 @@ dart_library.library('dart/html', null, /* Imports */[
       return this.width;
     }
   }
-  _ClientRect[dart.implements] = () => [math.Rectangle];
+  _ClientRect[dart.implements] = () => [math.Rectangle$(core.num)];
   dart.setSignature(_ClientRect, {
     constructors: () => ({_: [_ClientRect, []]}),
     methods: () => ({
-      [dartx.intersection]: [math.Rectangle, [math.Rectangle]],
+      [dartx.intersection]: [math.Rectangle$(core.num), [math.Rectangle$(core.num)]],
       [dartx.intersects]: [core.bool, [math.Rectangle$(core.num)]],
-      [dartx.boundingBox]: [math.Rectangle, [math.Rectangle]],
+      [dartx.boundingBox]: [math.Rectangle$(core.num), [math.Rectangle$(core.num)]],
       [dartx.containsRectangle]: [core.bool, [math.Rectangle$(core.num)]],
       [dartx.containsPoint]: [core.bool, [math.Point$(core.num)]]
     })
@@ -29969,7 +29967,7 @@ dart_library.library('dart/html', null, /* Imports */[
     'elementAt',
     'item'
   ]);
-  class _ClientRectList extends dart.mixin(_interceptors.Interceptor, collection.ListMixin$(math.Rectangle), ImmutableListMixin$(math.Rectangle)) {
+  class _ClientRectList extends dart.mixin(_interceptors.Interceptor, collection.ListMixin$(math.Rectangle$(core.num)), ImmutableListMixin$(math.Rectangle$(core.num))) {
     static _() {
       dart.throw(new core.UnsupportedError("Not supported"));
     }
@@ -29978,7 +29976,7 @@ dart_library.library('dart/html', null, /* Imports */[
     }
     [dartx.get](index) {
       if (index >>> 0 !== index || index >= this[dartx.length]) dart.throw(core.RangeError.index(index, this));
-      return dart.as(this[index], math.Rectangle);
+      return dart.as(this[index], math.Rectangle$(core.num));
     }
     [dartx.set](index, value) {
       dart.throw(new core.UnsupportedError("Cannot assign element of immutable List."));
@@ -29989,21 +29987,21 @@ dart_library.library('dart/html', null, /* Imports */[
     }
     get [dartx.first]() {
       if (dart.notNull(this[dartx.length]) > 0) {
-        return dart.as(this[0], math.Rectangle);
+        return dart.as(this[0], math.Rectangle$(core.num));
       }
       dart.throw(new core.StateError("No elements"));
     }
     get [dartx.last]() {
       let len = this[dartx.length];
       if (dart.notNull(len) > 0) {
-        return dart.as(this[dart.notNull(len) - 1], math.Rectangle);
+        return dart.as(this[dart.notNull(len) - 1], math.Rectangle$(core.num));
       }
       dart.throw(new core.StateError("No elements"));
     }
     get [dartx.single]() {
       let len = this[dartx.length];
       if (len == 1) {
-        return dart.as(this[0], math.Rectangle);
+        return dart.as(this[0], math.Rectangle$(core.num));
       }
       if (len == 0) dart.throw(new core.StateError("No elements"));
       dart.throw(new core.StateError("More than one element"));
@@ -30015,14 +30013,14 @@ dart_library.library('dart/html', null, /* Imports */[
       return this.item(index);
     }
   }
-  _ClientRectList[dart.implements] = () => [core.List$(math.Rectangle), _js_helper.JavaScriptIndexingBehavior];
+  _ClientRectList[dart.implements] = () => [core.List$(math.Rectangle$(core.num)), _js_helper.JavaScriptIndexingBehavior];
   dart.setSignature(_ClientRectList, {
     constructors: () => ({_: [_ClientRectList, []]}),
     methods: () => ({
-      [dartx.get]: [math.Rectangle, [core.int]],
-      [dartx.set]: [dart.void, [core.int, math.Rectangle]],
-      [dartx.elementAt]: [math.Rectangle, [core.int]],
-      [dartx.item]: [math.Rectangle, [core.int]]
+      [dartx.get]: [math.Rectangle$(core.num), [core.int]],
+      [dartx.set]: [dart.void, [core.int, math.Rectangle$(core.num)]],
+      [dartx.elementAt]: [math.Rectangle$(core.num), [core.int]],
+      [dartx.item]: [math.Rectangle$(core.num), [core.int]]
     })
   });
   _ClientRectList[dart.metadata] = () => [dart.const(new _metadata.DocsEditable()), dart.const(new _metadata.DomName('ClientRectList')), dart.const(new _js_helper.Native("ClientRectList,DOMRectList"))];
@@ -31384,7 +31382,7 @@ dart_library.library('dart/html', null, /* Imports */[
         if (word[dartx.get](i) != lower && i > 0) sb.write('-');
         sb.write(lower);
       }
-      return dart.toString(sb);
+      return sb.toString();
     }
   }
   _DataAttributeMap[dart.implements] = () => [core.Map$(core.String, core.String)];
@@ -31468,10 +31466,10 @@ dart_library.library('dart/html', null, /* Imports */[
       super.CssRect(dart.as(element, Element));
     }
     get height() {
-      return dart.notNull(this[_element][dartx.offsetHeight]) + dart.notNull(this[_addOrSubtractToBoxModel](dart.as(exports._HEIGHT, core.List$(core.String)), exports._CONTENT));
+      return dart.notNull(this[_element][dartx.offsetHeight]) + dart.notNull(this[_addOrSubtractToBoxModel](exports._HEIGHT, exports._CONTENT));
     }
     get width() {
-      return dart.notNull(this[_element][dartx.offsetWidth]) + dart.notNull(this[_addOrSubtractToBoxModel](dart.as(exports._WIDTH, core.List$(core.String)), exports._CONTENT));
+      return dart.notNull(this[_element][dartx.offsetWidth]) + dart.notNull(this[_addOrSubtractToBoxModel](exports._WIDTH, exports._CONTENT));
     }
     set height(newHeight) {
       if (dart.is(newHeight, Dimension)) {
@@ -31492,10 +31490,10 @@ dart_library.library('dart/html', null, /* Imports */[
       }
     }
     get left() {
-      return dart.as(dart.dsend(this[_element][dartx.getBoundingClientRect]()[dartx.left], '-', this[_addOrSubtractToBoxModel](dart.list(['left'], core.String), exports._CONTENT)), core.num);
+      return dart.notNull(this[_element][dartx.getBoundingClientRect]()[dartx.left]) - dart.notNull(this[_addOrSubtractToBoxModel](dart.list(['left'], core.String), exports._CONTENT));
     }
     get top() {
-      return dart.as(dart.dsend(this[_element][dartx.getBoundingClientRect]()[dartx.top], '-', this[_addOrSubtractToBoxModel](dart.list(['top'], core.String), exports._CONTENT)), core.num);
+      return dart.notNull(this[_element][dartx.getBoundingClientRect]()[dartx.top]) - dart.notNull(this[_addOrSubtractToBoxModel](dart.list(['top'], core.String), exports._CONTENT));
     }
   }
   dart.setSignature(_ContentCssRect, {
@@ -31524,16 +31522,16 @@ dart_library.library('dart/html', null, /* Imports */[
       super.CssRect(dart.as(element, Element));
     }
     get height() {
-      return dart.notNull(this[_element][dartx.offsetHeight]) + dart.notNull(this[_addOrSubtractToBoxModel](dart.as(exports._HEIGHT, core.List$(core.String)), exports._PADDING));
+      return dart.notNull(this[_element][dartx.offsetHeight]) + dart.notNull(this[_addOrSubtractToBoxModel](exports._HEIGHT, exports._PADDING));
     }
     get width() {
-      return dart.notNull(this[_element][dartx.offsetWidth]) + dart.notNull(this[_addOrSubtractToBoxModel](dart.as(exports._WIDTH, core.List$(core.String)), exports._PADDING));
+      return dart.notNull(this[_element][dartx.offsetWidth]) + dart.notNull(this[_addOrSubtractToBoxModel](exports._WIDTH, exports._PADDING));
     }
     get left() {
-      return dart.as(dart.dsend(this[_element][dartx.getBoundingClientRect]()[dartx.left], '-', this[_addOrSubtractToBoxModel](dart.list(['left'], core.String), exports._PADDING)), core.num);
+      return dart.notNull(this[_element][dartx.getBoundingClientRect]()[dartx.left]) - dart.notNull(this[_addOrSubtractToBoxModel](dart.list(['left'], core.String), exports._PADDING));
     }
     get top() {
-      return dart.as(dart.dsend(this[_element][dartx.getBoundingClientRect]()[dartx.top], '-', this[_addOrSubtractToBoxModel](dart.list(['top'], core.String), exports._PADDING)), core.num);
+      return dart.notNull(this[_element][dartx.getBoundingClientRect]()[dartx.top]) - dart.notNull(this[_addOrSubtractToBoxModel](dart.list(['top'], core.String), exports._PADDING));
     }
   }
   dart.setSignature(_PaddingCssRect, {
@@ -31551,10 +31549,10 @@ dart_library.library('dart/html', null, /* Imports */[
       return this[_element][dartx.offsetWidth];
     }
     get left() {
-      return dart.as(this[_element][dartx.getBoundingClientRect]()[dartx.left], core.num);
+      return this[_element][dartx.getBoundingClientRect]()[dartx.left];
     }
     get top() {
-      return dart.as(this[_element][dartx.getBoundingClientRect]()[dartx.top], core.num);
+      return this[_element][dartx.getBoundingClientRect]()[dartx.top];
     }
   }
   dart.setSignature(_BorderCssRect, {
@@ -31566,16 +31564,16 @@ dart_library.library('dart/html', null, /* Imports */[
       super.CssRect(dart.as(element, Element));
     }
     get height() {
-      return dart.notNull(this[_element][dartx.offsetHeight]) + dart.notNull(this[_addOrSubtractToBoxModel](dart.as(exports._HEIGHT, core.List$(core.String)), exports._MARGIN));
+      return dart.notNull(this[_element][dartx.offsetHeight]) + dart.notNull(this[_addOrSubtractToBoxModel](exports._HEIGHT, exports._MARGIN));
     }
     get width() {
-      return dart.notNull(this[_element][dartx.offsetWidth]) + dart.notNull(this[_addOrSubtractToBoxModel](dart.as(exports._WIDTH, core.List$(core.String)), exports._MARGIN));
+      return dart.notNull(this[_element][dartx.offsetWidth]) + dart.notNull(this[_addOrSubtractToBoxModel](exports._WIDTH, exports._MARGIN));
     }
     get left() {
-      return dart.as(dart.dsend(this[_element][dartx.getBoundingClientRect]()[dartx.left], '-', this[_addOrSubtractToBoxModel](dart.list(['left'], core.String), exports._MARGIN)), core.num);
+      return dart.notNull(this[_element][dartx.getBoundingClientRect]()[dartx.left]) - dart.notNull(this[_addOrSubtractToBoxModel](dart.list(['left'], core.String), exports._MARGIN));
     }
     get top() {
-      return dart.as(dart.dsend(this[_element][dartx.getBoundingClientRect]()[dartx.top], '-', this[_addOrSubtractToBoxModel](dart.list(['top'], core.String), exports._MARGIN)), core.num);
+      return dart.notNull(this[_element][dartx.getBoundingClientRect]()[dartx.top]) - dart.notNull(this[_addOrSubtractToBoxModel](dart.list(['top'], core.String), exports._MARGIN));
     }
   }
   dart.setSignature(_MarginCssRect, {
@@ -31584,12 +31582,12 @@ dart_library.library('dart/html', null, /* Imports */[
   dart.defineExtensionMembers(_MarginCssRect, ['height', 'width', 'left', 'top']);
   dart.defineLazyProperties(exports, {
     get _HEIGHT() {
-      return ['top', 'bottom'];
+      return dart.list(['top', 'bottom'], core.String);
     }
   });
   dart.defineLazyProperties(exports, {
     get _WIDTH() {
-      return ['right', 'left'];
+      return dart.list(['right', 'left'], core.String);
     }
   });
   exports._CONTENT = 'content';
@@ -31917,7 +31915,7 @@ dart_library.library('dart/html', null, /* Imports */[
       }
       [_forElementList](e, opts) {
         let useCapture = opts && 'useCapture' in opts ? opts.useCapture : false;
-        return new (_ElementListEventStreamImpl$(T))(dart.as(e, core.Iterable$(Element)), this[_eventType], useCapture);
+        return new (_ElementListEventStreamImpl$(T))(e, this[_eventType], useCapture);
       }
       getEventType(target) {
         return this[_eventType];
@@ -31928,7 +31926,7 @@ dart_library.library('dart/html', null, /* Imports */[
       methods: () => ({
         forTarget: [async.Stream$(T), [EventTarget], {useCapture: core.bool}],
         forElement: [ElementStream$(T), [Element], {useCapture: core.bool}],
-        [_forElementList]: [ElementStream$(T), [ElementList], {useCapture: core.bool}],
+        [_forElementList]: [ElementStream$(T), [ElementList$(Element)], {useCapture: core.bool}],
         getEventType: [core.String, [EventTarget]]
       })
     });
@@ -31986,11 +31984,14 @@ dart_library.library('dart/html', null, /* Imports */[
         super._EventStream(dart.as(target, EventTarget), dart.as(eventType, core.String), dart.as(useCapture, core.bool));
       }
       matches(selector) {
-        return dart.as(this.where(dart.fn(event => dart.as(dart.dcall(event[dartx.target][dartx.matchesWithAncestors], selector), core.bool), core.bool, [T])).map(dart.fn(e => {
+        return this.where(dart.fn(event => {
+          dart.as(event, T);
+          return dart.as(dart.dcall(event[dartx.target][dartx.matchesWithAncestors], selector), core.bool);
+        }, core.bool, [T])).map(dart.fn(e => {
           dart.as(e, T);
           e[_selector] = selector;
           return e;
-        }, dart.dynamic, [T])), async.Stream$(T));
+        }, T, [T]));
       }
       capture(onData) {
         dart.as(onData, dart.functionType(dart.void, [T]));
@@ -32018,11 +32019,14 @@ dart_library.library('dart/html', null, /* Imports */[
         super.Stream();
       }
       matches(selector) {
-        return dart.as(this.where(dart.fn(event => dart.as(dart.dcall(event[dartx.target][dartx.matchesWithAncestors], selector), core.bool), core.bool, [T])).map(dart.fn(e => {
+        return this.where(dart.fn(event => {
+          dart.as(event, T);
+          return dart.as(dart.dcall(event[dartx.target][dartx.matchesWithAncestors], selector), core.bool);
+        }, core.bool, [T])).map(dart.fn(e => {
           dart.as(e, T);
           e[_selector] = selector;
           return e;
-        }, dart.dynamic, [T])), async.Stream$(T));
+        }, T, [T]));
       }
       listen(onData, opts) {
         dart.as(onData, dart.functionType(dart.void, [T]));
@@ -32032,7 +32036,7 @@ dart_library.library('dart/html', null, /* Imports */[
         let cancelOnError = opts && 'cancelOnError' in opts ? opts.cancelOnError : null;
         let pool = new _StreamPool.broadcast();
         for (let target of this[_targetList]) {
-          pool.add(new _EventStream(target, this[_eventType], this[_useCapture]));
+          pool.add(new (_EventStream$(Event))(target, this[_eventType], this[_useCapture]));
         }
         return dart.as(pool.stream.listen(onData, {onError: onError, onDone: onDone, cancelOnError: cancelOnError}), async.StreamSubscription$(T));
       }
@@ -32040,7 +32044,7 @@ dart_library.library('dart/html', null, /* Imports */[
         dart.as(onData, dart.functionType(dart.void, [T]));
         let pool = new _StreamPool.broadcast();
         for (let target of this[_targetList]) {
-          pool.add(new _EventStream(target, this[_eventType], true));
+          pool.add(new (_EventStream$(Event))(target, this[_eventType], true));
         }
         return dart.as(pool.stream.listen(onData), async.StreamSubscription$(T));
       }
@@ -32079,7 +32083,7 @@ dart_library.library('dart/html', null, /* Imports */[
         this[_target] = target;
         this[_eventType] = eventType;
         this[_useCapture] = useCapture;
-        this[_onData] = _wrapZone(dart.as(onData, __CastType2));
+        this[_onData] = _wrapZone(dart.as(onData, dart.functionType(dart.dynamic, [dart.dynamic])));
         this[_pauseCount] = 0;
         this[_tryResume]();
       }
@@ -32208,10 +32212,10 @@ dart_library.library('dart/html', null, /* Imports */[
     return _CustomEventStreamImpl;
   });
   let _CustomEventStreamImpl = _CustomEventStreamImpl$();
+  const _parent = Symbol('_parent');
   const _shadowKeyCode = Symbol('_shadowKeyCode');
   const _shadowCharCode = Symbol('_shadowCharCode');
   const _shadowAltKey = Symbol('_shadowAltKey');
-  const _parent = Symbol('_parent');
   const _realKeyCode = Symbol('_realKeyCode');
   const _realCharCode = Symbol('_realCharCode');
   const _realAltKey = Symbol('_realAltKey');
@@ -32324,7 +32328,7 @@ dart_library.library('dart/html', null, /* Imports */[
         for (let i = 0; i < 4 - dart.notNull(hex[dartx.length]); i++)
           sb.write('0');
         sb.write(hex);
-        return dart.toString(sb);
+        return sb.toString();
       } else {
         return KeyCode._convertKeyCodeToKeyName(keyCode);
       }
@@ -32530,15 +32534,15 @@ dart_library.library('dart/html', null, /* Imports */[
       }
       forTarget(e, opts) {
         let useCapture = opts && 'useCapture' in opts ? opts.useCapture : false;
-        return new (_EventStream$(T))(e, dart.as(dart.dcall(this[_eventTypeGetter], e), core.String), useCapture);
+        return new (_EventStream$(Event))(e, dart.as(dart.dcall(this[_eventTypeGetter], e), core.String), useCapture);
       }
       forElement(e, opts) {
         let useCapture = opts && 'useCapture' in opts ? opts.useCapture : false;
-        return new (_ElementEventStreamImpl$(T))(e, dart.dcall(this[_eventTypeGetter], e), useCapture);
+        return new (_ElementEventStreamImpl$(Event))(e, dart.dcall(this[_eventTypeGetter], e), useCapture);
       }
       [_forElementList](e, opts) {
         let useCapture = opts && 'useCapture' in opts ? opts.useCapture : false;
-        return new (_ElementListEventStreamImpl$(T))(dart.as(e, core.Iterable$(Element)), dart.as(dart.dcall(this[_eventTypeGetter], e), core.String), useCapture);
+        return new (_ElementListEventStreamImpl$(Event))(e, dart.as(dart.dcall(this[_eventTypeGetter], e), core.String), useCapture);
       }
       getEventType(target) {
         return dart.as(dart.dcall(this[_eventTypeGetter], target), core.String);
@@ -32553,7 +32557,7 @@ dart_library.library('dart/html', null, /* Imports */[
       methods: () => ({
         forTarget: [async.Stream$(T), [EventTarget], {useCapture: core.bool}],
         forElement: [ElementStream$(T), [Element], {useCapture: core.bool}],
-        [_forElementList]: [ElementStream$(T), [ElementList], {useCapture: core.bool}],
+        [_forElementList]: [ElementStream$(T), [ElementList$(Element)], {useCapture: core.bool}],
         getEventType: [core.String, [EventTarget]]
       })
     });
@@ -34052,7 +34056,7 @@ dart_library.library('dart/html', null, /* Imports */[
       this[_window] = window;
     }
     static _createSafe(w) {
-      if (dart.notNull(core.identical(w, exports.window))) {
+      if (core.identical(w, exports.window)) {
         return dart.as(w, WindowBase);
       } else {
         return new _DOMWindowCrossFrame(w);
@@ -34127,7 +34131,7 @@ dart_library.library('dart/html', null, /* Imports */[
       this[_location] = location;
     }
     static _createSafe(location) {
-      if (dart.notNull(core.identical(location, exports.window[dartx.location]))) {
+      if (core.identical(location, exports.window[dartx.location])) {
         return dart.as(location, LocationBase);
       } else {
         return new _LocationCrossFrame(location);
@@ -34159,7 +34163,7 @@ dart_library.library('dart/html', null, /* Imports */[
       this[_history] = history;
     }
     static _createSafe(h) {
-      if (dart.notNull(core.identical(h, exports.window[dartx.history]))) {
+      if (core.identical(h, exports.window[dartx.history])) {
         return dart.as(h, HistoryBase);
       } else {
         return new _HistoryCrossFrame(h);
@@ -34422,8 +34426,6 @@ dart_library.library('dart/html', null, /* Imports */[
       sanitizeNode: [dart.void, [Node, Node]]
     })
   });
-  const __CastType0 = dart.typedef('__CastType0', () => dart.functionType(core.bool, [Element]));
-  const __CastType2 = dart.typedef('__CastType2', () => dart.functionType(dart.dynamic, [dart.dynamic]));
   // Exports:
   exports.EventTarget = EventTarget;
   exports.Node = Node;

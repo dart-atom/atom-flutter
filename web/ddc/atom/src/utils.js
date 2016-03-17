@@ -1,9 +1,9 @@
 dart_library.library('atom/src/utils', null, /* Imports */[
   'dart/_runtime',
-  'dart/core',
-  'dart/async'
+  'dart/async',
+  'dart/core'
 ], /* Lazy imports */[
-], function(exports, dart, core, async) {
+], function(exports, dart, async, core) {
   'use strict';
   let dartx = dart.dartx;
   const _operations = Symbol('_operations');

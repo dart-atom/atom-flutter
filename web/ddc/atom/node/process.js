@@ -1,13 +1,13 @@
 dart_library.library('atom/node/process', null, /* Imports */[
   'dart/_runtime',
   'logging/logging',
-  'atom/src/js',
   'atom/node/node',
   'dart/core',
+  'atom/src/js',
   'dart/async',
   'atom/atom'
 ], /* Lazy imports */[
-], function(exports, dart, logging, js, node, core, async, atom) {
+], function(exports, dart, logging, node, core, js, async, atom) {
   'use strict';
   let dartx = dart.dartx;
   dart.defineLazyProperties(exports, {
@@ -59,15 +59,28 @@ dart_library.library('atom/node/process', null, /* Imports */[
     constructors: () => ({_: [Process, []]}),
     methods: () => ({env: [core.String, [core.String]]})
   });
-  function exec(cmd, args) {
+  function exec(command, args, env) {
     if (args === void 0) args = null;
-    let runner = new ProcessRunner(cmd, {args: args});
-    return dart.as(runner.execSimple().then(dart.fn(result => {
+    if (env === void 0) env = null;
+    let runner = new ProcessRunner(command, {args: args, env: env});
+    return runner.execSimple().then(dart.fn(result => {
       if (result.exit == 0) return result.stdout;
       dart.throw(result.exit);
-    }, dart.dynamic, [ProcessResult])), async.Future$(core.String));
+    }, core.String, [ProcessResult]));
   }
-  dart.fn(exec, async.Future$(core.String), [core.String], [core.List$(core.String)]);
+  dart.fn(exec, async.Future$(core.String), [core.String], [core.List$(core.String), core.Map$(core.String, core.String)]);
+  function execSync(command) {
+    try {
+      let result = dart.as(node.require('child_process').callMethod('execSync', dart.list([command], core.String)), core.String);
+      if (result == null) return null;
+      result = `${result}`[dartx.trim]();
+      return dart.notNull(result[dartx.isEmpty]) ? null : result;
+    } catch (error) {
+      dart.throw(`${error}`);
+    }
+
+  }
+  dart.fn(execSync, core.String, [core.String]);
   const _exitCompleter = Symbol('_exitCompleter');
   const _stdoutController = Symbol('_stdoutController');
   const _stderrController = Symbol('_stderrController');
@@ -92,21 +105,11 @@ dart_library.library('atom/node/process', null, /* Imports */[
       let args = opts && 'args' in opts ? opts.args : null;
       let cwd = opts && 'cwd' in opts ? opts.cwd : null;
       let env = opts && 'env' in opts ? opts.env : null;
-      if (dart.notNull(exports.isMac)) {
-        let shellEscape = core.RegExp.new('(["\'| \\$!\\(\\)\\[\\]])');
-        let shell = exports.process.env('SHELL');
-        if (shell == null) {
-          exports._logger.warning("Couldn't identify the user's shell");
-          shell = '/bin/bash';
-        }
-        if (args != null) {
-          let escaped = args[dartx.map](dart.fn(arg => {
-            return `'${arg[dartx.replaceAllMapped](shellEscape, dart.fn(m => '\\' + dart.notNull(m.group(0)), core.String, [core.Match]))}'`;
-          }, dart.dynamic, [core.String]));
-          command = dart.notNull(command) + (' ' + dart.notNull(escaped[dartx.join](' ')));
-        }
-        args = dart.list(['-l', '-c', command], core.String);
-        return new ProcessRunner(shell, {args: args, cwd: cwd, env: env});
+      if (dart.notNull(exports.isMac) && ProcessRunner._shellWrangler == null) {
+        ProcessRunner._shellWrangler = new MacShellWrangler();
+      }
+      if (dart.notNull(exports.isMac) && dart.notNull(ProcessRunner._shellWrangler.isNecessary)) {
+        return new ProcessRunner(command, {args: args, cwd: cwd, env: ProcessRunner._shellWrangler.env});
       }
       return new ProcessRunner(command, {args: args, cwd: cwd, env: env});
     }
@@ -134,14 +137,14 @@ dart_library.library('atom/node/process', null, /* Imports */[
       let stderr = new core.StringBuffer();
       this.onStdout.listen(dart.fn(str => stdout.write(str), dart.void, [core.String]));
       this.onStderr.listen(dart.fn(str => stderr.write(str), dart.void, [core.String]));
-      return dart.as(this.execStreaming().then(dart.fn(code => {
-        return new ProcessResult(code, dart.toString(stdout), dart.toString(stderr));
-      }, dart.dynamic, [core.int])), async.Future$(ProcessResult));
+      return this.execStreaming().then(dart.fn(code => new ProcessResult(code, stdout.toString(), stderr.toString()), ProcessResult, [core.int]));
     }
     execStreaming() {
       if (this[_process] != null) dart.throw(new core.StateError('exec can only be called once'));
+      exports._logger.fine(`exec: ${this.command} ${this.args == null ? "" : this.args[dartx.join](" ")}` + `${this.cwd == null ? "" : ` (cwd=${this.cwd})`}`);
       try {
         this[_process] = atom.BufferedProcess.create(this.command, {args: this.args, cwd: this.cwd, env: this.env, stdout: dart.fn(s => this[_stdoutController].add(s), dart.void, [core.String]), stderr: dart.fn(s => this[_stderrController].add(s), dart.void, [core.String]), exit: dart.fn(code => {
+            exports._logger.fine(`exit code: ${code} (${this.command})`);
             this[_exit] = dart.asInt(code);
             if (!dart.notNull(this[_exitCompleter].isCompleted)) this[_exitCompleter].complete(code);
           }, dart.void, [core.num]), onWillThrowError: dart.fn(e => {
@@ -184,6 +187,7 @@ dart_library.library('atom/node/process', null, /* Imports */[
       getDescription: [core.String, []]
     })
   });
+  ProcessRunner._shellWrangler = null;
   class ProcessResult extends core.Object {
     ProcessResult(exit, stdout, stderr) {
       this.exit = exit;
@@ -197,10 +201,68 @@ dart_library.library('atom/node/process', null, /* Imports */[
   dart.setSignature(ProcessResult, {
     constructors: () => ({ProcessResult: [ProcessResult, [core.int, core.String, core.String]]})
   });
+  function queryEnv(variable) {
+    try {
+      return execSync(`echo \$${variable}`);
+    } catch (e) {
+      return null;
+    }
+
+  }
+  dart.fn(queryEnv, core.String, [core.String]);
+  const _currentShell = Symbol('_currentShell');
+  const _targetShell = Symbol('_targetShell');
+  const _env = Symbol('_env');
+  class MacShellWrangler extends core.Object {
+    MacShellWrangler() {
+      this[_currentShell] = null;
+      this[_targetShell] = null;
+      this[_env] = null;
+      this[_currentShell] = queryEnv('0');
+      this[_targetShell] = queryEnv('SHELL');
+      if (dart.notNull(this.isNecessary)) {
+        let result = null;
+        if (dart.notNull(this[_targetShell][dartx.endsWith]('/csh')) || dart.notNull(this[_targetShell][dartx.endsWith]('/tcsh'))) {
+          result = execSync(`${this[_targetShell]} -c 'printenv'`);
+        } else {
+          result = execSync(`${this[_targetShell]} -l -c 'printenv'`);
+        }
+        this[_env] = dart.map();
+        for (let line of result[dartx.split]('\n')) {
+          let index = line[dartx.indexOf]('=');
+          if (index != -1) {
+            this[_env][dartx.set](line[dartx.substring](0, index), line[dartx.substring](dart.notNull(index) + 1));
+          }
+        }
+      }
+    }
+    get isNecessary() {
+      return this[_currentShell] == '/bin/sh';
+    }
+    get targetShell() {
+      return this[_targetShell];
+    }
+    getEnv(variable) {
+      return this[_env] == null ? null : this[_env][dartx.get](variable);
+    }
+    get env() {
+      return this[_env];
+    }
+    toString() {
+      return `${this[_currentShell]} ${this[_targetShell]} ${this[_env]}`;
+    }
+  }
+  dart.setSignature(MacShellWrangler, {
+    constructors: () => ({MacShellWrangler: [MacShellWrangler, []]}),
+    methods: () => ({getEnv: [core.String, [core.String]]})
+  });
   // Exports:
   exports.Process = Process;
   exports.exec = exec;
+  exports.execSync = execSync;
   exports.ProcessRunner = ProcessRunner;
   exports.ProcessResult = ProcessResult;
+  exports.queryEnv = queryEnv;
+  exports.MacShellWrangler = MacShellWrangler;
 });
 //# sourceMappingURL=process.js.map

@@ -7,7 +7,7 @@ dart_library.library('atom/node/node', null, /* Imports */[
   'use strict';
   let dartx = dart.dartx;
   function require(input) {
-    return dart.as(js.context.callMethod('require', [input]), js.JsObject);
+    return dart.as(js.context.callMethod('require', dart.list([input], core.String)), js.JsObject);
   }
   dart.fn(require, js.JsObject, [core.String]);
   // Exports:

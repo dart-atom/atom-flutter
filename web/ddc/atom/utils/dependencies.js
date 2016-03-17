@@ -1,9 +1,9 @@
 dart_library.library('atom/utils/dependencies', null, /* Imports */[
   'dart/_runtime',
-  'dart/core',
-  'dart/async'
+  'dart/async',
+  'dart/core'
 ], /* Lazy imports */[
-], function(exports, dart, core, async) {
+], function(exports, dart, async, core) {
   'use strict';
   let dartx = dart.dartx;
   dart.copyProperties(exports, {
@@ -51,7 +51,7 @@ dart_library.library('atom/utils/dependencies', null, /* Imports */[
     }
     runInZone(func) {
       let zone = async.Zone.current.fork({zoneValues: dart.map({dependencies: this})});
-      zone.run(dart.as(func, __CastType0));
+      zone.run(dart.as(func, dart.functionType(dart.dynamic, [])));
     }
     [_calcParent](zone) {
       if (dart.equals(this, Dependencies._global)) return null;
@@ -79,7 +79,6 @@ dart_library.library('atom/utils/dependencies', null, /* Imports */[
     names: ['setGlobalInstance']
   });
   Dependencies._global = null;
-  const __CastType0 = dart.typedef('__CastType0', () => dart.functionType(dart.dynamic, []));
   // Exports:
   exports.Dependencies = Dependencies;
 });

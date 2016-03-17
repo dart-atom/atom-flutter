@@ -3,13 +3,24 @@ dart_library.library('atom/src/js', null, /* Imports */[
   'dart/js',
   'logging/logging',
   'dart/core',
-  'dart/async',
-  'atom/utils/disposable'
+  'dart/convert',
+  'dart/async'
 ], /* Lazy imports */[
-], function(exports, dart, js, logging, core, async, disposable) {
+  'atom/utils/disposable'
+], function(exports, dart, js, logging, core, convert, async, disposable) {
   'use strict';
   let dartx = dart.dartx;
   dart.export(exports, js, ['context', 'JsObject', 'JsFunction'], []);
+  dart.defineLazyProperties(exports, {
+    get _browserWindow() {
+      return js.JsObject.fromBrowserObject(js.context.get('window'));
+    }
+  });
+  dart.defineLazyProperties(exports, {
+    get _browserJson() {
+      return dart.as(exports._browserWindow.get('JSON'), js.JsObject);
+    }
+  });
   dart.defineLazyProperties(exports, {
     get _logger() {
       return logging.Logger.new("js");
@@ -24,6 +35,34 @@ dart_library.library('atom/src/js', null, /* Imports */[
     return obj;
   }
   dart.fn(jsify);
+  function uncrackDart2js(obj) {
+    return dart.as(js.context.callMethod('uncrackDart2js', [obj]), js.JsObject);
+  }
+  dart.fn(uncrackDart2js, js.JsObject, [dart.dynamic]);
+  function jsObjectToDart(obj) {
+    if (obj == null) return null;
+    try {
+      let str = dart.as(exports._browserJson.callMethod('stringify', dart.list([obj], js.JsObject)), core.String);
+      return convert.JSON.decode(str);
+    } catch (e) {
+      let st = dart.stackTrace(e);
+      exports._logger.severe('jsObjectToDart', e, st);
+    }
+
+  }
+  dart.fn(jsObjectToDart, dart.dynamic, [js.JsObject]);
+  function dartObjectToJS(obj) {
+    if (obj == null) return null;
+    try {
+      let str = convert.JSON.encode(obj);
+      return exports._browserJson.callMethod('parse', dart.list([str], core.String));
+    } catch (e) {
+      let st = dart.stackTrace(e);
+      exports._logger.severe('dartObjectToJS', e, st);
+    }
+
+  }
+  dart.fn(dartObjectToJS);
   function promiseToFuture(promise) {
     if (dart.is(promise, js.JsObject)) promise = new Promise(dart.as(promise, js.JsObject));
     let completer = async.Completer.new();
@@ -105,13 +144,13 @@ dart_library.library('atom/src/js', null, /* Imports */[
             dart.dsend(reject, 'apply', [e]);
           }));
         });
-        return js.JsObject.new(dart.as(js.context.get('Promise'), js.JsFunction), [callback]);
+        return js.JsObject.new(dart.as(js.context.get('Promise'), js.JsFunction), dart.list([callback], dart.functionType(dart.dynamic, [dart.dynamic, dart.dynamic])));
       }
       Promise(object) {
         super.ProxyHolder(object);
       }
       fromFuture(future) {
-        super.ProxyHolder(dart.as(Promise$()._jsObjectFromFuture(future), js.JsObject));
+        super.ProxyHolder(Promise$()._jsObjectFromFuture(future));
       }
       then(thenCallback, errorCallback) {
         dart.as(thenCallback, dart.functionType(dart.void, [T]));
@@ -134,7 +173,7 @@ dart_library.library('atom/src/js', null, /* Imports */[
         then: [dart.void, [dart.functionType(dart.void, [T])], [dart.functionType(dart.void, [dart.dynamic])]],
         error: [dart.void, [dart.functionType(dart.void, [dart.dynamic])]]
       }),
-      statics: () => ({_jsObjectFromFuture: [dart.dynamic, [async.Future]]}),
+      statics: () => ({_jsObjectFromFuture: [js.JsObject, [async.Future]]}),
       names: ['_jsObjectFromFuture']
     });
     return Promise;
@@ -142,6 +181,9 @@ dart_library.library('atom/src/js', null, /* Imports */[
   let Promise = Promise$();
   // Exports:
   exports.jsify = jsify;
+  exports.uncrackDart2js = uncrackDart2js;
+  exports.jsObjectToDart = jsObjectToDart;
+  exports.dartObjectToJS = dartObjectToJS;
   exports.promiseToFuture = promiseToFuture;
   exports.ProxyHolder = ProxyHolder;
   exports.JsDisposable = JsDisposable;

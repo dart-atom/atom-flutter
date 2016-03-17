@@ -1,16 +1,16 @@
 dart_library.library('atom_flutter/usage', null, /* Imports */[
   'dart/_runtime',
   'usage/usage',
-  'dart/core',
   'atom/utils/disposable',
   'atom_flutter/state',
   'atom/atom',
   'logging/logging',
+  'dart/core',
   'dart/async',
-  'usage/src/usage_impl',
-  'dart/html'
+  'dart/html',
+  'usage/src/usage_impl'
 ], /* Lazy imports */[
-], function(exports, dart, usage, core, disposable, state, atom, logging, async, usage_impl, html) {
+], function(exports, dart, usage, disposable, state, atom, logging, core, async, html, usage_impl) {
   'use strict';
   let dartx = dart.dartx;
   exports._UA = 'UA-67589403-3';
@@ -137,7 +137,7 @@ dart_library.library('atom_flutter/usage', null, /* Imports */[
       let value = `${map[dartx.get](key)}`;
       let result = core.Uri.encodeComponent(value);
       return `${key}=${result}`;
-    }, dart.dynamic, [core.String]))[dartx.join]('&');
+    }, core.String, [core.String]))[dartx.join]('&');
   }
   dart.fn(_postEncode, core.String, [core.Map$(core.String, dart.dynamic)]);
   // Exports:

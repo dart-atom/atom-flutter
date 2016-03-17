@@ -2,11 +2,11 @@ dart_library.library('usage/src/usage_impl', null, /* Imports */[
   'dart/_runtime',
   'dart/core',
   'dart/math',
-  'usage/usage',
   'dart/async',
+  'usage/usage',
   'usage/src/uuid'
 ], /* Lazy imports */[
-], function(exports, dart, core, math, usage, async, uuid) {
+], function(exports, dart, core, math, async, usage, uuid) {
   'use strict';
   let dartx = dart.dartx;
   exports._MAX_EXCEPTION_LENGTH = 100;
@@ -14,7 +14,7 @@ dart_library.library('usage/src/usage_impl', null, /* Imports */[
     return map[dartx.keys][dartx.map](dart.fn(key => {
       let value = `${map[dartx.get](key)}`;
       return `${key}=${core.Uri.encodeComponent(value)}`;
-    }, dart.dynamic, [core.String]))[dartx.join]('&');
+    }, core.String, [core.String]))[dartx.join]('&');
   }
   dart.fn(postEncode, core.String, [core.Map$(core.String, dart.dynamic)]);
   const _lastReplenish = Symbol('_lastReplenish');

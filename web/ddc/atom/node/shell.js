@@ -1,10 +1,10 @@
 dart_library.library('atom/node/shell', null, /* Imports */[
   'dart/_runtime',
-  'atom/src/js',
   'atom/node/node',
+  'atom/src/js',
   'dart/core'
 ], /* Lazy imports */[
-], function(exports, dart, js, node, core) {
+], function(exports, dart, node, js, core) {
   'use strict';
   let dartx = dart.dartx;
   dart.defineLazyProperties(exports, {

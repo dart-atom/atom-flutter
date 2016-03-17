@@ -7,11 +7,11 @@ dart_library.library('dart/html_common', null, /* Imports */[
   'dart/_js_helper',
   'dart/_native_typed_data',
   'dart/async',
-  'dart/collection',
-  'dart/_internal'
+  'dart/_internal',
+  'dart/collection'
 ], /* Lazy imports */[
   'dart/web_gl'
-], function(exports, dart, _metadata, core, html, typed_data, _js_helper, _native_typed_data, async, collection, _internal, web_gl) {
+], function(exports, dart, _metadata, core, html, typed_data, _js_helper, _native_typed_data, async, _internal, collection, web_gl) {
   'use strict';
   let dartx = dart.dartx;
   dart.export(exports, _metadata);
@@ -109,7 +109,7 @@ dart_library.library('dart/html_common', null, /* Imports */[
       this.modify(dart.fn(s => s.addAll(iterable[dartx.map](dart.bind(this, _validateToken))), dart.void, [core.Set$(core.String)]));
     }
     removeAll(iterable) {
-      this.modify(dart.fn(s => s.removeAll(iterable[dartx.map](dart.as(dart.bind(this, _validateToken), __CastType0))), dart.void, [core.Set$(core.String)]));
+      this.modify(dart.fn(s => s.removeAll(iterable[dartx.map](dart.as(dart.bind(this, _validateToken), dart.functionType(core.String, [core.Object])))), dart.void, [core.Set$(core.String)]));
     }
     toggleAll(iterable, shouldAdd) {
       if (shouldAdd === void 0) shouldAdd = null;
@@ -264,7 +264,6 @@ dart_library.library('dart/html_common', null, /* Imports */[
       return core.RegExp.new('^\\S+$');
     }
   });
-  const __CastType0 = dart.typedef('__CastType0', () => dart.functionType(core.String, [core.Object]));
   function convertDartToNative_SerializedScriptValue(value) {
     return convertDartToNative_PrepareForStructuredClone(value);
   }
@@ -281,7 +280,7 @@ dart_library.library('dart/html_common', null, /* Imports */[
     findSlot(value) {
       let length = this.values[dartx.length];
       for (let i = 0; i < dart.notNull(length); i++) {
-        if (dart.notNull(core.identical(this.values[dartx.get](i), value))) return i;
+        if (core.identical(this.values[dartx.get](i), value)) return i;
       }
       this.values[dartx.add](value);
       this.copies[dartx.add](null);

@@ -1,9 +1,9 @@
 dart_library.library('usage/src/uuid', null, /* Imports */[
   'dart/_runtime',
-  'dart/core',
-  'dart/math'
+  'dart/math',
+  'dart/core'
 ], /* Lazy imports */[
-], function(exports, dart, core, math) {
+], function(exports, dart, math, core) {
   'use strict';
   let dartx = dart.dartx;
   const _random = Symbol('_random');

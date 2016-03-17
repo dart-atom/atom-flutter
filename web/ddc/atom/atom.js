@@ -110,12 +110,10 @@ dart_library.library('atom/atom', null, /* Imports */[
     }
     deactivate() {}
     loadPackageJson() {
-      return dart.as(dart.as(html.HttpRequest.getString(`atom://${this.id}/package.json`).then(dart.fn(str => {
-        return convert.JSON.decode(str);
-      }, dart.dynamic, [core.String])), async.Future$(core.Map)), async.Future$(core.Map$(core.String, dart.dynamic)));
+      return dart.as(html.HttpRequest.getString(`atom://${this.id}/package.json`).then(dart.fn(str => dart.as(convert.JSON.decode(str), core.Map), core.Map, [core.String])), async.Future$(core.Map$(core.String, dart.dynamic)));
     }
     getPackageVersion() {
-      return dart.as(this.loadPackageJson().then(dart.fn(map => map[dartx.get]('version'), dart.dynamic, [core.Map])), async.Future$(core.String));
+      return this.loadPackageJson().then(dart.fn(map => dart.as(map[dartx.get]('version'), core.String), core.String, [core.Map]));
     }
   }
   dart.setSignature(AtomPackage, {
@@ -261,6 +259,15 @@ dart_library.library('atom/atom', null, /* Imports */[
       if (options == null) options = dart.map();
       return new js$.JsDisposable(dart.as(this.invoke('observe', keyPath, options, callback), js.JsObject));
     }
+    onDidChange(keyPath, options) {
+      if (options === void 0) options = null;
+      let disposable = null;
+      let controller = async.StreamController.broadcast({onCancel: dart.fn(() => {
+          dart.nullSafe(disposable, _ => _.dispose());
+        }, dart.void, [])});
+      disposable = this.observe(keyPath, options, dart.fn(e => controller.add(e), dart.void, [dart.dynamic]));
+      return controller.stream;
+    }
   }
   dart.setSignature(Config, {
     constructors: () => ({Config: [Config, [js.JsObject]]}),
@@ -268,7 +275,8 @@ dart_library.library('atom/atom', null, /* Imports */[
       getValue: [dart.dynamic, [core.String], {scope: dart.dynamic}],
       getBoolValue: [core.bool, [core.String], {scope: dart.dynamic}],
       setValue: [dart.void, [core.String, dart.dynamic]],
-      observe: [disposable.Disposable, [core.String, core.Map, dart.functionType(dart.void, [dart.dynamic])]]
+      observe: [disposable.Disposable, [core.String, core.Map, dart.functionType(dart.void, [dart.dynamic])]],
+      onDidChange: [async.Stream, [core.String], [core.Map]]
     })
   });
   const _options = Symbol('_options');
@@ -438,8 +446,8 @@ dart_library.library('atom/atom', null, /* Imports */[
           if (result == null) dart.throw(`unable to open ${url}`);
           let editor = new TextEditor(dart.as(result, js.JsObject));
           return dart.notNull(editor.isValid()) ? editor : null;
-        }));
-      }));
+        }, TextEditor, [dart.dynamic]));
+      }, async.Future$(TextEditor), []));
     }
     [_panelOptions](item, visible, priority) {
       let options = dart.map({item: item});
@@ -657,7 +665,7 @@ dart_library.library('atom/atom', null, /* Imports */[
         options[dartx.set]('options', nodeOptions);
       }
       let ctor = dart.as(node.require('atom').get('BufferedProcess'), js.JsFunction);
-      return new BufferedProcess._(js.JsObject.new(ctor, [js.JsObject.jsify(options)]));
+      return new BufferedProcess._(js.JsObject.new(ctor, dart.list([js.JsObject.jsify(options)], js.JsObject)));
     }
     _(object) {
       this[_stdin] = null;
@@ -665,7 +673,7 @@ dart_library.library('atom/atom', null, /* Imports */[
     }
     write(str) {
       if (this[_stdin] == null) this[_stdin] = dart.as(dart.dindex(this.obj.get('process'), 'stdin'), js.JsObject);
-      this[_stdin].callMethod('write', [str, 'utf8']);
+      this[_stdin].callMethod('write', dart.list([str, 'utf8'], core.String));
     }
     kill() {
       return this.invoke('kill');

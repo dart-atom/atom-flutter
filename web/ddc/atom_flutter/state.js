@@ -2,11 +2,11 @@ dart_library.library('atom_flutter/state', null, /* Imports */[
   'dart/_runtime',
   'atom/utils/dependencies',
   'atom/atom',
-  'dart/core',
   'dart/convert',
+  'dart/core',
   'dart/async'
 ], /* Lazy imports */[
-], function(exports, dart, dependencies, atom, core, convert, async) {
+], function(exports, dart, dependencies, atom, convert, core, async) {
   'use strict';
   let dartx = dart.dartx;
   exports.pluginId = 'flutter';

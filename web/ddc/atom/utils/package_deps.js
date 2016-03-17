@@ -26,7 +26,7 @@ dart_library.library('atom/utils/package_deps', null, /* Imports */[
       } else {
         return async.Future.forEach(toInstall, _installPackage);
       }
-    }, dart.dynamic, [core.Map]));
+    }, async.Future, [core.Map]));
   }
   dart.fn(install, async.Future, [core.String, atom.AtomPackage], {justNotify: core.bool});
   function _installPackage(name) {
