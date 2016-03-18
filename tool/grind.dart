@@ -28,19 +28,21 @@ buildDart2JS() async {
 }
 
 buildDDC() async {
-  // runDartScript(
-  //   '../../dev_compiler/bin/dev_compiler.dart',
-  //   arguments: [
-  //     '--no-destructure-named-params',
-  //     '-oweb/ddc',
-  //     'web/entry.dart']
-  // );
-  PubApp ddc = new PubApp.global('dev_compiler');
-  await ddc.runAsync([
-    '--no-destructure-named-params',
-    '-oweb/ddc',
-    'web/entry.dart'
-  ]);
+  runDartScript(
+    '../../dev_compiler/bin/dev_compiler.dart',
+    arguments: [
+      '--no-destructure-named-params',
+      '-oweb/ddc',
+      '--modules=node',
+      'web/entry.dart']
+  );
+  // PubApp ddc = new PubApp.global('dev_compiler');
+  // await ddc.runAsync([
+  //   '--no-destructure-named-params',
+  //   '-oweb/ddc',
+  //   '--modules=node',
+  //   'web/entry.dart'
+  // ]);
 
   // Generate web/entry_all.js by traversing the web/ddc output directory.
   Directory ddcDir = getDir('web/ddc');
