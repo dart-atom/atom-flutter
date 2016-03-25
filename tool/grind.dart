@@ -31,13 +31,11 @@ buildDDC() async {
   // runDartScript(
   //   '../../dev_compiler/bin/dev_compiler.dart',
   //   arguments: [
-  //     '--no-destructure-named-params',
   //     '-oweb/ddc',
   //     'web/entry.dart']
   // );
   PubApp ddc = new PubApp.global('dev_compiler');
   await ddc.runAsync([
-    '--no-destructure-named-params',
     '-oweb/ddc',
     'web/entry.dart'
   ]);

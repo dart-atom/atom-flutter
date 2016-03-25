@@ -1,9 +1,9 @@
 dart_library.library('atom_flutter/flutter', null, /* Imports */[
   'dart/_runtime',
   'logging/logging',
-  'atom/atom',
   'atom/utils/disposable',
   'atom/utils/dependencies',
+  'atom/atom',
   'atom_flutter/state',
   'dart/async',
   'dart/core',
@@ -11,7 +11,7 @@ dart_library.library('atom_flutter/flutter', null, /* Imports */[
   'atom_flutter/menus/getting_started',
   'atom_flutter/usage'
 ], /* Lazy imports */[
-], function(exports, dart, logging, atom, disposable, dependencies, state, async, core, package_deps, getting_started, usage) {
+], function(exports, dart, logging, disposable, dependencies, atom, state, async, core, package_deps, getting_started, usage) {
   'use strict';
   let dartx = dart.dartx;
   dart.defineLazyProperties(exports, {

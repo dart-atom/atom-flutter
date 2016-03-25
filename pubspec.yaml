@@ -15,6 +15,6 @@ dependencies:
   usage: ^1.1.0
 
 dev_dependencies:
-  # dev_compiler: 0.1.21
+  # dev_compiler: 0.1.22
   grinder: ^0.8.0+1
   pub_semver: ^1.2.1
