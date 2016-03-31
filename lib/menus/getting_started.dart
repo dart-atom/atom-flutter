@@ -65,5 +65,5 @@ Future<String> getSystemDescription() {
     }
     description += ', running on ${os}.';
     return description;
-  });
+  }) as Future<String>;
 }
