@@ -7,7 +7,7 @@ library atom.state;
 import 'dart:async';
 import 'dart:convert' show JSON;
 
-import 'package:atom/atom.dart';
+import 'package:atom/node/package.dart';
 import 'package:atom/utils/dependencies.dart';
 
 final String pluginId = 'flutter';

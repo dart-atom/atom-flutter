@@ -4,7 +4,7 @@
 
 import 'dart:async';
 
-import 'package:atom/atom.dart';
+import 'package:atom/node/package.dart';
 import 'package:atom/utils/dependencies.dart';
 import 'package:atom/utils/disposable.dart';
 import 'package:atom/utils/package_deps.dart' as package_deps;
