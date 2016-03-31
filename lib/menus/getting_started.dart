@@ -5,12 +5,11 @@
 import 'dart:async';
 
 import 'package:atom/atom.dart';
+import 'package:atom/node/package.dart';
 import 'package:atom/node/process.dart';
 import 'package:atom/node/shell.dart';
 import 'package:atom/utils/disposable.dart';
 import 'package:atom/utils/utils.dart';
-
-import '../state.dart';
 
 class GettingStarted implements Disposable {
   Disposables disposables = new Disposables();
@@ -65,5 +64,5 @@ Future<String> getSystemDescription() {
     }
     description += ', running on ${os}.';
     return description;
-  }) as Future<String>;
+  });
 }

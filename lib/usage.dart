@@ -6,12 +6,11 @@ import 'dart:async';
 import 'dart:html' show document, HttpRequest, window;
 
 import 'package:atom/atom.dart';
+import 'package:atom/node/package.dart';
 import 'package:atom/utils/disposable.dart';
 import 'package:logging/logging.dart';
 import 'package:usage/src/usage_impl.dart';
 import 'package:usage/usage.dart';
-
-import 'state.dart';
 
 final String _UA = 'UA-67589403-3';
 
