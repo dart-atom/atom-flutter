@@ -1,5 +1,8 @@
 # Changelog
 
+## unreleased
+- Updates to the flutter package settings
+
 ## 0.2.1
 - Added a `Packages > Flutter > Version` menu item
 

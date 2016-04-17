@@ -44,7 +44,7 @@ class FlutterDevPackage extends AtomPackage {
   Map config() {
     return {
       'flutterRoot': {
-        'title': 'FLUTTER_ROOT',
+        'title': 'flutter_root',
         'description': 'The location of the Flutter SDK.',
         'type': 'string',
         'default': '',
@@ -53,7 +53,7 @@ class FlutterDevPackage extends AtomPackage {
 
       // google analytics
       'sendUsage': {
-        'title': 'Report usage information to Google Analytics.',
+        'title': 'Report usage information to Google Analytics',
         'description': "Report anonymized usage information to Google Analytics.",
         'type': 'boolean',
         'default': true,
