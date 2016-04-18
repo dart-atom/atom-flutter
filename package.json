@@ -1,7 +1,7 @@
 {
   "name": "flutter",
   "main": "./web/entry.dart.js",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A Flutter development environment for Atom.",
   "keywords": [
     "flutter",
