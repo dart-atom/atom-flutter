@@ -1,6 +1,6 @@
 # Changelog
 
-## unreleased
+## 0.2.2
 - Updates to the flutter package settings
 
 ## 0.2.1
