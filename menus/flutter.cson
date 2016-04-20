@@ -12,6 +12,7 @@
           { type: 'separator' }
           { label: 'Flutter Version…', command: 'flutter:version' }
           { label: 'Flutter Doctor…', command: 'flutter:doctor' }
+          { label: 'Flutter Screenshot', command: 'flutter:screenshot' }
           { label: 'Flutter Upgrade…', command: 'flutter:upgrade' }
           { type: 'separator' }
           { label: 'Send Feedback…', command: 'flutter:send-feedback'}
