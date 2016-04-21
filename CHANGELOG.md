@@ -1,5 +1,8 @@
 # Changelog
 
+## unreleased
+- Exposed `flutter screenshot`
+
 ## 0.2.2
 - Updates to the flutter package settings
 
