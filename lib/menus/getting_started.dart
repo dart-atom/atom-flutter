@@ -41,7 +41,7 @@ class GettingStarted implements Disposable {
 
   void _handleSendFeedback(AtomEvent _) {
     getSystemDescription().then((String description) {
-      shell.openExternal('https://github.com/flutter/atom-flutter/issues/new?'
+      shell.openExternal('https://github.com/flutter/flutter/issues/new?'
           'body=${uriEncodeComponent(description)}');
     });
   }
