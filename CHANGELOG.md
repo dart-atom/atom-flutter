@@ -3,6 +3,7 @@
 ## unreleased
 - Exposed `flutter screenshot`
 - Changed the feedback link to point to https://github.com/flutter/flutter/issues/new
+- Exposed the `flutter:connect-remote-debugger` command
 
 ## 0.2.2
 - Updates to the flutter package settings
