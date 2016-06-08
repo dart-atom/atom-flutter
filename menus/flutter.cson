@@ -15,7 +15,7 @@
           { label: 'Flutter Screenshot', command: 'flutter:screenshot' }
           { label: 'Flutter Upgrade…', command: 'flutter:upgrade' }
           { type: 'separator' }
-          { label: 'Connect remote debugger…', command: 'flutter:connect-remote-debugger' }
+          { label: 'Connect Debugger to Remote App…', command: 'flutter:connect-remote-debugger' }
           { type: 'separator' }
           { label: 'Send Feedback…', command: 'flutter:send-feedback'}
         ]
