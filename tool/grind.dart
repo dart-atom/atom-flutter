@@ -103,8 +103,18 @@ publish() => publishAtomPlugin();
 @Depends(analyze, build)
 bot() => null;
 
-@Task('Generate a DDC analysis report')
-report() {
-  return new DevCompiler().analyzeAsync(
-    getFile('web/entry.dart'), htmlReport: true);
-}
+/* DDC manual commands:
+
+  dart $DDC_PATH/bin/dartdevc.dart compile --modules node -o web/entry.js -s web/logging.sum -s web/atom.sum -s web/atom_flutter.sum -s web/usage.sum web/entry.dart
+
+  dart $DDC_PATH/bin/dartdevc.dart compile --modules node -o web/logging.js package:logging/logging.dart
+
+  dart $DDC_PATH/bin/dartdevc.dart compile --modules node -o web/usage.js package:usage/usage.dart package:usage/src/uuid.dart package:usage/src/usage_impl.dart
+
+  dart $DDC_PATH/bin/dartdevc.dart compile --modules node -o web/atom.js -s web/logging.sum package:atom/atom.dart package:atom/atom_utils.dart package:atom/node/command.dart package:atom/node/config.dart package:atom/node/fs.dart package:atom/node/node.dart package:atom/node/notification.dart package:atom/node/package.dart package:atom/node/process.dart package:atom/node/shell.dart package:atom/node/workspace.dart package:atom/src/js.dart package:atom/src/utils.dart package:atom/utils/dependencies.dart package:atom/utils/disposable.dart package:atom/utils/package_deps.dart package:atom/utils/utils.dart
+
+  dart $DDC_PATH/bin/dartdevc.dart compile --modules node -o web/atom_flutter.js -s web/logging.sum -s web/atom.sum -s web/usage.sum package:atom_flutter/flutter.dart package:atom_flutter/menus/getting_started.dart package:atom_flutter/state.dart package:atom_flutter/usage.dart
+
+  dart $DDC_PATH/tool/build_sdk.dart --dart-sdk $DDC_PATH/tool/input_sdk/ --modules node -o web/dart_sdk.js
+
+*/
