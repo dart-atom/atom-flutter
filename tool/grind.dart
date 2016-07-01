@@ -102,9 +102,3 @@ publish() => publishAtomPlugin();
 @DefaultTask()
 @Depends(analyze, build)
 bot() => null;
-
-@Task('Generate a DDC analysis report')
-report() {
-  return new DevCompiler().analyzeAsync(
-    getFile('web/entry.dart'), htmlReport: true);
-}

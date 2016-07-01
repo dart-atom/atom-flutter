@@ -1,8 +1,0 @@
-{
-  "version": 3,
-  "sourceRoot": "",
-  "sources": ["../../../../atom/node/shell.dart"],
-  "names": ["require","invoke","path","url"],
-  "mappings": ";;;;;;;;;AASY;IAAA;YAAQ,cAAa;KAAA;;;IAG/B,IAAA;AAAY,wBAAM,AAAAA,YAAO,CAAC,OAAO,CAAC;AAAC,AAAA,AAAC,KAAA;IAEpC,SACS,IAAW,EAAE;YAAG,AAAAC,YAAM,CAAC,UAAU,EAAEC,IAAI,CAAC;KAAC,AAAA;IAElD,iBACiB,IAAW,EAAE;YAAG,AAAAD,YAAM,CAAC,kBAAkB,EAAEC,IAAI,CAAC;KAAC,AAAA;IAElE,aAEa,GAAU,EAAE;YAAG,AAAAD,YAAM,CAAC,cAAc,EAAEE,GAAG,CAAC;KAAC,AAAA",
-  "file": "shell.js"
-}
