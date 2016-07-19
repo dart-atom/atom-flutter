@@ -4,6 +4,7 @@
 
 import 'dart:async';
 
+import 'package:atom/atom.dart';
 import 'package:atom/node/package.dart';
 import 'package:atom/utils/dependencies.dart';
 import 'package:atom/utils/disposable.dart';
@@ -31,6 +32,7 @@ class FlutterDevPackage extends AtomPackage {
 
     new Future.delayed(Duration.ZERO, () {
       package_deps.install('Flutter', this);
+      _dispatch('flutter:enable');
     });
 
     _init();
@@ -84,4 +86,9 @@ class FlutterDevPackage extends AtomPackage {
   //     _logger.info("logging level: ${Logger.root.level}");
   //   }));
   // }
+}
+
+void _dispatch(String commandName) {
+  var view = atom.views.getView(atom.workspace);
+  atom.commands.dispatch(view, commandName);
 }
