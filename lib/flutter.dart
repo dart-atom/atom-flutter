@@ -52,6 +52,14 @@ class FlutterDevPackage extends AtomPackage {
         'default': '',
         'order': 1
       },
+      'enableHotPatching': {
+        'title': 'Enable hot patching',
+        'description': 'Enable hot patching of changes when running applications.',
+        'type': 'boolean',
+        'default': false,
+        'order': 3
+      },
+
 
       // google analytics
       'sendUsage': {

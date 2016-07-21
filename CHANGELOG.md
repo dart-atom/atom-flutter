@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.2.4
+- Expose the `Enable Hot patching` mode
+
 ## 0.2.3
 - Exposed `flutter screenshot`
 - Changed the feedback link to point to https://github.com/flutter/flutter/issues/new
