@@ -16,7 +16,7 @@ analyze() => new PubApp.global('tuneup').runAsync(['check']);
 @Task()
 build() async {
   return buildDart2JS();
-  // return buildDDC();
+  // return buildDdc();
 }
 
 buildDart2JS() async {
@@ -27,72 +27,109 @@ buildDart2JS() async {
   outputFile.writeAsStringSync(patchDart2JSOutput(outputFile.readAsStringSync()));
 }
 
-buildDDC() async {
-  // runDartScript(
-  //   '../../dev_compiler/bin/dev_compiler.dart',
-  //   arguments: [
-  //     '-oweb/ddc',
-  //     'web/entry.dart']
+@Task()
+buildDdc() async {
+  // // In dart:convert, change '= JSON.parse(' to '= window.JSON.parse('.
+  // File convertJs = getFile('web/ddc/dev_compiler/runtime/dart/convert.js');
+  // convertJs.writeAsStringSync(
+  //   convertJs.readAsStringSync().replaceAll(
+  //     '= JSON.parse(',
+  //     '= window.JSON.parse('
+  //   )
   // );
-  PubApp ddc = new PubApp.global('dev_compiler');
-  await ddc.runAsync([
-    '-oweb/ddc',
-    'web/entry.dart'
-  ]);
 
-  // Generate web/entry_all.js by traversing the web/ddc output directory.
-  Directory ddcDir = getDir('web/ddc');
-  List<File> files = ddcDir.listSync(followLinks: false, recursive: true)
-      .where((entity) => entity is File && entity.path.endsWith('.js'))
-      .toList();
+  // Manually run './tool/build_sdk.sh --modules=node'.
 
-  files.removeWhere((file) => file.path.endsWith('dart_library.js'));
-  files.removeWhere((file) => file.path.endsWith('harmony_feature_check.js'));
-
-  // In dart:convert, change '= JSON.parse(' to '= window.JSON.parse('.
-  File convertJs = getFile('web/ddc/dev_compiler/runtime/dart/convert.js');
-  convertJs.writeAsStringSync(
-    convertJs.readAsStringSync().replaceAll(
-      '= JSON.parse(',
-      '= window.JSON.parse('
-    )
+  _ddc(
+    out: 'web/logging.js',
+    inputs: ['package:logging/logging.dart']
   );
 
-  List<String> paths = new List.from(files
-      .map((file) => file.path)
-      .map((path) => path.replaceAll('web/ddc/', './ddc/')));
+  _ddc(
+    out: 'web/usage.js',
+    inputs: [
+      'package:usage/usage.dart',
+      'package:usage/src/uuid.dart',
+      'package:usage/src/usage_impl.dart'
+    ],
+    summaries: ['web/logging.sum']
+  );
 
-  File entryJsFile = getFile('web/entry_all.js');
-  String contents = '''
-// Copyright (c) 2015, the Flutter project authors. Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
+  _ddc(
+    out: 'web/atom.js',
+    inputs: [
+      'package:atom/atom.dart',
+      'package:atom/atom_utils.dart',
+      'package:atom/node/command.dart',
+      'package:atom/node/config.dart',
+      'package:atom/node/fs.dart',
+      'package:atom/node/node.dart',
+      'package:atom/node/notification.dart',
+      'package:atom/node/package.dart',
+      'package:atom/node/process.dart',
+      'package:atom/node/shell.dart',
+      'package:atom/node/workspace.dart',
+      'package:atom/src/js.dart',
+      'package:atom/src/utils.dart',
+      'package:atom/utils/dependencies.dart',
+      'package:atom/utils/disposable.dart',
+      'package:atom/utils/package_deps.dart',
+      'package:atom/utils/utils.dart'
+    ],
+    summaries: ['web/logging.sum']
+  );
 
-global.dart_library = require('./ddc/dev_compiler/runtime/dart_library.js');
+  _ddc(
+    out: 'web/atom_flutter.js',
+    inputs: [
+      'package:atom_flutter/flutter.dart',
+      'package:atom_flutter/menus/getting_started.dart',
+      'package:atom_flutter/state.dart',
+      'package:atom_flutter/usage.dart'
+    ],
+    summaries: ['web/logging.sum', 'web/atom.sum', 'web/usage.sum']
+  );
 
-${paths.map((path) => "require('${path}');").join('\n')}
+  _ddc(
+    out: 'web/entry.js',
+    inputs: [ 'web/entry.dart' ],
+    summaries: ['web/logging.sum', 'web/atom.sum', 'web/usage.sum', 'web/atom_flutter.sum']
+  );
+}
 
-dart_library.start('entry');
+void _ddc({ String out, List<String> inputs, List<String> summaries: const [] }) {
+  List<String> args = ['--modules', 'node', '-o', out];
 
-module.exports = {
-  activate: function(arg) {
-    global.flutter.activate(); // TODO: arg);
-  },
-
-  config: global.flutter.config,
-
-  serialize: function(arg) {
-    return global.flutter.serialize();
-  },
-
-  deactivate: function() {
-    global.flutter.deactivate();
+  for (String summary in summaries) {
+    args.add('-s');
+    args.add(summary);
   }
-};
-''';
 
-  log('Generated ${entryJsFile.path}.');
-  entryJsFile.writeAsStringSync(contents);
+  args.addAll(inputs);
+
+  Stopwatch stopwatch = new Stopwatch()..start();
+  run(sdkBin('dartdevc'), arguments: args, quiet: true);
+  stopwatch.stop();
+
+  int inSize = _sizeInKb(inputs.map((String s) => _fileFromRef(s).lengthSync()).reduce((a, b) => a + b));
+  int outSize = _sizeInKb(new File(out).lengthSync());
+  log('Generated ${out}, ${inSize}k ==> ${outSize}k (${_ms(stopwatch.elapsedMilliseconds)}).');
+}
+
+int _sizeInKb(int sizeInBytes) => (sizeInBytes + 1023) ~/ 1024;
+
+String _ms(int milliseconds) {
+  String str = milliseconds.toString();
+  if (str.length > 3) str = str.substring(0, str.length - 3) + ',' + str.substring(str.length - 3);
+  return '${str}ms';
+}
+
+File _fileFromRef(String reference) {
+  if (reference.startsWith('package:')) {
+    return new File('packages/${reference.substring('package:'.length)}');
+  } else {
+    return new File(reference);
+  }
 }
 
 @Task()
@@ -103,18 +140,11 @@ publish() => publishAtomPlugin();
 @Depends(analyze, build)
 bot() => null;
 
-/* DDC manual commands:
-
-  dart $DDC_PATH/bin/dartdevc.dart compile --modules node -o web/entry.js -s web/logging.sum -s web/atom.sum -s web/atom_flutter.sum -s web/usage.sum web/entry.dart
-
-  dart $DDC_PATH/bin/dartdevc.dart compile --modules node -o web/logging.js package:logging/logging.dart
-
-  dart $DDC_PATH/bin/dartdevc.dart compile --modules node -o web/usage.js package:usage/usage.dart package:usage/src/uuid.dart package:usage/src/usage_impl.dart
-
-  dart $DDC_PATH/bin/dartdevc.dart compile --modules node -o web/atom.js -s web/logging.sum package:atom/atom.dart package:atom/atom_utils.dart package:atom/node/command.dart package:atom/node/config.dart package:atom/node/fs.dart package:atom/node/node.dart package:atom/node/notification.dart package:atom/node/package.dart package:atom/node/process.dart package:atom/node/shell.dart package:atom/node/workspace.dart package:atom/src/js.dart package:atom/src/utils.dart package:atom/utils/dependencies.dart package:atom/utils/disposable.dart package:atom/utils/package_deps.dart package:atom/utils/utils.dart
-
-  dart $DDC_PATH/bin/dartdevc.dart compile --modules node -o web/atom_flutter.js -s web/logging.sum -s web/atom.sum -s web/usage.sum package:atom_flutter/flutter.dart package:atom_flutter/menus/getting_started.dart package:atom_flutter/state.dart package:atom_flutter/usage.dart
-
-  dart $DDC_PATH/tool/build_sdk.dart --dart-sdk $DDC_PATH/tool/input_sdk/ --modules node -o web/dart_sdk.js
-
-*/
+@Task()
+clean() {
+  for (FileSystemEntity entity in webDir.listSync()) {
+    if (entity is File && (entity.path.endsWith('.sum') || entity.path.endsWith('.js.map'))) {
+      delete(entity);
+    }
+  }
+}
