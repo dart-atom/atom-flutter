@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.2.5
+- Change the `enableHotPatching` preference to a `disableHotPatching` one.
+
 ## 0.2.4
 - Expose the `Enable Hot patching` mode
 
