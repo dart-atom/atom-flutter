@@ -52,11 +52,11 @@ class FlutterDevPackage extends AtomPackage {
         'default': '',
         'order': 1
       },
-      'disableHotPatching': {
-        'title': 'Disable hot patching',
-        'description': 'Disable hot patching of changes when running applications.',
+      'enableHotReload': {
+        'title': 'Enable hot reload',
+        'description': 'Enable hot reload of changes when running applications.',
         'type': 'boolean',
-        'default': false,
+        'default': true,
         'order': 3
       },
 
