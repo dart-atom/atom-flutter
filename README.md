@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/flutter/atom-flutter.svg?branch=master)](https://travis-ci.org/flutter/atom-flutter)
+[![Build Status](https://travis-ci.org/dart-atom/atom-flutter.svg?branch=master)](https://travis-ci.org/dart-atom/atom-flutter)
 
 ## Status - discontinued
 
@@ -23,14 +23,14 @@ or through IntelliJ.
 
 A [Flutter][] development environment for Atom.
 
-![Flutter plugin for Atom screenshot](https://raw.githubusercontent.com/flutter/atom-flutter/master/doc/images/screenshot.png)
+![Flutter plugin for Atom screenshot](https://raw.githubusercontent.com/dart-atom/atom-flutter/master/doc/images/screenshot.png)
 
 ### Flutter!
 
 Flutter is a new project to help developers build high-performance, high-fidelity,
 mobile apps for iOS and Android from a single codebase.
 
-For more information about Flutter see [flutter.io](https://flutter.io) and our
+For more information about Flutter see [flutter.io](https://flutter.io) and the
 [getting started guide](https://flutter.io/getting-started/).
 
 ### Features
