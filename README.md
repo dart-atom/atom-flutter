@@ -27,9 +27,9 @@ Most features are listed in the Command Palette (Cmd-Shift-P / Control-Shift-P).
 
 ## Features and bugs
 
-Please file feature requests and bugs at the [issue tracker][tracker].
+Please file bugs at the [issue tracker][tracker].
 
-[tracker]: https://github.com/flutter/flutter/issues
+[tracker]: https://github.com/dart-atom/atom-flutter/issues
 
 ## See also
 
