@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.2.7
+- Update the readme to reflect the deprecation status
+
 ## 0.2.6
 - Updates to the `Enable hot reload` setting
 
